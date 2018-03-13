@@ -1,0 +1,6 @@
+<div class="ui segment">
+    <h3 class="ui header">{{segment.name}}</h3>
+    <app-user-list *ngIf="users"
+        [segment]="segment" [users]="users">
+    </app-user-list>
+</div> 

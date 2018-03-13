@@ -1,0 +1,50 @@
+<p *ngIf="location && location.id else nameLocation">
+    U bent ingechecked in locatie: {{location.name}}
+</p>
+<ng-template #nameLocation>
+    <p>New sticker scanned</p>
+    <div class="ui horizontal segments" *ngIf="locations">
+        <!-- create new location -->
+        <div class="ui segment">
+            <h1>Create New Location </h1>
+            <div class="ui segment">
+                <form class="ui form">
+                    <div class="field">
+                        <label for="newLocationName">Name:</label>
+                        <input type="text" name="new-location-name" placeholder="Location name"
+                            id="newLocationName">
+                    </div>
+                    <button class="ui primary fluid button" type="button"
+                        (click)="createLoc()">
+                        Create Location
+                    </button>
+                </form>      
+            </div>
+        </div>
+        <div class="ui segment">
+            <div class="ui vertical divider">
+                 OR
+            </div>
+        </div>
+         <!-- add to existing location -->
+        <div class="ui segment">
+            <h1>Add to existing location </h1>
+            <div class="ui segment">
+                <form class="ui form">
+                    <div class="field">
+                        <label for="existingLocation">Location:</label>
+                        <select id="selectLocation">
+                            <option *ngFor="let localLocation of locations" [value]="localLocation.id">
+                                {{localLocation.name}}
+                            </option>
+                        </select>
+                    </div>
+                    <button class="ui primary fluid button" type="button"
+                        (click)="addSticker()">
+                        Add sticker to location
+                    </button>
+                </form>      
+            </div>
+        </div>
+    </div>
+</ng-template>
