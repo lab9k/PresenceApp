@@ -32,7 +32,6 @@ export class AdminDataService {
 
   // UPDATE CAMPUS
   updateCampus(campus): Observable<Campus> {
-    console.log(JSON.stringify(campus));
     let headers = new Headers({ 'Content-Type': 'application/json'});
     let options = new RequestOptions({ headers: headers });
     return this.http.put(`/API/campus/`, JSON.stringify(campus), options)

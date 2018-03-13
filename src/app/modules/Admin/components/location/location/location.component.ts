@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Location } from '../../../../../shared/models/location.model'
+import { Location } from '../../../../../shared/models/location.model';
 
 @Component({
   selector: 'app-location',

@@ -12,6 +12,8 @@ import { DragulaModule } from 'ng2-dragula';
 import { CampusCreateComponent } from './components/campus/campus-create/campus-create.component';
 import { SegmentComponent } from './components/segment/segment/segment.component';
 import { SegmentListComponent } from './components/segment/segment-list/segment-list.component';
+import { SegmentLocationComponent } from './components/segment-location/segment-location/segment-location.component';
+import { SegmentLocationListComponent } from './components/segment-location/segment-location-list/segment-location-list.component';
 
 const routes = [
   { path: '', component:  DashboardComponent},
@@ -32,7 +34,9 @@ const routes = [
     DashboardComponent,
     CampusCreateComponent,
     SegmentComponent,
-    SegmentListComponent
+    SegmentListComponent,
+    SegmentLocationComponent,
+    SegmentLocationListComponent
   ],
   providers: [
     AdminDataService

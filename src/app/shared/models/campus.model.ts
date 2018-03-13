@@ -8,8 +8,7 @@ export class Campus {
     static fromJSON(json) {
         let segs = [];
         json.segments.forEach(element => {
-            if(element._id !== undefined && element.name !== undefined && element.locations.length !== 0)
-                segs.push(Segment.fromJSON(element));
+            segs.push(Segment.fromJSON(element));       
         });
         const campus = new Campus(json._id, json.name, segs);
         return campus;

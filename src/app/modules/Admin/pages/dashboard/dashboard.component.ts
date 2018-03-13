@@ -4,6 +4,7 @@ import { Location } from '../../../../shared/models/location.model';
 import { AdminDataService } from '../../admin.service';
 import { DragulaService } from 'ng2-dragula/components/dragula.provider';
 import { DataService } from '../../../../shared/services/data.service';
+import { Segment } from '../../../../shared/models/segment.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,6 +15,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   private _campuses: Campus[];
   private _campus: Campus;
+  private _segments: Segment[];
+  private _segment: Segment;
 
   constructor(private _adminDataService: AdminDataService, private dataService: DataService, private dragulaService: DragulaService) { 
     this.dragulaService.setOptions('bag-segments', {
@@ -21,14 +24,22 @@ export class DashboardComponent implements OnInit, OnDestroy {
         return container.id !== "Segments without campus";
       }
     });
+    this.dragulaService.setOptions('bag-locations', {
+      accepts: function (el, container, handle) {
+        return container.id !== "Locations without segment";
+      }
+    });
   }
 
   ngOnInit() {
     this._campus = new Campus(null, "Segments without campus", []);
+    this._segment = new Segment(null, "Locations without segment", []);
+
     this.dataService.campuses()
       .subscribe(items => {
         this._campuses = items;
         this.dataService.segments().subscribe(segments => {
+          this._segments = segments;
           segments.forEach(segment => {
             this._campus.segments.push(segment);
             this._campuses.forEach(cmp => {
@@ -37,12 +48,24 @@ export class DashboardComponent implements OnInit, OnDestroy {
               }
             });
           });
+          this.dataService.locations().subscribe(locations => {
+            locations.forEach(location => {
+              this._segment.locations.push(location);
+              this._segments.forEach(seg => {
+                if(seg.locations.find(x => x.id === location.id)) {
+                  this._segment.locations.pop();
+                }
+              })
+            });
+          });
         });
       });
+
   }
 
   ngOnDestroy() {
     this.dragulaService.destroy('bag-segments');
+    this.dragulaService.destroy('bag-locations');
   }
 
   get campuses() {
@@ -51,6 +74,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   get campus() {
     return this._campus;
+  }
+
+  get segments() {
+    return this._segments;
+  }
+
+  get segment() {
+    return this._segment;
   }
 
 }

@@ -11,4 +11,13 @@
         <app-campus-list [campuses]="campuses"></app-campus-list>
       </div>
   </div>
+  <h2>Segments</h2>
+  <div class="ui two cards">
+      <div class="ui red card">
+        <app-segment-location *ngIf="segment.locations.length !== 0" [segment]="segment"></app-segment-location>
+      </div>
+      <div class="ui green card">
+        <app-segment-location-list [segments]="segments"></app-segment-location-list>
+      </div>
+  </div>
 </div>

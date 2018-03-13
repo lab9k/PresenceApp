@@ -17,7 +17,8 @@ export class SegmentListComponent implements OnInit, OnDestroy {
   
   constructor(private dragulaService: DragulaService, private adminDataService: AdminDataService, private dataService: DataService) { 
     dragulaService.dropModel.subscribe((value) => {
-      this.onDropModel(value);
+      if(value.slice()[0] === "bag-segments")
+        this.onDropModel(value);
     });
   }
 

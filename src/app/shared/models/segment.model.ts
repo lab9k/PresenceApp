@@ -18,9 +18,7 @@ export class Segment {
         return {
             _id: this._id,
             name: this._name,
-            locations: this._locations.forEach(location => {
-                location.toJSON()
-            }),
+            locations: this._locations
         }
     }
 

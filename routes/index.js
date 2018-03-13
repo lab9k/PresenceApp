@@ -10,11 +10,6 @@ let Segment = mongoose.model('Segment');
 const {OAuth2Client} = require('google-auth-library');
 const client = new OAuth2Client('780736623262-jcskkstckghd9fg2nom07dgq393ttehp.apps.googleusercontent.com');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-
 /* Checkin user */
 router.post('/API/checkin/', function(req, res, next) {
   if(!req.body.userid || !req.body.locationid) {
