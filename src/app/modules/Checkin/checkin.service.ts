@@ -26,6 +26,14 @@ export class CheckinService {
             });
     }
 
+    // REMOVE CHECKIN
+    removeCheckin(userid): Observable<string> {
+        return this.http.delete('/API/checkin/')
+            .map(res => {
+                return res.statusText;
+            });
+    }
+
     // UPDATE LOCATION
     updateLocation(location): Observable<Location> {
         let headers = new Headers({ 'Content-Type': 'application/json' });

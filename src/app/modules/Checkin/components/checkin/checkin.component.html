@@ -1,0 +1,9 @@
+<div class="ui container" *ngIf="time !== undefined && location !== undefined">
+    <p>
+      Your last checkin was on {{time}} at {{location.name}}
+    </p>
+    <button type="button" class="negative ui button"
+      (click)="removeCheckin()">
+      Remove checkin
+    </button>
+</div>

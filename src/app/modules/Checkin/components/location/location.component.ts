@@ -24,9 +24,9 @@ export class LocationComponent implements OnInit {
   ngOnInit() {
     this.route.data.subscribe(item => {
       this._location = item['location'];
-      if(this._location && this._location.id) {
+      if(this._location) {
         this.currentUser.subscribe(user => {
-          this.checkinService.checkIn(this.authService.user.getValue() , this._location.id)
+          this.checkinService.checkIn(this.authService.user.getValue() , this._location.stickers[0])
             .subscribe();
         });
       } else {

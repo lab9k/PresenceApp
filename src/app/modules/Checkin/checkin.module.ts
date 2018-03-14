@@ -5,9 +5,11 @@ import { RouterModule } from '@angular/router';
 import { LocationComponent } from './components/location/location.component';
 import { CheckinService } from './checkin.service';
 import { LocationResolver } from './location-resolver.service';
+import { CheckinComponent } from './components/checkin/checkin.component';
 
 const routes = [
   { path: ':id', component: LocationComponent, resolve: { location: LocationResolver} },
+  { path: '', component: CheckinComponent }
 ];
 
 @NgModule({
@@ -17,7 +19,8 @@ const routes = [
     RouterModule.forChild(routes)
   ],
   declarations: [
-    LocationComponent
+    LocationComponent,
+    CheckinComponent
   ],
   providers: [
     CheckinService,
