@@ -17,8 +17,7 @@ router.post('/API/checkin/', function(req, res, next) {
       {message: 'Missing fields'}
     );
   }
-  console.log(req.body.userid);
-  console.log(req.body.locationid);
+
   let user = null;
   let id = req.body.locationid;
   
@@ -26,9 +25,8 @@ router.post('/API/checkin/', function(req, res, next) {
     if(err) {return next(err);}
     if(usr) {
       user = usr;
-      console.log(user);
       
-      Location.findOne({stickers: {"$in": [req.body.locationid]}}, function(err, location) {
+      Location.findOne({stickers: req.body.locationid}, function(err, location) {
         if (err) { return next(err);}
         if(!location) {
           return res.status(200).json({message: 'New sticker'});
