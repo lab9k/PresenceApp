@@ -1,6 +1,11 @@
 var express = require('express');
 var router = express.Router();
 let mongoose = require('mongoose');
+var app = express();
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+
+server.listen(4000);
 
 let Location = mongoose.model('Location');
 let User = mongoose.model('User');
@@ -9,6 +14,18 @@ let Segment = mongoose.model('Segment');
 
 const {OAuth2Client} = require('google-auth-library');
 const client = new OAuth2Client('780736623262-jcskkstckghd9fg2nom07dgq393ttehp.apps.googleusercontent.com');
+
+// socket io
+io.on('connection', function (socket) {
+  console.log('User connected');
+  socket.on('disconnect', function() {
+    console.log('User disconnected');
+  });
+  socket.on('checkin', function (data) {
+    console.log(data);
+    io.emit('new-checkin', { user: data });
+  });
+});
 
 /* Checkin user */
 router.post('/API/checkin/', function(req, res, next) {
@@ -44,7 +61,7 @@ router.post('/API/checkin/', function(req, res, next) {
         user.checkin = { location: location, time: +new Date()};
         user.save(function(err, usr) {
           if (err) { return next(err);}
-          return res.status(200).json({message: 'Checkin succesful.'});
+          res.json(user);
         });
       });
     }

@@ -21,4 +21,16 @@ export class HomeDataService {
     return this.http.get('/API/campuses')
       .map(response => response.json().map(item => Campus.fromJSON(item)));
   }
+
+  getUsers() {
+    return new Promise((resolve, reject) => {
+      this.http.get('/API/users/')
+      .map(response => response.json().map(item => User.fromJSON(item)))
+      .subscribe(res => {
+        resolve(res);
+      }, (err) => {
+        reject(err);
+      });
+    });
+  }
 }

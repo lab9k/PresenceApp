@@ -22,8 +22,22 @@ export class CheckinService {
         let options = new RequestOptions({ headers: headers });
         return this.http.post('/API/checkin/', JSON.stringify({userid: userid, locationid: locationid}), options)
             .map(res => {
-                return res.statusText;
+                return res.json();
             });
+    }
+
+    saveCheckin(userid, stickerid) {
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        return new Promise((resolve, reject) => {
+            this.http.post('/API/checkin/', JSON.stringify({userid: userid, locationid: stickerid}), options)
+            .map(response => response.json()).map(item => User.fromJSON(item))
+            .subscribe(res => {
+                resolve(res);
+              }, (err) => {
+                reject(err);
+              });
+        });
     }
 
     // REMOVE CHECKIN

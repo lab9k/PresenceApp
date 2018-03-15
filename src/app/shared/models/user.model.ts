@@ -8,8 +8,12 @@ export class User {
     private _picture: string;
 
     static fromJSON(json) {
-        const user = new User(json._id, json.name, json.checkin, json.picture);
-        return user;
+        let user;
+        if(json.name)
+            user = new User(json._id, json.name, json.checkin, json.picture);
+        else
+            user = new User(json._id, json._name, json._checkin, json._picture);
+            return user;
     }
     constructor(id: string, name: string, checkin: {location: string;time: number;}, picture: string) {
         this._id = id;
@@ -36,5 +40,9 @@ export class User {
 
     get picture() {
         return this._picture;
+    }
+
+    set checkin(checkin) {
+        this._checkin = checkin;
     }
 }

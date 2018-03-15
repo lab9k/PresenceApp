@@ -30,6 +30,18 @@ export class UserListComponent implements OnInit {
     })
   }
 
+  ngOnChanges() {
+    this._filteredUsers = [];
+    this.users.map(user => {
+      this.segment.locations.map(location => {
+        let loc = Location.fromJSON(location);
+        if(user.checkin && loc.id === user.checkin.location) {
+          this._filteredUsers.push(user);
+        }
+      })
+    })
+  }
+
   get filteredUsers() {
     return this._filteredUsers;
   }

@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '../../../../shared/services/authentication.service';
 import { Observable } from 'rxjs';
 import { DataService } from '../../../../shared/services/data.service';
-
+import * as io from "socket.io-client";
 declare var $: any;
 
 @Component({
@@ -18,6 +18,7 @@ export class LocationComponent implements OnInit {
   private _location: Location;
   private locationName: string;
   private _locations: Location[];
+  socket = io('http://localhost:4000');
 
   constructor(private route: ActivatedRoute, private checkinService: CheckinService, private authService: AuthenticationService, private dataService: DataService) { }
 
@@ -26,8 +27,13 @@ export class LocationComponent implements OnInit {
       this._location = item['location'];
       if(this._location && this._location.id) {
         this.currentUser.subscribe(user => {
-          this.checkinService.checkIn(this.authService.user.getValue() , this._location.stickers[0])
-            .subscribe();
+          this.checkinService.saveCheckin(this.authService.user.getValue(), this.location.stickers[0]).then((result) => {
+            console.log(result);
+            this.socket.emit('checkin', result);
+          }, (err) => {
+            console.log(err);
+          });
+          //this.checkinService.checkIn(this.authService.user.getValue() , this._location.stickers[0]).subscribe();
         });
       } else {
         this.dataService.locations().subscribe(items => this._locations = items);

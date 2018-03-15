@@ -16,7 +16,9 @@ export class CampusComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    
+  }
+
+  ngOnChanges() {
   }
 
 }
