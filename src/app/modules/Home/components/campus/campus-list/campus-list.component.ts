@@ -33,7 +33,10 @@ export class CampusListComponent implements OnInit {
         if(this._users[i].id === data.user._id) {
           this._users.splice(i, 1);
           this.usr = User.fromJSON(data.user);
-          this.usr.checkin.location = data.user._checkin.location._id;
+          if(data.user._checkin)
+            this.usr.checkin.location = data.user._checkin.location._id;
+          else
+            this.usr.checkin.location = data.user.checkin.location._id;
           this._users.push(this.usr);
           break;
         }
