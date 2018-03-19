@@ -5,6 +5,7 @@ var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 
+console.log(process.env.PORT);
 server.listen(process.env.PORT || 5000);
 
 let Location = mongoose.model('Location');
