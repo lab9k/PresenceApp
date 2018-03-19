@@ -1,11 +1,11 @@
 var express = require('express');
 var router = express.Router();
 let mongoose = require('mongoose');
-var app = express();
-var server = require('http').createServer(app);
-var io = require('socket.io')(server);
+//var app = express();
+//var server = require('http').createServer(app);
+var io = require('../io');
 
-server.listen(4000);
+//server.listen(process.env.PORT);
 
 let Location = mongoose.model('Location');
 let User = mongoose.model('User');
