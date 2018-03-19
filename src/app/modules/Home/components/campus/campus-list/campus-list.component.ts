@@ -17,7 +17,7 @@ export class CampusListComponent implements OnInit {
   //socket = io().connect();
   //socket = io(window.location.hostname + ':4000');
   //socket = io(window.location.hostname);
-  socket = io(":4000");
+  socket = io();
 
   constructor(private _homeDataService: HomeDataService, private cd: ChangeDetectorRef) { }
 

@@ -5,7 +5,7 @@ var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 
-server.listen('4000');
+server.listen(4000);
 
 let Location = mongoose.model('Location');
 let User = mongoose.model('User');
