@@ -3,10 +3,9 @@ var router = express.Router();
 let mongoose = require('mongoose');
 var app = express();
 var server = require('http').createServer(app);
-var io = require('socket.io').listen(server);
+var io = require('socket.io')(server);
 
-console.log(process.env.PORT);
-server.listen(process.env.PORT || 5000);
+server.listen('4000');
 
 let Location = mongoose.model('Location');
 let User = mongoose.model('User');

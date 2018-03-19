@@ -18,7 +18,10 @@ export class LocationComponent implements OnInit {
   private _location: Location;
   private locationName: string;
   private _locations: Location[];
-  socket = io(window.location.hostname);
+  //socket = io().connect();
+  //socket = io(window.location.hostname + ':4000');
+  //socket = io(window.location.hostname);
+  socket = io(":4000");
 
   constructor(private route: ActivatedRoute, private checkinService: CheckinService, private authService: AuthenticationService, private dataService: DataService) { }
 

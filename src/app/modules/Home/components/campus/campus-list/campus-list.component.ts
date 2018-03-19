@@ -14,7 +14,10 @@ export class CampusListComponent implements OnInit {
   private _campuses: Campus[];
   private _users: any;
   private usr: User;
-  socket = io(window.location.hostname);
+  //socket = io().connect();
+  //socket = io(window.location.hostname + ':4000');
+  //socket = io(window.location.hostname);
+  socket = io(":4000");
 
   constructor(private _homeDataService: HomeDataService, private cd: ChangeDetectorRef) { }
 
