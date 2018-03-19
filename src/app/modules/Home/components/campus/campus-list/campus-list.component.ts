@@ -14,7 +14,7 @@ export class CampusListComponent implements OnInit {
   private _campuses: Campus[];
   private _users: any;
   private usr: User;
-  socket = io('http://agile-everglades-38755.herokuapp.com:4000');
+  socket = io(window.location.hostname + ':5000');
 
   constructor(private _homeDataService: HomeDataService, private cd: ChangeDetectorRef) { }
 
@@ -25,6 +25,7 @@ export class CampusListComponent implements OnInit {
     //this._homeDataService.users().subscribe(items => this._users = items);
 
     this.socket.on('new-checkin', function(data) {
+      console.log(data);
       for(let i = 0; i < this._users.length; i++) {
         if(this._users[i].id === data.user._id) {
           this._users.splice(i, 1);
