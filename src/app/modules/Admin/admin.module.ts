@@ -14,6 +14,7 @@ import { SegmentComponent } from './components/segment/segment/segment.component
 import { SegmentListComponent } from './components/segment/segment-list/segment-list.component';
 import { SegmentLocationComponent } from './components/segment-location/segment-location/segment-location.component';
 import { SegmentLocationListComponent } from './components/segment-location/segment-location-list/segment-location-list.component';
+import { CreateSegmentComponent } from './components/segment/create-segment/create-segment.component';
 
 const routes = [
   { path: '', component:  DashboardComponent},
@@ -36,7 +37,8 @@ const routes = [
     SegmentComponent,
     SegmentListComponent,
     SegmentLocationComponent,
-    SegmentLocationListComponent
+    SegmentLocationListComponent,
+    CreateSegmentComponent
   ],
   providers: [
     AdminDataService
