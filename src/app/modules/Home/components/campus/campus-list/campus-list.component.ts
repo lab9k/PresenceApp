@@ -33,6 +33,7 @@ export class CampusListComponent implements OnInit {
             this.usr.checkin.location = data.user._checkin.location._id;
           else
             this.usr.checkin.location = data.user.checkin.location._id;
+          
           this._users.push(this.usr);
           break;
         }
