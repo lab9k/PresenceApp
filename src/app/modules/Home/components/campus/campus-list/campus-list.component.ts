@@ -14,9 +14,7 @@ export class CampusListComponent implements OnInit {
   private _campuses: Campus[];
   private _users: any;
   private usr: User;
-  //socket = io().connect();
-  //socket = io(window.location.hostname + ':4000');
-  //socket = io(window.location.hostname);
+
   socket = io();
 
   constructor(private _homeDataService: HomeDataService, private cd: ChangeDetectorRef) { }
@@ -25,10 +23,8 @@ export class CampusListComponent implements OnInit {
     this.fetchUsers();
     this._homeDataService.campuses()
       .subscribe(items => this._campuses = items);
-    //this._homeDataService.users().subscribe(items => this._users = items);
 
     this.socket.on('new-checkin', function(data) {
-      console.log(data);
       for(let i = 0; i < this._users.length; i++) {
         if(this._users[i].id === data.user._id) {
           this._users.splice(i, 1);
@@ -42,7 +38,6 @@ export class CampusListComponent implements OnInit {
         }
       }
       this._users = this._users.slice(0);
-      //this._users = undefined;
       this.cd.detectChanges();
     }.bind(this));
   }

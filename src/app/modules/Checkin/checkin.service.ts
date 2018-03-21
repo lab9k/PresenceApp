@@ -17,15 +17,6 @@ export class CheckinService {
     constructor(private http: Http) { }
 
     // CHECKIN
-    checkIn(userid, locationid): Observable<string> {
-        let headers = new Headers({ 'Content-Type': 'application/json' });
-        let options = new RequestOptions({ headers: headers });
-        return this.http.post('/API/checkin/', JSON.stringify({userid: userid, locationid: locationid}), options)
-            .map(res => {
-                return res.json();
-            });
-    }
-
     saveCheckin(userid, stickerid) {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });

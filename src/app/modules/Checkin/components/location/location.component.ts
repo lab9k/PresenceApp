@@ -18,9 +18,7 @@ export class LocationComponent implements OnInit {
   private _location: Location;
   private locationName: string;
   private _locations: Location[];
-  //socket = io().connect();
-  //socket = io(window.location.hostname + ':4000');
-  //socket = io(window.location.hostname);
+
   socket = io();
 
   constructor(private route: ActivatedRoute, private checkinService: CheckinService, private authService: AuthenticationService, private dataService: DataService) { }
@@ -36,7 +34,6 @@ export class LocationComponent implements OnInit {
           }, (err) => {
             console.log(err);
           });
-          //this.checkinService.checkIn(this.authService.user.getValue() , this._location.stickers[0]).subscribe();
         });
       } else {
         this.dataService.locations().subscribe(items => this._locations = items);
