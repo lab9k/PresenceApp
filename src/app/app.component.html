@@ -11,7 +11,7 @@
       Make it so it only deletes after we know the location was moved 
       to another campus.
     -->
-    <a class='item' *ngIf='(currentUser | async) else loginlink' routerLink="/login/logout">Logout</a>
+    <a class='item' *ngIf='(currentUser | async) else loginlink' href="/logout">Logout</a>
     <ng-template #loginlink>
       <a class='item' routerLink="/login">Login</a>
     </ng-template>
