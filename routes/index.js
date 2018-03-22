@@ -2,14 +2,13 @@ var express = require('express');
 var router = express.Router();
 let mongoose = require('mongoose');
 var io = require('../io');
+var passport = require('passport');
+var config = require('../config');
 
 let Location = mongoose.model('Location');
 let User = mongoose.model('User');
 let Campus = mongoose.model('Campus');
 let Segment = mongoose.model('Segment');
-
-const {OAuth2Client} = require('google-auth-library');
-const client = new OAuth2Client('780736623262-jcskkstckghd9fg2nom07dgq393ttehp.apps.googleusercontent.com');
 
 // socket io
 io.on('connection', function (socket) {
@@ -416,43 +415,85 @@ router.get('/API/location/sticker/:sticker', function(req, res, next) {
   });
 });
 
-/* LOGIN */
-router.post('/API/login', function(req, res, next) {
-  let token = req.body.token;
-  verify(token, function(payload) {
-    User.findById({_id: payload.email}, function(err, user) {
-      if(err) { return next(err); }
-      if(user !== null) {
-        res.json(user);
-      }
-      else {
-        let user = new User({
-          _id: payload.email, 
-          name: payload.name, 
-          checkin: [], 
-          picture: payload.picture
-        });
-        user.save(function(err, usr) {
-          if(err) { return next(err);}
-          console.log(usr);
-          res.json(usr);
-        });
-      }
-    });
-  }).catch(console.error);
-  
+router.get('/login',
+function(req, res, next) {
+  console.log("LOGIN");
+  passport.authenticate('azuread-openidconnect', 
+    { 
+      response: res,                      // required
+      resourceURL: config.resourceURL,    // optional. Provide a value if you want to specify the resource.
+      customState: 'my_state',            // optional. Provide a value if you want to provide custom state value.
+      failureRedirect: '/' 
+    }
+  )(req, res, next);
+},
+function(req, res) {
+  console.log('Login was called in the Sample');
+  res.redirect('/');
 });
 
-async function verify(token, callback) {
-  const ticket = await client.verifyIdToken({
-      idToken: token,
-      audience: '780736623262-jcskkstckghd9fg2nom07dgq393ttehp.apps.googleusercontent.com',  
-  });
-  const payload = ticket.getPayload();
-  const userid = payload['sub'];
-  callback(payload);
-  // If request specified a G Suite domain:
-  //const domain = payload['hd'];
-}
+// 'GET returnURL'
+// `passport.authenticate` will try to authenticate the content returned in
+// query (such as authorization code). If authentication fails, user will be
+// redirected to '/' (home page); otherwise, it passes to the next middleware.
+router.get('/auth/openid/return',
+function(req, res, next) {
+  console.log("RETURN GET");
+  passport.authenticate('azuread-openidconnect', 
+    { 
+      response: res,                      // required
+      failureRedirect: '/'  
+    }
+  )(req, res, next);
+},
+function(req, res) {
+  console.log('We received a return from AzureAD.');
+  res.redirect('/');
+});
+
+// 'POST returnURL'
+// `passport.authenticate` will try to authenticate the content returned in
+// body (such as authorization code). If authentication fails, user will be
+// redirected to '/' (home page); otherwise, it passes to the next middleware.
+router.post('/auth/openid/return',
+function(req, res, next) {
+  console.log("RETURN POST");
+  passport.authenticate('azuread-openidconnect', 
+    { 
+      response: res,                      // required
+      failureRedirect: '/'  
+    }
+  )(req, res, next);
+},
+function(req, res) {
+  console.log('We received a return from AzureAD.');
+  res.redirect('/');
+});
+
+// 'logout' route, logout from passport, and destroy the session with AAD.
+router.get('/logout', function(req, res){
+req.session.destroy(function(err) {
+  req.logOut();
+  res.redirect(config.destroySessionUrl);
+});
+});
+
+router.get('/user', function(req, res) {
+  if(req.isAuthenticated()) {
+    res.json(req.user);
+  }
+  else {
+    res.json({message: "Please log in"});
+  }
+});
+
+router.get('/isLoggedIn', function(req, res) {
+  res.json({isLoggedIn: req.isAuthenticated()});
+});
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/login');
+};
 
 module.exports = router;

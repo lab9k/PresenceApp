@@ -18,40 +18,55 @@ export class AuthenticationService {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this._user = new BehaviorSubject<string>(
       currentUser && currentUser.email);
+    this.isLoggedIn().subscribe(loggedIn => {
+        if(loggedIn) {
+            this.getCurrentUser().subscribe(res => {
+                console.log(res);
+                if(res !== null) {
+                    localStorage.setItem('currentUser',
+                    JSON.stringify({ email: res.id, name: res.name, picture: res.picture}));
+                this._user.next(res.id);
+                } 
+            });
+        }
+        else {
+            localStorage.removeItem('currentUser');
+            setTimeout(() => this._user.next(null));
+        }
+    });
+    
    }
-
-  login(token) : Observable<boolean> {
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-    return this.http.post('/API/login/', JSON.stringify({token: token}), options)
-        .map(response => response.json()).map(res => {
-            if(res) {
-                localStorage.setItem('currentUser',
-                    JSON.stringify({ email: res._id, name: res.name, picture: res.picture}));
-                this._user.next(res._id);
-                return true;
-            }
-            return false;
-        });
-  }
 
   logout() {
     if (this.user.getValue()) {  
         localStorage.removeItem('currentUser');
         setTimeout(() => this._user.next(null));
+        this.http.get('/logout').subscribe();
     }
-    gapi.load('auth2', () => {
-        this.auth2 = gapi.auth2.init({
-          client_id: '780736623262-jcskkstckghd9fg2nom07dgq393ttehp.apps.googleusercontent.com',
-          cookiepolicy: 'single_host_origin',
-          scope: 'profile email'
-        });
-        this.auth2.signOut();
-      });
   }
 
   get user() : BehaviorSubject<string> {
       return this._user;
   }
 
+  getCurrentUser(): Observable<User> {
+    return this.http.get('/user')
+        .map(response => {
+            console.log(response);
+            return response.json();
+                }).map(item => {
+                    console.log(item);
+                    if(!item.message)
+                        return User.fromJSON(item);
+                    return null;
+                });
+  }
+
+  isLoggedIn(): Observable<boolean> {
+      return this.http.get('/isLoggedIn').map(res => {
+        return res.json()
+      }).map(item => {
+          return item.isLoggedIn;
+      });
+  }
 }
