@@ -38,6 +38,14 @@ export class AdminDataService {
       .map(res => res.json()).map(item => Campus.fromJSON(item));
   }
 
+  // UPDATE USER
+  updateUser(user): Observable<User> {
+    let headers = new Headers({ 'Content-Type': 'application/json'});
+    let options = new RequestOptions({ headers: headers });
+    return this.http.put(`/API/user/`, user, options)
+      .map(res => res.json()).map(item => User.fromJSON(item));
+  }
+
   // CREATE LOCATION
   createLocation(location) : Observable<Location> {
     let headers = new Headers({ 'Content-Type': 'application/json' });

@@ -1,0 +1,23 @@
+<h1>Profile</h1>
+<div class="ui form" *ngIf="user !== undefined">
+  <div class="field">
+    <label>Name:</label>
+    {{user.name}}
+  </div>
+  <div class="field">
+    <label>PhoneId:</label>
+    <div *ngIf="user.phoneid else enterPhoneId">{{user.phoneid}}</div>
+    <ng-template #enterPhoneId>
+        <div class="ui pointing below label">
+          Get your phone id by opening the app.
+        </div>
+      <input type="text" name="phoneid" placeholder="id of phone"/>
+    </ng-template>
+  </div>
+
+  <button class="ui primary button" type="button"
+    (click)="save()">
+    Save
+  </button>
+</div>
+

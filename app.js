@@ -3,25 +3,107 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
+var expressSession = require('express-session');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var passport = require('passport');
+var OIDCStrategy = require('passport-azure-ad').OIDCStrategy;
+var config = require('./config');
 require('dotenv').config({path: './app-env.env'});
 
 require('./models/User');
 require('./models/Location');
 require('./models/Campus');
 require('./models/Segment');
+var app = express();
 
 //mongoose.connect('mongodb://localhost/presencedb2');
 mongoose.connect(process.env.PRESENCE_DATABASE);
 var index = require('./routes/index');
 var users = require('./routes/users');
 
-var app = express();
+let User = mongoose.model('User');
+
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
+  /*
+  findByOid(oid, function (err, user) {
+    done(err, user);
+  });*/
+});
+
+var findByOid = function(oid, fn) {
+  for (var i = 0, len = users.length; i < len; i++) {
+    var user = users[i];
+   log.info('we are using user: ', user);
+    if (user.oid === oid) {
+      return fn(null, user);
+    }
+  }
+  return fn(null, null);
+};
+
+passport.use(new OIDCStrategy({
+  identityMetadata: config.creds.identityMetadata,
+  clientID: config.creds.clientID,
+  responseType: config.creds.responseType,
+  responseMode: config.creds.responseMode,
+  redirectUrl: config.creds.redirectUrl,
+  allowHttpForRedirectUrl: config.creds.allowHttpForRedirectUrl,
+  clientSecret: config.creds.clientSecret,
+  validateIssuer: config.creds.validateIssuer,
+  isB2C: config.creds.isB2C,
+  issuer: config.creds.issuer,
+  passReqToCallback: config.creds.passReqToCallback,
+  scope: config.creds.scope,
+  loggingLevel: config.creds.loggingLevel,
+  nonceLifetime: config.creds.nonceLifetime,
+  nonceMaxAmount: config.creds.nonceMaxAmount,
+  useCookieInsteadOfSession: config.creds.useCookieInsteadOfSession,
+  cookieEncryptionKeys: config.creds.cookieEncryptionKeys,
+  clockSkew: config.creds.clockSkew,
+},
+function(iss, sub, profile, accessToken, refreshToken, done) {
+  if (!profile.oid) {
+    return done(new Error("No oid found"), null);
+  }
+  // asynchronous verification, for effect...
+  process.nextTick(function () {
+    User.findById(profile.oid, function(err, user) {
+      if (err) {
+        return done(err);
+      }
+      if (!user) {
+        // "Auto-registration"
+        user = new User({
+          _id: profile.oid, 
+          name: profile.displayName, 
+          checkin: [], 
+        });
+        console.log(user);
+        user.save(function(err, usr) {
+          if(err) {console.log(err);}
+        });
+        return done(null, user);
+      }
+      return done(null, user);
+    });
+  });
+}
+));
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
+
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -30,6 +112,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(expressSession({ 
+  secret: 'keyboard cat', 
+  resave: true, 
+  saveUninitialized: false 
+}));
+// Initialize Passport!  Also use passport.session() middleware, to support
+// persistent login sessions (recommended).
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', index);
 app.use('/users', users);
