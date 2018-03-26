@@ -6,20 +6,32 @@ export class User {
         time: number;
     };
     private _picture: string;
+    private _phoneid: string;
+
+    toJSON() {
+        return {
+            _id: this._id,
+            name: this._name,
+            checkin: this._checkin,
+            picture: this._picture,
+            phoneid: this._phoneid,
+        }
+    }
 
     static fromJSON(json) {
         let user;
         if(json.name)
-            user = new User(json._id, json.name, json.checkin, json.picture);
+            user = new User(json._id, json.name, json.checkin, json.picture, json.phoneid);
         else
-            user = new User(json._id, json._name, json._checkin, json._picture);
+            user = new User(json._id, json._name, json._checkin, json._picture, json._phoneid);
             return user;
     }
-    constructor(id: string, name: string, checkin: {location: string;time: number;}, picture: string) {
+    constructor(id: string, name: string, checkin: {location: string;time: number;}, picture: string, phoneid: string) {
         this._id = id;
         this._name = name;
         this._checkin = checkin;
         this._picture = picture;
+        this._phoneid = phoneid;
     }
 
     get id() {
@@ -44,5 +56,13 @@ export class User {
 
     set checkin(checkin) {
         this._checkin = checkin;
+    }
+
+    get phoneid() {
+        return this._phoneid;
+    }
+
+    set phoneid(phoneid) {
+        this._phoneid = phoneid;
     }
 }

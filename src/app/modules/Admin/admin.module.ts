@@ -15,9 +15,11 @@ import { SegmentListComponent } from './components/segment/segment-list/segment-
 import { SegmentLocationComponent } from './components/segment-location/segment-location/segment-location.component';
 import { SegmentLocationListComponent } from './components/segment-location/segment-location-list/segment-location-list.component';
 import { CreateSegmentComponent } from './components/segment/create-segment/create-segment.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 const routes = [
   { path: '', component:  DashboardComponent},
+  { path: 'profile', component:  ProfileComponent},
 ];
 
 @NgModule({
@@ -38,7 +40,8 @@ const routes = [
     SegmentListComponent,
     SegmentLocationComponent,
     SegmentLocationListComponent,
-    CreateSegmentComponent
+    CreateSegmentComponent,
+    ProfileComponent
   ],
   providers: [
     AdminDataService

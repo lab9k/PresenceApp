@@ -122,14 +122,17 @@ router.post('/API/location/', function(req, res, next) {
 
 /* UPDATE USER */
 router.put('/API/user/', function(req, res, next) {
-  User.findByIdAndUpdate(req.body._id, req.body, function (err, user) {
+  console.log(req.body);
+  User.findByIdAndUpdate(req.body._id, {"$set": req.body}, function (err, user) {
     if (err) { return next(err); }
+    console.log(user);
     res.json(user);
   })
 });
 
 /* UPDATE CAMPUS */
 router.put('/API/campus/', function(req, res, next) {
+  console.log(req.body);
   Campus.findByIdAndUpdate(req.body._id, req.body, function (err, campus) {
     if (err) { return next(err); }
     res.json(campus);
@@ -138,6 +141,7 @@ router.put('/API/campus/', function(req, res, next) {
 
 /* UPDATE SEGMENT */
 router.put('/API/segment/', function(req, res, next) {
+  console.log(req.body);
   Segment.findByIdAndUpdate(req.body._id, req.body, function (err, segment) {
     if (err) { return next(err); }
     res.json(segment);
@@ -430,6 +434,18 @@ function(req, res, next) {
 function(req, res) {
   console.log('Login was called in the Sample');
   res.redirect('/');
+});
+
+/* GET USER WITH PHONEID */
+router.get('/API/user/phoneid/:phoneid', function(req, res, next) {
+  User.find({phoneid: req.params.phoneid}, function(err, user) {
+    if (err) { return next(err); }
+    if (user[0]) {
+      res.json(user[0]);
+    } else {
+      res.status(400).json({message: "User not found."});
+    }
+  });
 });
 
 // 'GET returnURL'

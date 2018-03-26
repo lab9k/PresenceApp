@@ -11,6 +11,7 @@ let UserSchema = new mongoose.Schema({
         time: Number,
     },
     picture: String,
+    phoneid: String,
 });
 
 mongoose.model('User', UserSchema);
