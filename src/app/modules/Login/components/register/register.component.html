@@ -1,7 +1,10 @@
-<div *ngIf="isRegistered !== undefined && isRegistered">
+<div *ngIf="loggedIn !== undefined && isRegistered !== undefined && isRegistered && loggedIn">
   Phone already registered.
   You can remove your phone on your profile if you want to change.
 </div>
-<div *ngIf="isRegistered !== undefined && !isRegistered">
+<div *ngIf="loggedIn !== undefined &&  !loggedIn">
   Login to register phone.
+</div>
+<div *ngIf="loggedIn !== undefined && isRegistered !== undefined && !isRegistered && loggedIn">
+  Succesfully registered phone
 </div>

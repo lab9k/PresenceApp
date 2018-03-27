@@ -8,6 +8,7 @@ var cookieSession = require('cookie-session');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var passport = require('passport');
+const MongoStore = require('connect-mongo')(expressSession);
 var OIDCStrategy = require('passport-azure-ad').OIDCStrategy;
 var config = require('./config');
 require('dotenv').config({path: './app-env.env'});
@@ -18,8 +19,8 @@ require('./models/Campus');
 require('./models/Segment');
 var app = express();
 
-mongoose.connect('mongodb://localhost/presencedb2');
-//mongoose.connect(process.env.PRESENCE_DATABASE);
+//mongoose.connect('mongodb://localhost/presencedb2');
+mongoose.connect(process.env.PRESENCE_DATABASE);
 var index = require('./routes/index');
 var users = require('./routes/users');
 
@@ -113,10 +114,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(cookieSession({ 
-  name: 'session',
-  keys: [process.env.SESSION_SECRET], 
-
+app.use(expressSession({ 
+  secret: process.env.SESSION_SECRET, 
+  resave: true, 
+  saveUninitialized: false,
+  store: new MongoStore({ mongooseConnection: mongoose.connection }),
 }));
 // Initialize Passport!  Also use passport.session() middleware, to support
 // persistent login sessions (recommended).

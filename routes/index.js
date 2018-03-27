@@ -10,8 +10,6 @@ let User = mongoose.model('User');
 let Campus = mongoose.model('Campus');
 let Segment = mongoose.model('Segment');
 
-let sess;
-
 // socket io
 io.on('connection', function (socket) {
   console.log('User connected');
@@ -455,16 +453,30 @@ router.get('/API/register/:phoneid', function(req, res, next) {
   if(!req.params.phoneid) {
     res.status(400).json({message: "Enter phoneid"});
   }
-  User.find({phoneid: req.params.phoneid}, function(err, user) {
-    if (err) { return next(err); }
-    if (user[0]) {
-      res.json({register: false})
-    } else {
-      sess = req.session;
-      sess.phoneid = req.params.phoneid;
+  if(req.isAuthenticated()) {
+    if(!req.user.phoneid) {
+      let usr = req.user;
+      usr.phoneid = req.params.phoneid;
+      usr.save(function(err, us) {
+        if(err) {console.log(err);}
+        res.json({register: false});
+      });
+    }
+    else {
       res.json({register: true});
     }
-  });
+  }
+  else {
+    User.find({phoneid: req.params.phoneid}, function(err, user) {
+      if (err) { return next(err); }
+      if (user[0]) {
+        res.json({register: true});
+      } else {
+        req.session.phoneid = req.params.phoneid;
+        res.json({register: false});
+      }
+    });
+  }
 });
 
 // 'GET returnURL'
@@ -502,9 +514,10 @@ function(req, res, next) {
 },
 function(req, res) {
   console.log('We received a return from AzureAD.');
-  if(sess !== undefined && sess.phoneid) {
+  console.log("SESSION: " + req.session.phoneid);
+  if(req.session.phoneid !== undefined) {
     let user = req.user;
-    user.phoneid = sess.phoneid;
+    user.phoneid = req.session.phoneid;
     user.save(function(err, usr) {
       if(err) {console.log(err);}
     });
@@ -514,10 +527,10 @@ function(req, res) {
 
 // 'logout' route, logout from passport, and destroy the session with AAD.
 router.get('/logout', function(req, res){
-req.session.destroy(function(err) {
-  req.logOut();
-  res.redirect(config.destroySessionUrl);
-});
+  req.session.destroy(function(err) {
+    req.logOut();
+    res.redirect(config.destroySessionUrl);
+  });
 });
 
 router.get('/user', function(req, res) {
