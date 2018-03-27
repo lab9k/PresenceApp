@@ -90,7 +90,6 @@ function(iss, sub, profile, accessToken, refreshToken, done) {
         user.save(function(err, usr) {
           if(err) {console.log(err);}
         });
-        return done(null, user);
       }
       return done(null, user);
     });
@@ -114,7 +113,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(expressSession({ 
-  secret: 'keyboard cat', 
+  secret: process.env.SESSION_SECRET, 
   resave: true, 
   saveUninitialized: false 
 }));

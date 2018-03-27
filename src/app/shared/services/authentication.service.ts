@@ -69,4 +69,12 @@ export class AuthenticationService {
           return item.isLoggedIn;
       });
   }
+
+  register(phoneid): Observable<boolean> {
+    return this.http.get(`/API/register/${phoneid}`).map(res => {
+        return res.json()
+      }).map(item => {
+          return item.register;
+      });
+  }
 }

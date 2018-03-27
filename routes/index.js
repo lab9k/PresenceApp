@@ -10,6 +10,8 @@ let User = mongoose.model('User');
 let Campus = mongoose.model('Campus');
 let Segment = mongoose.model('Segment');
 
+let sess;
+
 // socket io
 io.on('connection', function (socket) {
   console.log('User connected');
@@ -448,6 +450,23 @@ router.get('/API/user/phoneid/:phoneid', function(req, res, next) {
   });
 });
 
+/* REGISTER */
+router.get('/API/register/:phoneid', function(req, res, next) {
+  if(!req.params.phoneid) {
+    res.status(400).json({message: "Enter phoneid"});
+  }
+  User.find({phoneid: req.params.phoneid}, function(err, user) {
+    if (err) { return next(err); }
+    if (user[0]) {
+      res.json({register: false})
+    } else {
+      sess = req.session;
+      sess.phoneid = req.params.phoneid;
+      res.json({register: true});
+    }
+  });
+});
+
 // 'GET returnURL'
 // `passport.authenticate` will try to authenticate the content returned in
 // query (such as authorization code). If authentication fails, user will be
@@ -483,6 +502,13 @@ function(req, res, next) {
 },
 function(req, res) {
   console.log('We received a return from AzureAD.');
+  if(sess !== undefined && sess.phoneid) {
+    let user = req.user;
+    user.phoneid = sess.phoneid;
+    user.save(function(err, usr) {
+      if(err) {console.log(err);}
+    });
+  }
   res.redirect('/');
 });
 
