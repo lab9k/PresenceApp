@@ -1,4 +1,4 @@
-<div class="ui container" *ngIf="time !== undefined && location !== undefined">
+<div class="ui container" *ngIf="time !== undefined && location !== undefined else noCheckin">
     <p>
       Your last checkin was on {{time}} at {{location.name}}
     </p>
@@ -7,3 +7,6 @@
       Remove checkin
     </button>
 </div>
+<ng-template #noCheckin>
+  Not checked in.
+</ng-template>

@@ -33,7 +33,7 @@ export class CheckinService {
 
     // REMOVE CHECKIN
     removeCheckin(userid): Observable<string> {
-        return this.http.delete('/API/checkin/')
+        return this.http.delete('/API/checkin/' + userid)
             .map(res => {
                 return res.statusText;
             });

@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { AuthenticationService } from './shared/services/authentication.service';
 
+declare var $: any;
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -17,5 +19,10 @@ export class AppComponent  {
   get currentUser(): Observable<string> {
     return this.authService.user;
   } 
+
+  drop() {
+    $('.ui.dropdown')
+    .dropdown();
+  }
 
 }

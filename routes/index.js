@@ -67,14 +67,14 @@ router.post('/API/checkin/', function(req, res, next) {
 });
 
 /* REMOVE CHECKIN */
-router.delete('/API/checkin', function(req, res, next) {
-  if(!req.body.userid) {
+router.delete('/API/checkin/:userid', function(req, res, next) {
+  if(!req.params.userid) {
     return res.status(400).json(
       {message: 'Missing fields'}
     );
   }
   
-  User.findById(req.body.userid, function(err, user) {
+  User.findById(req.params.userid, function(err, user) {
     user.checkin = null;
     user.save(function(err, usr) {
       if (err) { return next(err); }

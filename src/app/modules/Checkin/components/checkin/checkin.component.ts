@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../../../shared/services/authentication.service';
 import { DataService } from '../../../../shared/services/data.service';
 import { Location } from '../../../../shared/models/location.model';
+import { CheckinService } from '../../checkin.service';
 
 @Component({
   selector: 'app-checkin',
@@ -13,7 +14,7 @@ export class CheckinComponent implements OnInit {
   private _location: Location;
   private _time: String;
 
-  constructor(private authService: AuthenticationService, private dataService: DataService) { }
+  constructor(private authService: AuthenticationService, private dataService: DataService, private checkinService: CheckinService) { }
 
   ngOnInit() {
     this.authService.user.subscribe(user => {
@@ -38,7 +39,7 @@ export class CheckinComponent implements OnInit {
 
   timeConverter(UNIX_timestamp){
     var a = new Date(UNIX_timestamp);
-    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
     var year = a.getFullYear();
     var month = months[a.getMonth()];
     var date = a.getDate();
@@ -50,6 +51,7 @@ export class CheckinComponent implements OnInit {
   }
 
   removeCheckin() {
+    this.checkinService.removeCheckin(this.authService.user.getValue()).subscribe();
     console.log("remove checkin");
   }
 

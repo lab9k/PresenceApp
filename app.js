@@ -17,8 +17,8 @@ require('./models/Campus');
 require('./models/Segment');
 var app = express();
 
-//mongoose.connect('mongodb://localhost/presencedb2');
-mongoose.connect(process.env.PRESENCE_DATABASE);
+mongoose.connect('mongodb://localhost/presencedb2');
+//mongoose.connect(process.env.PRESENCE_DATABASE);
 var index = require('./routes/index');
 var users = require('./routes/users');
 
