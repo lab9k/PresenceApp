@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var expressSession = require('express-session');
+var cookieSession = require('cookie-session');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var passport = require('passport');
@@ -17,8 +18,8 @@ require('./models/Campus');
 require('./models/Segment');
 var app = express();
 
-//mongoose.connect('mongodb://localhost/presencedb2');
-mongoose.connect(process.env.PRESENCE_DATABASE);
+mongoose.connect('mongodb://localhost/presencedb2');
+//mongoose.connect(process.env.PRESENCE_DATABASE);
 var index = require('./routes/index');
 var users = require('./routes/users');
 
@@ -112,10 +113,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(expressSession({ 
-  secret: process.env.SESSION_SECRET, 
-  resave: true, 
-  saveUninitialized: false 
+app.use(cookieSession({ 
+  name: 'session',
+  keys: [process.env.SESSION_SECRET], 
+
 }));
 // Initialize Passport!  Also use passport.session() middleware, to support
 // persistent login sessions (recommended).
