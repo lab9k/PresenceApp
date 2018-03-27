@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from "./components/page-not-found/page-not-found.component";
 import { AuthGuardService } from "./auth-guard.service";
+import { AdminGuardService } from "./admin-guard.service";
 
 const appRoutes: Routes = [
     { 
@@ -10,7 +11,7 @@ const appRoutes: Routes = [
     },
     { 
         path: 'admin',
-        canActivate: [ AuthGuardService ],
+        canActivate: [ AdminGuardService ],
         loadChildren: '../Admin/admin.module#AdminModule'
     },
     {

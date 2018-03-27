@@ -4,8 +4,6 @@ import { Http, RequestOptions, Headers } from '@angular/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import 'rxjs/add/operator/map'
 
-declare const gapi: any;
-
 @Injectable()
 export class AuthenticationService {
 
@@ -21,7 +19,6 @@ export class AuthenticationService {
     this.isLoggedIn().subscribe(loggedIn => {
         if(loggedIn) {
             this.getCurrentUser().subscribe(res => {
-                console.log(res);
                 if(res !== null) {
                     localStorage.setItem('currentUser',
                     JSON.stringify({ email: res.id, name: res.name, picture: res.picture}));
@@ -52,10 +49,8 @@ export class AuthenticationService {
   getCurrentUser(): Observable<User> {
     return this.http.get('/user')
         .map(response => {
-            console.log(response);
             return response.json();
                 }).map(item => {
-                    console.log(item);
                     if(!item.message)
                         return User.fromJSON(item);
                     return null;

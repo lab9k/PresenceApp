@@ -12,6 +12,7 @@ let UserSchema = new mongoose.Schema({
     },
     picture: String,
     phoneid: String,
+    role: String,
 });
 
 mongoose.model('User', UserSchema);

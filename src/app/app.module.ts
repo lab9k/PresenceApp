@@ -11,6 +11,7 @@ import { AuthGuardService } from './modules/app-routing/auth-guard.service';
 import { LocationComponent } from './modules/Checkin/components/location/location.component';
 import { DataService } from './shared/services/data.service';
 import { DragulaModule } from 'ng2-dragula/components/dragular.module';
+import { AdminGuardService } from './modules/app-routing/admin-guard.service';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { DragulaModule } from 'ng2-dragula/components/dragular.module';
   providers: [
     AuthenticationService,
     DataService,
-    AuthGuardService
+    AuthGuardService,
+    AdminGuardService
   ],
   bootstrap: [AppComponent]
 })
