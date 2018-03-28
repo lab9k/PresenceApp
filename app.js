@@ -10,6 +10,7 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 const MongoStore = require('connect-mongo')(expressSession);
 var OIDCStrategy = require('passport-azure-ad').OIDCStrategy;
+var GoogleStrategy = require('passport-google-oauth20').Strategy;
 var config = require('./config');
 require('dotenv').config({path: './app-env.env'});
 
@@ -50,6 +51,31 @@ var findByOid = function(oid, fn) {
   }
   return fn(null, null);
 };
+
+passport.use(new GoogleStrategy({
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  callbackURL: "http://localhost:5000/auth/callback/google"
+},
+function(accessToken, refreshToken, profile, cb) {
+  console.log(profile);
+  User.findById(profile.id, function (err, user) {
+    if(!user) {
+      user = new User({
+        _id: profile.id, 
+        name: profile.displayName, 
+        checkin: [], 
+        role: "user"
+      });
+      user.save(function(err, usr) {
+        if(err) {console.log(err);}
+        return cb(err, user);
+      })
+    }
+    return cb(err, user);
+  });
+}
+));
 
 passport.use(new OIDCStrategy({
   identityMetadata: config.creds.identityMetadata,

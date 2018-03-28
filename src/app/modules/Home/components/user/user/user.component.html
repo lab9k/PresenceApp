@@ -1,5 +1,5 @@
 <div class="column">
-  <div class="ui fluid card">
+  <div class='ui {{color}} fluid card'>
       <div class="ui tiny image">
           <img *ngIf="user.picture else googlepic"
           src="{{user.picture}}">
@@ -14,7 +14,7 @@
           </div>   
       </div>
       <div class="extra content" *ngIf="location != undefined" style="width:80px">
-        <div class="center aligned" style="word-wrap: break-word;flex: inherit; width:80px">
+        <div class="left aligned" style="word-wrap: break-word;flex: inherit; width:80px">
             {{location.name}} 
         </div> 
       </div>

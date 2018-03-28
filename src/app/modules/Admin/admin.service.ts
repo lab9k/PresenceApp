@@ -70,4 +70,31 @@ export class AdminDataService {
       .map(res => res.json()).map(item => Campus.fromJSON(item));
   }
 
+  // DELETE LOCATION
+  deleteLocation(location) : Observable<boolean> {
+    return this.http.delete(`/API/location/${location.id}`).map(res => {
+      return res.json()
+    }).map(item => {
+        return item.removed;
+    });
+  }
+
+  // DELETE SEGMENT
+  deleteSegment(segment) : Observable<boolean> {
+    return this.http.delete(`/API/segment/${segment.id}`).map(res => {
+      return res.json()
+    }).map(item => {
+        return item.removed;
+    });
+  }
+
+  // DELETE CAMPUS
+  deleteCampus(campus) : Observable<boolean> {
+    return this.http.delete(`/API/campus/${campus.id}`).map(res => {
+      return res.json()
+    }).map(item => {
+        return item.removed;
+    });
+  }
+
 }

@@ -1,0 +1,12 @@
+<h1>Profile</h1>
+<div class="ui form" *ngIf="user !== undefined">
+  <div class="field">
+    <label>Name:</label>
+    {{user.name}}
+  </div>
+  <div class="field">
+    <label>PhoneId:</label>
+    <div *ngIf="user.phoneid">{{user.phoneid}}</div>
+  </div>
+</div>
+

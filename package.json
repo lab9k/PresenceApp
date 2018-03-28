@@ -39,6 +39,7 @@
     "morgan": "~1.9.0",
     "ng2-dragula": "^1.5.0",
     "passport-azure-ad": "^3.0.12",
+    "passport-google-oauth20": "^1.0.0",
     "rxjs": "^5.4.2",
     "serve-favicon": "~2.4.5",
     "socket.io": "^2.0.4",

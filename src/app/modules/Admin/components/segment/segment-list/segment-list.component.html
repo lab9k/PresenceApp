@@ -1,8 +1,8 @@
 <div *ngIf="segments !== undefined">
   <div class="ui container" id="{{campus.name}}" [dragula]='"bag-segments"' 
       [dragulaModel]="campus.segments" style="min-height: 15px;">
-    <app-segment *ngFor="let localSegment of campus.segments" [segment]="localSegment"
-      id="{{localSegment._id}}">
-    </app-segment>
+          <app-segment *ngFor="let localSegment of campus.segments" [segment]="localSegment"
+          id="{{localSegment._id}}">
+        </app-segment>
   </div>
 </div>

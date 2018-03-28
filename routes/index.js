@@ -419,9 +419,47 @@ router.get('/API/location/sticker/:sticker', function(req, res, next) {
   });
 });
 
-router.get('/login',
+/* DELETE CAMPUS */
+router.delete('/API/campus/:id', function(req, res, next) {
+  if(!req.params.id) {
+    res.status(400).json({message: "enter id"});
+  }
+  Campus.remove({_id: req.params.id}, function(err) {
+    if(!err) {
+      res.json({removed: true});
+    }
+    else {
+      res.json({removed: false});
+    }
+  });
+});
+
+/* DELETE CAMPUS */
+router.delete('/API/segment/:id', function(req, res, next) {
+  if(!req.params.id) {
+    res.status(400).json({message: "enter id"});
+  }
+  //Find campus with this segment and update it
+  Campus.findOneAndUpdate({segments: {"$in": [req.params.id]}},
+     { $pull: {segments: { $in: [req.params.id]}}}, {new: true},
+    function(err, campus) {
+      if(err) { return next(err);}
+      Segment.remove({_id: req.params.id}, function(err) {
+        if(!err) {
+          res.json({removed: true});
+        }
+        else {
+          res.json({removed: false});
+        }
+      });
+  });
+
+});
+
+router.get('/login/microsoft',
 function(req, res, next) {
   console.log("LOGIN");
+  
   passport.authenticate('azuread-openidconnect', 
     { 
       response: res,                      // required
@@ -525,11 +563,21 @@ function(req, res) {
   res.redirect('/');
 });
 
+router.get('/auth/google',
+  passport.authenticate('google', { scope: ['profile'] }));
+
+router.get('/auth/callback/google', 
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
+
 // 'logout' route, logout from passport, and destroy the session with AAD.
 router.get('/logout', function(req, res){
   req.session.destroy(function(err) {
     req.logOut();
-    res.redirect(config.destroySessionUrl);
+    res.redirect('/');
   });
 });
 

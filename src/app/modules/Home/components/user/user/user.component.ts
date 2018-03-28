@@ -12,6 +12,7 @@ export class UserComponent implements OnInit {
 
   @Input() public user: User;
   private _location: Location;
+  private _color: String;
   
   constructor(private dataService: DataService) { }
 
@@ -20,9 +21,26 @@ export class UserComponent implements OnInit {
       .subscribe(loc => {
         this._location = loc;
       });
+    let diff = +new Date() - this.user.checkin.time;
+    if(diff <= 60000 * 30) {
+      this._color = "green";
+    }
+    else if(diff <= 60000 * 60) {
+      this._color = "olive";
+    }
+    else if(diff <= 60000 * 120) {
+      this._color = "yellow";
+    }
+    else {
+      this._color = "red";
+    }
   }
 
   get location() {
     return this._location;
+  }
+
+  get color() {
+    return this._color;
   }
 }

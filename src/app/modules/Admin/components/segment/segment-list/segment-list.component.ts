@@ -25,8 +25,12 @@ export class SegmentListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._segments = [];
     this.campus.segments.forEach(seg => {
-      if(seg.id !== undefined)
+      if(seg.id !== undefined){
         this._segments.push(seg);
+      }
+      else {
+        this.campus.segments.pop();
+      }
     });
   }
 

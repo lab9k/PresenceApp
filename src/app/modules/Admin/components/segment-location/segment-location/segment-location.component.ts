@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Segment } from '../../../../../shared/models/segment.model';
+import { AdminDataService } from '../../../admin.service';
 
 @Component({
   selector: 'app-segment-location',
@@ -10,9 +11,13 @@ export class SegmentLocationComponent implements OnInit {
 
   @Input() public segment: Segment;
   
-  constructor() { }
+  constructor(private adminService: AdminDataService) { }
 
   ngOnInit() {
   }
 
+  delete() {
+    this.adminService.deleteSegment(this.segment).subscribe();
+    location.reload();
+  }
 }

@@ -35,6 +35,8 @@ export class CampusListComponent implements OnInit {
             this.usr.checkin.location = data.user.checkin.location._id;
           
           this._users.push(this.usr);
+          //sort users
+          this.sortUsers();
           break;
         }
       }
@@ -54,9 +56,34 @@ export class CampusListComponent implements OnInit {
   fetchUsers() {
     this._homeDataService.getUsers().then((res) => {
       this._users = res;
+      //sort users
+      this.sortUsers();
     }, (err) => {
       console.log(err);
     });
+  }
+
+  sortUsers() {
+    this._users = this._users.sort((a, b) => {
+      if(a.checkin !== undefined && b.checkin === undefined) {
+        return -1;
+      }
+      if(a.checkin === undefined && b.checkin !== undefined) {
+        return 1;
+      }
+      if(a.checkin === undefined && b.checkin === undefined) {
+        return 0;
+      }
+      if (a.checkin.time > b.checkin.time) {
+          return -1;
+      }
+  
+      if (a.checkin.time < b.checkin.time) {
+          return 1;
+      }
+  
+      return 0;
+  });
   }
 
 }
