@@ -3,6 +3,8 @@ import { User } from '../../../../../shared/models/user.model';
 import { DataService } from '../../../../../shared/services/data.service';
 import { Location } from '../../../../../shared/models/location.model';
 
+declare var $: any;
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -42,5 +44,10 @@ export class UserComponent implements OnInit {
 
   get color() {
     return this._color;
+  }
+
+  userSelected() {
+    console.log("User " +  this.user.name + " selected");
+    $('.ui.modal').modal('show');
   }
 }

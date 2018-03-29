@@ -570,6 +570,14 @@ router.get('/auth/callback/google',
   passport.authenticate('google', { failureRedirect: '/login' }),
   function(req, res) {
     // Successful authentication, redirect home.
+    console.log("SESSION: " + req.session.phoneid);
+  if(req.session.phoneid !== undefined) {
+    let user = req.user;
+    user.phoneid = req.session.phoneid;
+    user.save(function(err, usr) {
+      if(err) {console.log(err);}
+    });
+  }
     res.redirect('/');
   });
 

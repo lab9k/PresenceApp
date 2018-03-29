@@ -55,7 +55,7 @@ var findByOid = function(oid, fn) {
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: "https://agile-everglades-38755.herokuapp.com/auth/callback/google"
+  callbackURL: "http://localhost:5000/auth/callback/google"
 },
 function(accessToken, refreshToken, profile, cb) {
   console.log(profile);
@@ -65,7 +65,8 @@ function(accessToken, refreshToken, profile, cb) {
         _id: profile.id, 
         name: profile.displayName, 
         checkin: [], 
-        role: "user"
+        role: "user",
+        messages: [],
       });
       user.save(function(err, usr) {
         if(err) {console.log(err);}
@@ -113,7 +114,8 @@ function(iss, sub, profile, accessToken, refreshToken, done) {
           _id: profile.oid, 
           name: profile.displayName, 
           checkin: [], 
-          role: "user"
+          role: "user",
+          messages: [],
         });
         console.log(user);
         user.save(function(err, usr) {

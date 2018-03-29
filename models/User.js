@@ -13,6 +13,12 @@ let UserSchema = new mongoose.Schema({
     picture: String,
     phoneid: String,
     role: String,
+    messages: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Message'
+        },
+    ]
 });
 
 mongoose.model('User', UserSchema);
