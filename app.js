@@ -55,7 +55,7 @@ var findByOid = function(oid, fn) {
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: "http://localhost:5000/auth/callback/google"
+  callbackURL: "https://agile-everglades-38755.herokuapp.com/auth/callback/google"
 },
 function(accessToken, refreshToken, profile, cb) {
   console.log(profile);
