@@ -1,14 +1,13 @@
 let mongoose = require('mongoose');
 
 let MessageSchema = new mongoose.Schema({
-    _id: String,
     sender: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        name: String,
+        id: String
     },
     subject: String,
     content: String,
     isRead: Boolean
 });
 
-mongoose.model('User', UserSchema);
+mongoose.model('Message', MessageSchema);

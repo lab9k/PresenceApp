@@ -1,5 +1,5 @@
 <div class="column">
-  <div class='ui {{color}} fluid card'
+  <div class='ui {{color}} fluid card' [ngStyle]="{'opacity': opacity}"
     (click)="userSelected()">
       <div class="ui tiny image">
           <img *ngIf="user.picture else googlepic"
@@ -21,20 +21,20 @@
       </div>
   </div> 
 </div>
-<div class="ui modal">
-    <i class="close icon"></i>
+<div class="ui modal" id="{{user.id}}">
+    <p class="close icon">&#10005;</p>
     <div class="header">
         Send Message
     </div>
     <div class="content">
         <div class="ui form">
             <div class="field">
-                    <label>Subject</label>
-                    <input type="text" name="subject" placeholder="Subject">
-                </div>
+                <label>Subject</label>
+                <input type="text" name="subject-{{user.id}}" placeholder="Subject">
+            </div>
             <div class="field">
                 <label>Message</label>
-                <textarea
+                <textarea name="message-{{user.id}}"
                     style="margin-top: 0px; margin-bottom: 0px; height: 150px;">
                 </textarea>
             </div>
@@ -44,9 +44,10 @@
         <div class="ui black deny button">
             Cancel
         </div>
-        <div class="ui positive right labeled icon button">
+        <div class="ui positive right labeled icon button"
+          (click)="sendMessage()">
             Send
-            <i class="checkmark icon"></i>
+            <p class="checkmark icon">&#10003;</p>
         </div>
     </div>
-</div>
+  </div>

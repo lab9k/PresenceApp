@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from '../../shared/models/user.model';
-import { Http } from '@angular/http';
+import { Http, RequestOptions, Headers } from '@angular/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map'
 import { Campus } from '../../shared/models/campus.model';
@@ -32,5 +32,20 @@ export class HomeDataService {
         reject(err);
       });
     });
+  }
+
+  // UPDATE USER
+  updateUser(user): Observable<User> {
+    let headers = new Headers({ 'Content-Type': 'application/json'});
+    let options = new RequestOptions({ headers: headers });
+    return this.http.put(`/API/user/`, user, options)
+      .map(res => res.json()).map(item => User.fromJSON(item));
+  }
+  
+  addMessage(user, message): Observable<User> {
+    let headers = new Headers({ 'Content-Type': 'application/json'});
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post(`/API/message/${user.id}`, message, options)
+      .map(res => res.json()).map(item => User.fromJSON(item));
   }
 }

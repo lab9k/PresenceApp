@@ -18,6 +18,7 @@ require('./models/User');
 require('./models/Location');
 require('./models/Campus');
 require('./models/Segment');
+require('./models/Message');
 var app = express();
 
 //mongoose.connect('mongodb://localhost/presencedb2');

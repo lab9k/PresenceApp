@@ -1,3 +1,5 @@
+import { Message } from "./message.model";
+
 export class User {
     private _id: string;
     private _name: string;
@@ -8,6 +10,7 @@ export class User {
     private _picture: string;
     private _phoneid: string;
     private _role: string;
+    private _messages: Message[];
 
     toJSON() {
         return {
@@ -17,24 +20,26 @@ export class User {
             picture: this._picture,
             phoneid: this._phoneid,
             role: this._role,
+            messages: this._messages,
         }
     }
 
     static fromJSON(json) {
         let user;
         if(json.name)
-            user = new User(json._id, json.name, json.checkin, json.picture, json.phoneid, json.role);
+            user = new User(json._id, json.name, json.checkin, json.picture, json.phoneid, json.role, json.messages);
         else
-            user = new User(json._id, json._name, json._checkin, json._picture, json._phoneid, json._role);
+            user = new User(json._id, json._name, json._checkin, json._picture, json._phoneid, json._role, json._messages);
             return user;
     }
-    constructor(id: string, name: string, checkin: {location: string;time: number;}, picture: string, phoneid: string, role:string) {
+    constructor(id: string, name: string, checkin: {location: string;time: number;}, picture: string, phoneid: string, role:string, messages: Message[]) {
         this._id = id;
         this._name = name;
         this._checkin = checkin;
         this._picture = picture;
         this._phoneid = phoneid;
         this._role = role;
+        this._messages = messages;
     }
 
     get id() {
@@ -71,5 +76,20 @@ export class User {
 
     get role() {
         return this._role;
+    }
+
+    get messages() {
+        return this._messages;
+    }
+
+    set messages(messages) {
+        this._messages = messages;
+    }
+    
+    addMessage(message) {
+        if(this._messages === undefined) {
+            this._messages = [];
+        }
+        this._messages.push(message);
     }
 }

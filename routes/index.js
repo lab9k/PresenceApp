@@ -9,6 +9,7 @@ let Location = mongoose.model('Location');
 let User = mongoose.model('User');
 let Campus = mongoose.model('Campus');
 let Segment = mongoose.model('Segment');
+let Message = mongoose.model('Message');
 
 // socket io
 io.on('connection', function (socket) {
@@ -124,10 +125,32 @@ router.post('/API/location/', function(req, res, next) {
 router.put('/API/user/', function(req, res, next) {
   console.log(req.body);
   User.findByIdAndUpdate(req.body._id, {"$set": req.body}, function (err, user) {
-    if (err) { return next(err); }
+    if (err) { 
+      console.log(err);
+      return next(err); 
+    }
     console.log(user);
     res.json(user);
   })
+});
+
+/* ADD MESSAGE TO USER */
+router.post('/API/message/:userid', function(req, res, next) {
+  let message = new Message({
+    _id: mongoose.Types.ObjectId(),
+    sender: req.body.sender,
+    subject: req.body.subject,
+    content: req.body.content,
+    isRead: req.body.isRead,
+  });
+  message.save(function(err, mess) {
+    User.findByIdAndUpdate(req.params.userid, 
+      {$push: {"messages": message}},
+      {safe: true, upsert: true, new : true},
+      function(err, user) {
+        res.json(user);
+    });
+  }); 
 });
 
 /* UPDATE CAMPUS */
@@ -476,13 +499,23 @@ function(req, res) {
 
 /* GET USER WITH PHONEID */
 router.get('/API/user/phoneid/:phoneid', function(req, res, next) {
-  User.find({phoneid: req.params.phoneid}, function(err, user) {
-    if (err) { return next(err); }
-    if (user[0]) {
-      res.json(user[0]);
+  User.aggregate([
+    {$match: {phoneid: req.params.phoneid}},
+    {$lookup:
+      {
+        from: "messages",
+        localField: "messages",
+        foreignField: "_id",
+        as: "messages"
+      }
+    }
+  ],function(err, user) {
+    if (err) {next(err);}
+    if (user) {
+      res.json(user);
     } else {
       res.status(400).json({message: "User not found."});
-    }
+    } 
   });
 });
 
