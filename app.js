@@ -111,6 +111,7 @@ function(iss, sub, profile, accessToken, refreshToken, done) {
       }
       if (!user) {
         // "Auto-registration"
+        console.log(profile);
         user = new User({
           _id: profile.oid, 
           name: profile.displayName, 
