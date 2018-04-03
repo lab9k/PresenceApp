@@ -65,6 +65,7 @@ function(accessToken, refreshToken, profile, cb) {
       user = new User({
         _id: profile.id, 
         name: profile.displayName, 
+        picture: profile.image.url,
         checkin: [], 
         role: "user",
         messages: [],
