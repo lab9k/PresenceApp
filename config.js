@@ -21,7 +21,7 @@ exports.creds = {
     responseMode: 'form_post', 
   
     // Required, the reply URL registered in AAD for your app
-    redirectUrl: 'https://samloffice365digipolisgent.gent.be/saml/idp/profile/redirectorpost/sso', 
+    redirectUrl: 'https://agile-everglades-38755.herokuapp.com/auth/openid/return', 
     //redirectUrl: 'http://localhost:5000/auth/openid/return',
 
     // Required if we use http for redirectUrl
@@ -32,7 +32,7 @@ exports.creds = {
     clientSecret: process.env.CLIENT_SECRET, 
   
     // Required to set to false if you don't want to validate issuer
-    validateIssuer: false,
+    validateIssuer: true,
   
     // Required if you want to provide the issuer(s) you want to validate instead of using the issuer from metadata
     // issuer could be a string or an array of strings of the following form: 'https://sts.windows.net/<tenant_guid>/v2.0'
