@@ -619,7 +619,7 @@ router.get('/auth/callback/google',
 router.get('/logout', function(req, res){
   req.session.destroy(function(err) {
     req.logOut();
-    res.redirect('/');
+    res.redirect(config.destroySessionUrl);
   });
 });
 
