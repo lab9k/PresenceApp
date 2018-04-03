@@ -4,6 +4,7 @@ import { DataService } from '../../../../../shared/services/data.service';
 import { Location } from '../../../../../shared/models/location.model';
 import { Message } from '../../../../../shared/models/message.model';
 import { HomeDataService } from '../../../home.service';
+import { AuthenticationService } from '../../../../../shared/services/authentication.service';
 
 declare var $: any;
 
@@ -19,7 +20,7 @@ export class UserComponent implements OnInit {
   private _color: String;
   private _opacity: String;
   
-  constructor(private dataService: DataService, private homeService: HomeDataService) { }
+  constructor(private dataService: DataService, private homeService: HomeDataService, private authService: AuthenticationService) { }
 
   ngOnInit() {
     this.dataService.getLocationById(this.user.checkin.location)

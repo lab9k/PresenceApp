@@ -585,6 +585,7 @@ function(req, res, next) {
 },
 function(req, res) {
   console.log('We received a return from AzureAD.');
+  console.log("SESSION: " + req.session);
   console.log("SESSION: " + req.session.phoneid);
   if(req.session.phoneid !== undefined) {
     let user = req.user;
