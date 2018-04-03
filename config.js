@@ -21,7 +21,7 @@ exports.creds = {
     responseMode: 'form_post', 
   
     // Required, the reply URL registered in AAD for your app
-    redirectUrl: 'https://agile-everglades-38755.herokuapp.com/auth/openid/return', 
+    redirectUrl: 'https://samloffice365digipolisgent.gent.be/saml/idp/profile/redirectorpost/sso', 
     //redirectUrl: 'http://localhost:5000/auth/openid/return',
 
     // Required if we use http for redirectUrl
