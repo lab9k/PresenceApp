@@ -18,22 +18,22 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private _segments: Segment[];
   private _segment: Segment;
 
-  constructor(private _adminDataService: AdminDataService, private dataService: DataService, private dragulaService: DragulaService) { 
+  constructor(private _adminDataService: AdminDataService, private dataService: DataService, private dragulaService: DragulaService) {
     this.dragulaService.setOptions('bag-segments', {
       accepts: function (el, container, handle) {
-        return container.id !== "Segments without campus";
+        return container.id !== 'Segments without campus';
       }
     });
     this.dragulaService.setOptions('bag-locations', {
       accepts: function (el, container, handle) {
-        return container.id !== "Locations without segment";
+        return container.id !== 'Locations without segment';
       }
     });
   }
 
   ngOnInit() {
-    this._campus = new Campus(null, "Segments without campus", []);
-    this._segment = new Segment(null, "Locations without segment", []);
+    this._campus = new Campus(null, 'Segments without campus', []);
+    this._segment = new Segment(null, 'Locations without segment', []);
 
     this.dataService.campuses()
       .subscribe(items => {
@@ -43,7 +43,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           segments.forEach(segment => {
             this._campus.segments.push(segment);
             this._campuses.forEach(cmp => {
-              if(cmp.segments.find(x => x.id === segment.id)) {
+              if (cmp.segments.find(x => x.id === segment.id)) {
                 this._campus.segments.pop();
               }
             });
@@ -52,10 +52,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
             locations.forEach(location => {
               this._segment.locations.push(location);
               this._segments.forEach(seg => {
-                if(seg.locations.find(x => x.id === location.id)) {
+                if (seg.locations.find(x => x.id === location.id)) {
                   this._segment.locations.pop();
                 }
-              })
+              });
             });
           });
         });
@@ -82,6 +82,46 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   get segment() {
     return this._segment;
+  }
+
+  createCampus(name) {
+    const campus = new Campus(null, name, []);
+    this._adminDataService.createCampus(campus).subscribe(res => {
+      this._campuses.push(res);
+    });
+  }
+
+  updateCampus(campus) {
+    this._adminDataService.updateCampus(campus).subscribe(res => {
+      const index = this._campuses.indexOf(campus, 0);
+      if (index > -1) {
+        this._campuses.splice(index, 1);
+      }
+      this._campuses.push(campus);
+    });
+  }
+
+  deleteCampus(campus) {
+    const index = this._campuses.indexOf(campus, 0);
+    if (index > -1) {
+      this._campuses.splice(index, 1);
+    }
+    this._adminDataService.deleteCampus(campus).subscribe();
+  }
+
+  createSegment(name) {
+    const segment = new Segment(null, name, []);
+    this._adminDataService.createSegment(segment).subscribe(res => {
+      this._segments.push(res);
+    });
+  }
+
+  deleteSegment(segment) {
+    const index = this._segments.indexOf(segment, 0);
+    if (index > -1) {
+      this._segments.splice(index, 1);
+    }
+    this._adminDataService.deleteSegment(segment).subscribe();
   }
 
 }

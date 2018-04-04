@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Campus } from '../../../../../shared/models/campus.model';
-import { AdminDataService } from '../../../admin.service';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-campus',
@@ -10,14 +10,21 @@ import { AdminDataService } from '../../../admin.service';
 export class CampusComponent implements OnInit {
 
   @Input() public campus: Campus;
-  
-  constructor(private adminService: AdminDataService) { }
+  @Output() deleteCampusEvent = new EventEmitter<Campus>();
+  @Output() updateCampusEvent = new EventEmitter<Campus>();
+
+  constructor() { }
 
   ngOnInit() {
   }
 
   delete() {
-    this.adminService.deleteCampus(this.campus).subscribe();
-    location.reload();
+    this.deleteCampusEvent.next(this.campus);
+  }
+
+  test(event, data) {
+    event.target.blur();
+    this.campus.name = data;
+    this.updateCampusEvent.next(this.campus);
   }
 }

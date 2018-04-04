@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { AdminDataService } from '../../../admin.service';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Campus } from '../../../../../shared/models/campus.model';
 
 declare var $: any;
@@ -12,17 +11,17 @@ declare var $: any;
 export class CampusCreateComponent implements OnInit {
 
   private campusName: string;
+  @Output() createCampusEvent = new EventEmitter<string>();
 
-  constructor(private adminDataService: AdminDataService) { }
+  constructor() { }
 
   ngOnInit() {
   }
 
   createCampus() {
-    this.campusName = $("input[name='campus-name']").val();
-    if(this.campusName.trim() !== "") {
-      let campus = new Campus(null, this.campusName, []);
-      this.adminDataService.createCampus(campus).subscribe();
+    this.campusName = $('input[name=\'campus-name\']').val();
+    if (this.campusName.trim() !== '') {
+      this.createCampusEvent.next(this.campusName);
     }
 
   }

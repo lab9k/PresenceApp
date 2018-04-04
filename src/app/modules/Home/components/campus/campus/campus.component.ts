@@ -12,7 +12,7 @@ export class CampusComponent implements OnInit {
 
   @Input() public campus: Campus;
   @Input() public users: User[];
-  
+
   constructor() { }
 
   ngOnInit() {

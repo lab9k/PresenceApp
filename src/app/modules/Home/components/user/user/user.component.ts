@@ -19,7 +19,7 @@ export class UserComponent implements OnInit {
   private _location: Location;
   private _color: String;
   private _opacity: String;
-  
+
   constructor(private dataService: DataService, private homeService: HomeDataService, private authService: AuthenticationService) { }
 
   ngOnInit() {
@@ -27,22 +27,22 @@ export class UserComponent implements OnInit {
       .subscribe(loc => {
         this._location = loc;
       });
-    let diff = +new Date() - this.user.checkin.time;
-    if(diff <= 60000 * 30) {
-      this._opacity = "1";
-      this._color = "green";
+    const diff = +new Date() - this.user.checkin.time;
+    if (diff <= 60000 * 30) {
+      this._opacity = '1';
+      this._color = 'green';
     }
-    else if(diff <= 60000 * 60) {
-      this._opacity = "0.9";
-      this._color = "olive";
+    else if (diff <= 60000 * 60) {
+      this._opacity = '0.9';
+      this._color = 'olive';
     }
-    else if(diff <= 60000 * 120) {
-      this._opacity = "0.7";
-      this._color = "yellow";
+    else if (diff <= 60000 * 120) {
+      this._opacity = '0.7';
+      this._color = 'yellow';
     }
     else {
-      this._opacity = "0.5";
-      this._color = "red";
+      this._opacity = '0.5';
+      this._color = 'red';
     }
   }
 
@@ -59,23 +59,26 @@ export class UserComponent implements OnInit {
   }
 
   userSelected() {
-    console.log("User " +  this.user.name + " selected");
+    console.log('User ' +  this.user.name + ' selected');
     $('#' + this.user.id).modal('show');
   }
 
   sendMessage() {
-    console.log("User " +  this.user.name + " message");
-    let subject = $("input[name='subject-" + this.user.id + "']").val();
-    let content = $("textarea[name='message-" + this.user.id + "']").val();
-    if(content.trim() !== "") {
-      console.log(subject + "\n" + content);
-      let user = {
-        name: this.user.name,
-        id: this.user.id
-      }
-      let message = new Message(null, user, subject, content, false);
-      //this.user.addMessage(message);
+    console.log('User ' +  this.user.name + ' message');
+    const subject = $('input[name=\'subject-' + this.user.id + '\']').val();
+    const content = $('textarea[name=\'message-' + this.user.id + '\']').val();
+    if (content.trim() !== '') {
+      console.log(subject + '\n' + content);
+      let user;
+      this.authService.getCurrentUser().subscribe(res => {
+        user = {
+          id: res.id,
+          name: res.name
+        };
+        const message = new Message(null, user, subject, content, false);
+      // this.user.addMessage(message);
       this.homeService.addMessage(this.user, message).subscribe();
+      });
     }
   }
 }

@@ -9,7 +9,7 @@ import { Location } from '../../../../../shared/models/location.model';
 export class LocationComponent implements OnInit {
 
   @Input() public location: Location;
-  
+
   constructor() { }
 
   ngOnInit() {

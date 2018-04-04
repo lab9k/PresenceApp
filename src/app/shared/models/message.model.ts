@@ -1,4 +1,4 @@
-import { User } from "./user.model";
+import { User } from './user.model';
 
 export class Message {
     private _id: string;
@@ -9,7 +9,14 @@ export class Message {
     private _subject: string;
     private _content: string;
     private _isRead: boolean;
-    
+
+    static fromJSON(json) {
+        let message;
+
+        message = new Message(json._id, json.sender, json.subject, json.content, json.isRead);
+        return message;
+    }
+
     toJSON() {
         return {
             _id: this._id,
@@ -17,16 +24,11 @@ export class Message {
             subject: this._subject,
             content: this._content,
             isRead: this._isRead,
-        }
+        };
     }
 
-    static fromJSON(json) {
-        let message;
-        
-        message = new Message(json._id, json.sender, json.subject, json.content, json.isRead);
-        return message;
-    }
-    constructor(id: string, sender: {name: string,id: string}, subject: string, content: string, isRead: boolean) {
+
+    constructor(id: string, sender: {name: string, id: string}, subject: string, content: string, isRead: boolean) {
         this._id = id;
         this._sender = sender;
         this._subject = subject;

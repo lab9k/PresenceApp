@@ -11,7 +11,7 @@ export class SegmentListComponent implements OnInit {
 
   @Input() public segments: Segment[];
   @Input() public users: User[];
-  
+
   constructor() { }
 
   ngOnInit() {

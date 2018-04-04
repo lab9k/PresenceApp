@@ -10,7 +10,7 @@ declare var $: any;
   styleUrls: ['./app.component.css']
 })
 export class AppComponent  {
-  
+
   private _currentUser: string;
 
   constructor(private authService: AuthenticationService) {
@@ -18,7 +18,7 @@ export class AppComponent  {
 
   get currentUser(): Observable<string> {
     return this.authService.user;
-  } 
+  }
 
   drop() {
     $('.ui.dropdown')

@@ -1,4 +1,4 @@
-import { User } from "./user.model";
+import { User } from './user.model';
 
 export class Checkin {
     private _time: number;

@@ -1,4 +1,4 @@
-import { Message } from "./message.model";
+import { Message } from './message.model';
 
 export class User {
     private _id: string;
@@ -12,6 +12,17 @@ export class User {
     private _role: string;
     private _messages: Message[];
 
+    static fromJSON(json) {
+        let user;
+        if (json.name) {
+            user = new User(json._id, json.name, json.checkin, json.picture, json.phoneid, json.role, json.messages);
+        } else {
+            user = new User(json._id, json._name, json._checkin, json._picture, json._phoneid, json._role, json._messages);
+        }
+
+            return user;
+    }
+
     toJSON() {
         return {
             _id: this._id,
@@ -21,18 +32,11 @@ export class User {
             phoneid: this._phoneid,
             role: this._role,
             messages: this._messages,
-        }
+        };
     }
 
-    static fromJSON(json) {
-        let user;
-        if(json.name)
-            user = new User(json._id, json.name, json.checkin, json.picture, json.phoneid, json.role, json.messages);
-        else
-            user = new User(json._id, json._name, json._checkin, json._picture, json._phoneid, json._role, json._messages);
-            return user;
-    }
-    constructor(id: string, name: string, checkin: {location: string;time: number;}, picture: string, phoneid: string, role:string, messages: Message[]) {
+    constructor(id: string, name: string, checkin: {location: string; time: number; }, picture: string,
+        phoneid: string, role: string, messages: Message[]) {
         this._id = id;
         this._name = name;
         this._checkin = checkin;
@@ -85,9 +89,9 @@ export class User {
     set messages(messages) {
         this._messages = messages;
     }
-    
+
     addMessage(message) {
-        if(this._messages === undefined) {
+        if (this._messages === undefined) {
             this._messages = [];
         }
         this._messages.push(message);

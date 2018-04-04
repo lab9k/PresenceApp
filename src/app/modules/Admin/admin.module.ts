@@ -15,6 +15,7 @@ import { SegmentListComponent } from './components/segment/segment-list/segment-
 import { SegmentLocationComponent } from './components/segment-location/segment-location/segment-location.component';
 import { SegmentLocationListComponent } from './components/segment-location/segment-location-list/segment-location-list.component';
 import { CreateSegmentComponent } from './components/segment/create-segment/create-segment.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const routes = [
   { path: '', component:  DashboardComponent},
@@ -24,6 +25,8 @@ const routes = [
   imports: [
     HttpModule,
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule.forChild(routes),
     DragulaModule
   ],

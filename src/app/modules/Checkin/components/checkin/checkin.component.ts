@@ -19,7 +19,7 @@ export class CheckinComponent implements OnInit {
   ngOnInit() {
     this.authService.user.subscribe(user => {
       this.dataService.getUserById(user).subscribe(usr => {
-        if(usr.checkin) {
+        if (usr.checkin) {
           this.dataService.getLocationById(usr.checkin.location).subscribe(loc => {
             this._location = loc;
             this._time = this.timeConverter(usr.checkin.time);
@@ -37,22 +37,23 @@ export class CheckinComponent implements OnInit {
     return this._time;
   }
 
-  timeConverter(UNIX_timestamp){
-    var a = new Date(UNIX_timestamp);
-    var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-    var year = a.getFullYear();
-    var month = months[a.getMonth()];
-    var date = a.getDate();
-    var hour = a.getHours();
-    var min = a.getMinutes() < 10 ? '0' + a.getMinutes() : a.getMinutes(); 
-    var sec = a.getSeconds() < 10 ? '0' + a.getSeconds() : a.getSeconds();
-    var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+  timeConverter(UNIX_timestamp) {
+    const a = new Date(UNIX_timestamp);
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
+      'September', 'October', 'November', 'December'];
+    const year = a.getFullYear();
+    const month = months[a.getMonth()];
+    const date = a.getDate();
+    const hour = a.getHours();
+    const min = a.getMinutes() < 10 ? '0' + a.getMinutes() : a.getMinutes();
+    const sec = a.getSeconds() < 10 ? '0' + a.getSeconds() : a.getSeconds();
+    const time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
     return time;
   }
 
   removeCheckin() {
     this.checkinService.removeCheckin(this.authService.user.getValue()).subscribe();
-    console.log("remove checkin");
+    console.log('remove checkin');
   }
 
 }

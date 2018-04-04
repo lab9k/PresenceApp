@@ -1,8 +1,11 @@
 <div class="ui segment">
-    <p>{{campus.name}}</p>
+    <div class="ui input">
+        <input #name type="text" placeholder="Search..."
+            value="{{campus.name}}" (keyup.enter)="test($event, name.value)">
+    </div>
     <div *ngIf="campus.name !== 'Segments without campus'">
         <a class="ui right corner label" (click)="delete()">
-            <p class="red trash icon">🗑</p>
+            <i class="red trash icon"></i>
         </a>
     </div>
     <div class="ui container" id="segment-list">

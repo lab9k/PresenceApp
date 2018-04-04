@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { HomeDataService } from '../../../home.service';
 import { Campus } from '../../../../../shared/models/campus.model';
 import { User } from '../../../../../shared/models/user.model';
-import * as io from "socket.io-client";
+import * as io from 'socket.io-client';
 
 @Component({
   selector: 'app-campus-list',
@@ -25,17 +25,18 @@ export class CampusListComponent implements OnInit {
       .subscribe(items => this._campuses = items);
 
     this.socket.on('new-checkin', function(data) {
-      for(let i = 0; i < this._users.length; i++) {
-        if(this._users[i].id === data.user._id) {
+      for (let i = 0; i < this._users.length; i++) {
+        if (this._users[i].id === data.user._id) {
           this._users.splice(i, 1);
           this.usr = User.fromJSON(data.user);
-          if(data.user._checkin)
+          if (data.user._checkin) {
             this.usr.checkin.location = data.user._checkin.location._id;
-          else
+          }else {
             this.usr.checkin.location = data.user.checkin.location._id;
-          
+          }
+
           this._users.push(this.usr);
-          //sort users
+          // sort users
           this.sortUsers();
           break;
         }
@@ -43,6 +44,9 @@ export class CampusListComponent implements OnInit {
       this._users = this._users.slice(0);
       this.cd.detectChanges();
     }.bind(this));
+    setTimeout(function(){
+      location.reload();
+    }, 300000);
   }
 
   get campuses() {
@@ -56,7 +60,7 @@ export class CampusListComponent implements OnInit {
   fetchUsers() {
     this._homeDataService.getUsers().then((res) => {
       this._users = res;
-      //sort users
+      // sort users
       this.sortUsers();
     }, (err) => {
       console.log(err);
@@ -65,23 +69,21 @@ export class CampusListComponent implements OnInit {
 
   sortUsers() {
     this._users = this._users.sort((a, b) => {
-      if(a.checkin !== undefined && b.checkin === undefined) {
+      if (a.checkin !== undefined && b.checkin === undefined) {
         return -1;
       }
-      if(a.checkin === undefined && b.checkin !== undefined) {
+      if (a.checkin === undefined && b.checkin !== undefined) {
         return 1;
       }
-      if(a.checkin === undefined && b.checkin === undefined) {
+      if (a.checkin === undefined && b.checkin === undefined) {
         return 0;
       }
       if (a.checkin.time > b.checkin.time) {
           return -1;
       }
-  
       if (a.checkin.time < b.checkin.time) {
           return 1;
       }
-  
       return 0;
   });
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AdminDataService } from '../../../admin.service';
 import { Segment } from '../../../../../shared/models/segment.model';
 
@@ -12,17 +12,17 @@ declare var $: any;
 export class CreateSegmentComponent implements OnInit {
 
   private segmentName: string;
-  
+  @Output() createSegmentEvent = new EventEmitter<string>();
+
     constructor(private adminDataService: AdminDataService) { }
-  
+
     ngOnInit() {
     }
-  
+
     createSegment() {
-      this.segmentName = $("input[name='segment-name']").val();
-      if(this.segmentName.trim() !== "") {
-        let segment = new Segment(null, this.segmentName, []);
-        this.adminDataService.createSegment(segment).subscribe();
+      this.segmentName = $('input[name=\'segment-name\']').val();
+      if (this.segmentName.trim() !== '') {
+        this.createSegmentEvent.next(this.segmentName);
       }
     }
 

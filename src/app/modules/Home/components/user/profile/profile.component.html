@@ -6,7 +6,12 @@
   </div>
   <div class="field">
     <label>PhoneId:</label>
-    <div *ngIf="user.phoneid">{{user.phoneid}}</div>
+    <div *ngIf="user.phoneid">
+      {{user.phoneid}}
+      <a (click)="deletePhoneId()">
+          <i class="red trash icon"></i>
+        </a>
+    </div>
   </div>
 </div>
 

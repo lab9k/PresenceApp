@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Campus } from '../../../../../shared/models/campus.model';
 
 @Component({
@@ -9,10 +9,20 @@ import { Campus } from '../../../../../shared/models/campus.model';
 export class CampusListComponent implements OnInit {
 
   @Input() public campuses: Campus[];
-  
+  @Output() deleteCampusEvent = new EventEmitter<Campus>();
+  @Output() updateCampusEvent = new EventEmitter<Campus>();
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  deleteCampus(campus) {
+    this.deleteCampusEvent.next(campus);
+  }
+
+  updateCampus(campus) {
+    this.updateCampusEvent.next(campus);
   }
 
 }

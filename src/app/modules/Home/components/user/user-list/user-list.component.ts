@@ -15,31 +15,31 @@ export class UserListComponent implements OnInit {
   @Input() public segment: Segment;
   @Input() public users: User[];
   private _filteredUsers: User[];
-  
+
   constructor(private _userDataService: HomeDataService) { }
 
   ngOnInit() {
     this._filteredUsers = [];
     this.users.map(user => {
       this.segment.locations.map(location => {
-        let loc = Location.fromJSON(location);
-        if(user.checkin && loc.id === user.checkin.location) {
+        const loc = Location.fromJSON(location);
+        if (user.checkin && loc.id === user.checkin.location) {
           this._filteredUsers.push(user);
         }
-      })
-    })
+      });
+    });
   }
 
   ngOnChanges() {
     this._filteredUsers = [];
     this.users.map(user => {
       this.segment.locations.map(location => {
-        let loc = Location.fromJSON(location);
-        if(user.checkin && loc.id === user.checkin.location) {
+        const loc = Location.fromJSON(location);
+        if (user.checkin && loc.id === user.checkin.location) {
           this._filteredUsers.push(user);
         }
-      })
-    })
+      });
+    });
   }
 
   get filteredUsers() {

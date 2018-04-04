@@ -96,7 +96,11 @@ router.post('/API/user/', function(req, res, next) {
 
 /* CREATE CAMPUS */
 router.post('/API/campus/', function(req, res, next) {
-  let campus = new Campus(req.body);
+  let campus = new Campus({
+    _id: mongoose.Types.ObjectId(),
+    name: req.body.name,
+    segments: req.body.segments,
+  });
   campus.save(function(err, camp) {
     if(err) { return next(err);}
     res.json(camp);
@@ -105,7 +109,11 @@ router.post('/API/campus/', function(req, res, next) {
 
 /* CREATE SEGMENT */
 router.post('/API/segment/', function(req, res, next) {
-  let segment = new Segment(req.body);
+  let segment = new Segment({
+    _id: mongoose.Types.ObjectId(),
+    name: req.body.name,
+    locations: req.body.locations,
+  });
   segment.save(function(err, seg) {
     if(err) { return next(err);}
     res.json(seg);
@@ -114,7 +122,11 @@ router.post('/API/segment/', function(req, res, next) {
 
 /* CREATE LOCATION */
 router.post('/API/location/', function(req, res, next) {
-  let location = new Location(req.body);
+  let location = new Location({
+    _id: mongoose.Types.ObjectId(),
+    name: req.body.name,
+    stickers: req.body.stickers,
+  });
   location.save(function(err, loc) {
     if(err) { return next(err);}
     res.json(loc);
@@ -123,13 +135,26 @@ router.post('/API/location/', function(req, res, next) {
 
 /* UPDATE USER */
 router.put('/API/user/', function(req, res, next) {
-  console.log(req.body);
-  User.findByIdAndUpdate(req.body._id, {"$set": req.body}, function (err, user) {
+  console.log("USER:" + req.body.phoneid);
+  User.findByIdAndUpdate(req.body._id, req.body, function (err, user) {
     if (err) { 
       console.log(err);
       return next(err); 
     }
-    console.log(user);
+    console.log("RESULT:" + user);
+    res.json(user);
+  })
+});
+
+/* REMOVE PHONEID */
+router.put('/API/user/removephoneid', function(req, res, next) {
+  console.log("USER:" + req.body.phoneid);
+  User.findByIdAndUpdate(req.body._id, { "$unset": { "phoneid": 1 } }, function (err, user) {
+    if (err) { 
+      console.log(err);
+      return next(err); 
+    }
+    console.log("RESULT:" + user);
     res.json(user);
   })
 });
@@ -479,7 +504,7 @@ router.delete('/API/segment/:id', function(req, res, next) {
 
 });
 
-router.get('/login/microsoft',
+router.get('/auth/login/microsoft',
 function(req, res, next) {
   console.log("LOGIN");
   
@@ -614,14 +639,14 @@ router.get('/auth/callback/google',
   });
 
 // 'logout' route, logout from passport, and destroy the session with AAD.
-router.get('/logout', function(req, res){
+router.get('/auth/logout', function(req, res){
   req.session.destroy(function(err) {
     req.logOut();
     res.redirect(config.destroySessionUrl);
   });
 });
 
-router.get('/user', function(req, res) {
+router.get('/auth/user', function(req, res) {
   if(req.isAuthenticated()) {
     res.json(req.user);
   }
@@ -630,7 +655,7 @@ router.get('/user', function(req, res) {
   }
 });
 
-router.get('/isLoggedIn', function(req, res) {
+router.get('/auth/isLoggedIn', function(req, res) {
   res.json({isLoggedIn: req.isAuthenticated()});
 });
 

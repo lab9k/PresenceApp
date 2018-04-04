@@ -1,25 +1,26 @@
 <div class="ui container">
   <h1>Dashboard</h1>
   <h2>Create campus</h2>
-  <app-campus-create></app-campus-create>
+  <app-campus-create (createCampusEvent)="createCampus($event)"></app-campus-create>
   <h2>Campuses</h2>
   <div class="ui two cards">
       <div class="ui red card">
         <app-campus *ngIf="campus.segments.length !== 0" [campus]="campus"></app-campus>
       </div>
       <div class="ui green card">
-        <app-campus-list [campuses]="campuses"></app-campus-list>
+        <app-campus-list [campuses]="campuses" (deleteCampusEvent)="deleteCampus($event)"
+          (updateCampusEvent)="updateCampus($event)"></app-campus-list>
       </div>
   </div>
   <h2>Create segment</h2>
-  <app-create-segment></app-create-segment>
+  <app-create-segment (createSegmentEvent)="createSegment($event)"></app-create-segment>
   <h2>Segments</h2>
   <div class="ui two cards">
       <div class="ui red card">
         <app-segment-location *ngIf="segment.locations.length !== 0" [segment]="segment"></app-segment-location>
       </div>
       <div class="ui green card">
-        <app-segment-location-list [segments]="segments"></app-segment-location-list>
+        <app-segment-location-list [segments]="segments" (deleteSegmentEvent)="deleteSegment($event)"></app-segment-location-list>
       </div>
   </div>
 </div>

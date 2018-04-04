@@ -14,28 +14,31 @@ export class LocationListComponent implements OnInit, OnDestroy {
 
   @Input() public segment: Segment;
   private _locations: Location[];
-  
-  constructor(private dragulaService: DragulaService, private adminDataService: AdminDataService) { 
+
+  constructor(private dragulaService: DragulaService, private adminDataService: AdminDataService) {
     dragulaService.dropModel.subscribe((value) => {
-      if(value.slice()[0] === "bag-locations")
+      if (value.slice()[0] === 'bag-locations') {
         this.onDropModel(value);
+      }
     });
   }
 
   ngOnInit() {
     this._locations = [];
     this.segment.locations.forEach(loc => {
-      if(loc.id !== undefined)
+      if (loc.id !== undefined) {
         this._locations.push(loc);
-    })
+      }
+    });
   }
 
   ngOnDestroy() {
   }
 
   private onDropModel(args) {
-    if(this.segment.name !== "Locations without segment")
+    if (this.segment.name !== 'Locations without segment') {
       this.adminDataService.updateSegment(this.segment).subscribe();
+    }
   }
 
   get locations() {

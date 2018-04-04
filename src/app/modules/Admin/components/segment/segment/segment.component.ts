@@ -9,7 +9,7 @@ import { Segment } from '../../../../../shared/models/segment.model';
 export class SegmentComponent implements OnInit {
 
   @Input() public segment: Segment;
-  
+
   constructor() { }
 
   ngOnInit() {

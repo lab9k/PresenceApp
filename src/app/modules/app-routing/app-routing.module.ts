@@ -1,15 +1,15 @@
-import { NgModule } from "@angular/core";
+import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { PageNotFoundComponent } from "./components/page-not-found/page-not-found.component";
-import { AuthGuardService } from "./auth-guard.service";
-import { AdminGuardService } from "./admin-guard.service";
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { AuthGuardService } from './auth-guard.service';
+import { AdminGuardService } from './admin-guard.service';
 
 const appRoutes: Routes = [
-    { 
+    {
         path: '',
         loadChildren: '../Home/home.module#HomeModule'
     },
-    { 
+    {
         path: 'admin',
         canActivate: [ AdminGuardService ],
         loadChildren: '../Admin/admin.module#AdminModule'

@@ -3,9 +3,9 @@ import { Location } from '../../../../shared/models/location.model';
 import { CheckinService } from '../../checkin.service';
 import { ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '../../../../shared/services/authentication.service';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { DataService } from '../../../../shared/services/data.service';
-import * as io from "socket.io-client";
+import * as io from 'socket.io-client';
 declare var $: any;
 
 @Component({
@@ -21,12 +21,13 @@ export class LocationComponent implements OnInit {
 
   socket = io();
 
-  constructor(private route: ActivatedRoute, private checkinService: CheckinService, private authService: AuthenticationService, private dataService: DataService) { }
+  constructor(private route: ActivatedRoute, private checkinService: CheckinService,
+    private authService: AuthenticationService, private dataService: DataService) { }
 
   ngOnInit() {
     this.route.data.subscribe(item => {
       this._location = item['location'];
-      if(this._location && this._location.id) {
+      if (this._location && this._location.id) {
         this.currentUser.subscribe(user => {
           this.checkinService.saveCheckin(this.authService.user.getValue(), this.location.stickers[0]).then((result) => {
             console.log(result);
@@ -42,9 +43,9 @@ export class LocationComponent implements OnInit {
   }
 
   createLoc() {
-    this.locationName = $("input[name='new-location-name']").val();
-    if(this.locationName.trim() !== "") {
-      let location = new Location(null, this.locationName, this._location.stickers);
+    this.locationName = $('input[name=\'new-location-name\']').val();
+    if (this.locationName.trim() !== '') {
+      const location = new Location(null, this.locationName, this._location.stickers);
       this.checkinService.createLocation(location).subscribe(res => {
         window.location.reload();
       });
@@ -52,7 +53,7 @@ export class LocationComponent implements OnInit {
   }
 
   addSticker() {
-    let selectLocation = $("#selectLocation").find(":selected").val();
+    const selectLocation = $('#selectLocation').find(':selected').val();
     this.dataService.getLocationById(selectLocation).subscribe(item => {
       item.addSticker(this._location.stickers[0]);
       this.checkinService.updateLocation(item).subscribe(res => {
@@ -63,7 +64,7 @@ export class LocationComponent implements OnInit {
 
   get currentUser(): Observable<string> {
     return this.authService.user;
-  } 
+  }
 
   get location() {
     return this._location;

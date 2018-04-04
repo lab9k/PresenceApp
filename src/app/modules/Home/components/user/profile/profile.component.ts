@@ -12,7 +12,7 @@ declare var $: any;
 export class ProfileComponent implements OnInit {
 
   private _user: User;
-  
+
   constructor(private authService: AuthenticationService) { }
 
   ngOnInit() {
@@ -23,5 +23,11 @@ export class ProfileComponent implements OnInit {
 
   get user() {
     return this._user;
+  }
+
+  deletePhoneId() {
+    this._user.phoneid = undefined;
+    console.log(this._user);
+    this.authService.removePhone(this._user).subscribe();
   }
 }

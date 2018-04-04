@@ -1,25 +1,24 @@
-<div class="ui container" id='topid'>
-  <div class="ui menu">
-    <a class='item' routerLink="/" >Wie is waar</a>
-    <!--
-      status??
-    -->
-    <a class='item' routerLink="/admin" >Admin</a>
-    <div class="right menu">
-      <div class="ui dropdown item">
-          <a class='item' *ngIf='(currentUser | async) else loginlink' href="/logout">Logout</a>
-          <ng-template #loginlink>
-            <a class='item' routerLink="/login">Login</a>
-          </ng-template>
-          <i class="dropdown icon" (click)="drop()"></i>
-          <div class="menu">
-            <a class='item' routerLink="/profile" >Profile</a>
-            <a class='item' routerLink="/checkin" >Last checkin</a>
-          </div>
+<div class="ui menu">
+  <a class='item' routerLink="/" >Wie is waar</a>
+  <!--
+    status??
+  -->
+  <a class='item' routerLink="/admin" >Admin</a>
+  <div class="right menu">
+    <div class="ui dropdown item">
+      <a class='item' *ngIf='(currentUser | async) else loginlink' href="/auth/logout">Logout</a>
+      <ng-template #loginlink>
+        <a class='item' routerLink="/login">Login</a>
+      </ng-template>
+      <i class="dropdown icon" (click)="drop()"></i>
+      <div class="menu">
+        <a class='item' routerLink="/profile" >Profile</a>
+        <a class='item' routerLink="/checkin" >Last checkin</a>
       </div>
-      
-    </div>
   </div>
+    
+</div>
+</div><div class="ui padded segment fluid container" id='topid'>
   <router-outlet></router-outlet>
 </div>
 
@@ -27,5 +26,4 @@
   move stickers?
   edit campus/segment/location name
   welke api calls hebben authenticatie nodig, welke niet (ensureAuthenticated)
-  remove phoneid
 -->

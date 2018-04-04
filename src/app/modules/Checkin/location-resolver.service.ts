@@ -10,7 +10,7 @@ export class LocationResolver implements Resolve<Location> {
     constructor(private dataService: DataService) {}
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Location> {
-        
+
         return this.dataService.getLocationWithSticker(route.params['id'])
             .map(item => {
                 if (item) {
@@ -22,6 +22,6 @@ export class LocationResolver implements Resolve<Location> {
             .catch(error => {
                 console.log(`Retrieval error: ${error}`);
                 return Observable.of(new Location(null, null, [route.params['id']]));
-            });    
+            });
     }
  }

@@ -4,7 +4,7 @@ export class Location {
     private _stickers: string[];
 
     static fromJSON(json) {
-        if(json.id !== undefined) {
+        if (json.id !== undefined) {
             json._id = json.id;
         }
         const location = new Location(json._id, json.name, json.stickers);
@@ -16,7 +16,7 @@ export class Location {
             _id: this._id,
             name: this._name,
             stickers: this._stickers,
-        }
+        };
     }
 
     constructor(id: string, name: string, stickers: string[]) {
@@ -43,7 +43,7 @@ export class Location {
 
     removeSticker(sticker: string) {
         const index = this._stickers.indexOf(sticker);
-        if(index !== -1)  {
+        if (index !== -1)  {
             this._stickers.splice(index, 1);
         }
     }

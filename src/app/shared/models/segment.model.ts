@@ -1,12 +1,12 @@
-import { Location } from './location.model'
+import { Location } from './location.model';
 
 export class Segment {
     private _id: string;
     private _name: string;
-    private _locations: Location[]; 
+    private _locations: Location[];
 
     static fromJSON(json) {
-        let locs = [];
+        const locs = [];
         json.locations.forEach(element => {
             locs.push(Location.fromJSON(element));
         });
@@ -19,7 +19,7 @@ export class Segment {
             _id: this._id,
             name: this._name,
             locations: this._locations
-        }
+        };
     }
 
     constructor(id: string, name: string, locations: Location[]) {
@@ -39,7 +39,7 @@ export class Segment {
     set name(name: string) {
         this._name = name;
     }
-    
+
     get locations() {
         return this._locations;
     }
@@ -50,7 +50,7 @@ export class Segment {
 
     removeLocation(loc: Location) {
         const index = this._locations.indexOf(loc);
-        if(index !== -1)  {
+        if (index !== -1)  {
             this._locations.splice(index, 1);
         }
     }
