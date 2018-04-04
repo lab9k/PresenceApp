@@ -178,6 +178,18 @@ router.post('/API/message/:userid', function(req, res, next) {
   }); 
 });
 
+/* UPDATE MESSAGE */
+router.put('/API/message', function(req, res, next) {
+  Message.findByIdAndUpdate(req.body._id, req.body, function (err, message) {
+    if (err) { 
+      console.log(err);
+      return next(err); 
+    }
+    console.log("RESULT:" + message);
+    res.json(message);
+  })
+});
+
 /* UPDATE CAMPUS */
 router.put('/API/campus/', function(req, res, next) {
   console.log(req.body);
