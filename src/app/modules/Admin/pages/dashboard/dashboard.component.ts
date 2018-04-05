@@ -17,6 +17,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private _campus: Campus;
   private _segments: Segment[];
   private _segment: Segment;
+  private _locations: Location[];
+  private _location: Location;
 
   constructor(private _adminDataService: AdminDataService, private dataService: DataService, private dragulaService: DragulaService) {
     this.dragulaService.setOptions('bag-segments', {
@@ -29,11 +31,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
         return container.id !== 'Locations without segment';
       }
     });
+    this.dragulaService.setOptions('bag-stickers', {
+      accepts: function (el, container, handle) {
+        return container.id !== 'Stickers without location';
+      }
+    });
   }
 
   ngOnInit() {
     this._campus = new Campus(null, 'Segments without campus', []);
     this._segment = new Segment(null, 'Locations without segment', []);
+    this._location = new Location(null, 'Stickers without location', []);
 
     this.dataService.campuses()
       .subscribe(items => {
@@ -49,6 +57,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
             });
           });
           this.dataService.locations().subscribe(locations => {
+            this._locations = locations;
             locations.forEach(location => {
               this._segment.locations.push(location);
               this._segments.forEach(seg => {
@@ -66,6 +75,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.dragulaService.destroy('bag-segments');
     this.dragulaService.destroy('bag-locations');
+    this.dragulaService.destroy('bag-stickers');
   }
 
   get campuses() {
@@ -82,6 +92,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   get segment() {
     return this._segment;
+  }
+
+  get locations() {
+    return this._locations;
+  }
+
+  get location() {
+    return this._location;
   }
 
   createCampus(name) {

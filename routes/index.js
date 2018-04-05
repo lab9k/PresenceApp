@@ -652,9 +652,20 @@ router.get('/auth/callback/google',
 
 // 'logout' route, logout from passport, and destroy the session with AAD.
 router.get('/auth/logout', function(req, res){
+  let user = req.user;
   req.session.destroy(function(err) {
     req.logOut();
-    res.redirect(config.destroySessionUrl);
+    switch(user.accountType) {
+      case 'google':
+        res.redirect('/');
+        break;
+      case 'azure-ad':
+        res.redirect(config.destroySessionUrl);
+        break;
+      default:
+        res.redirect('/');
+        break;
+    }
   });
 });
 

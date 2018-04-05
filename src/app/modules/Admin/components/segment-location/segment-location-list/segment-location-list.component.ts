@@ -10,7 +10,7 @@ export class SegmentLocationListComponent implements OnInit {
 
   @Input() public segments: Segment[];
   @Output() deleteSegmentEvent = new EventEmitter<Segment>();
-  
+
   constructor() { }
 
   ngOnInit() {

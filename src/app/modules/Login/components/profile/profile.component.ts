@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '../../../../../shared/services/authentication.service';
-import { User } from '../../../../../shared/models/user.model';
+import { AuthenticationService } from '../../../../shared/services/authentication.service';
+import { User } from '../../../../shared/models/user.model';
+import { Router } from '@angular/router';
 
 declare var $: any;
 
@@ -13,11 +14,15 @@ export class ProfileComponent implements OnInit {
 
   private _user: User;
 
-  constructor(private authService: AuthenticationService) { }
+  constructor(private authService: AuthenticationService, private router: Router) { }
 
   ngOnInit() {
     this.authService.getCurrentUser().subscribe(res => {
-      this._user = res;
+      if (res !== null) {
+        this._user = res;
+      } else {
+        this.router.navigate(['/account/login']);
+      }
     });
   }
 

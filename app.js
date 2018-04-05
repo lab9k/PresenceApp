@@ -12,6 +12,7 @@ const MongoStore = require('connect-mongo')(expressSession);
 var OIDCStrategy = require('passport-azure-ad').OIDCStrategy;
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
 var config = require('./config');
+const graphHelper = require('./graphHelper.js');
 require('dotenv').config({path: './app-env.env'});
 
 require('./models/User');
@@ -65,15 +66,23 @@ function(accessToken, refreshToken, profile, cb) {
       user = new User({
         _id: profile.id, 
         name: profile.displayName, 
-        picture: profile.image.url,
+        picture: profile.photos[0].value,
         checkin: [], 
         role: "user",
         messages: [],
+        accountType: "google",
       });
       user.save(function(err, usr) {
         if(err) {console.log(err);}
         return cb(err, user);
-      })
+      });
+    }
+    else if(profile.photos[0].value !== user.picture) {
+      user.picture = profile.photos[0].value;
+      user.save(function(err, usr) {
+        if(err) {console.log(err);}
+        return cb(err, user);
+      });
     }
     return cb(err, user);
   });
@@ -112,20 +121,42 @@ function(iss, sub, profile, accessToken, refreshToken, done) {
       }
       if (!user) {
         // "Auto-registration"
-        console.log(profile);
-        user = new User({
-          _id: profile.oid, 
-          name: profile.displayName, 
-          checkin: [], 
-          role: "user",
-          messages: [],
-        });
-        console.log(user);
-        user.save(function(err, usr) {
-          if(err) {console.log(err);}
+        graphHelper.getProfilePhoto(accessToken, (errPhoto, photo) => {
+          console.log(errPhoto)
+          if(!errPhoto) {
+            console.log(photo);
+            user = new User({
+              _id: profile.oid, 
+              name: profile.displayName, 
+              checkin: [], 
+              role: "user",
+              messages: [],
+              picture: photo
+            });
+            console.log(user);
+            user.save(function(err, usr) {
+              if(err) {console.log(err);}
+            });
+          } else {
+            user = new User({
+              _id: profile.oid, 
+              name: profile.displayName, 
+              checkin: [], 
+              role: "user",
+              messages: [],
+              accountType: "azure-ad",
+            });
+            console.log(user);
+            user.save(function(err, usr) {
+              if(err) {console.log(err);}
+            });
+          }
+          return done(null, user);
         });
       }
-      return done(null, user);
+      else {
+        return done(null, user);
+      }
     });
   });
 }

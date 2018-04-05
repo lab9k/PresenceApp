@@ -1,0 +1,12 @@
+<div class="ui segment">
+    <p>{{location.name}}</p>
+    <div *ngIf="location.name !== 'Stickers without location'">
+        <a class="ui right corner label" (click)="delete()">
+          <i class="red trash icon"></i>
+        </a>
+    </div>
+    <div class="ui container" id="sticker-list">
+        <app-sticker-list [location]="location">
+        </app-sticker-list>
+    </div>  
+  </div>

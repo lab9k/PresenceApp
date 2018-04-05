@@ -9,11 +9,9 @@ import { UserListComponent } from './components/user/user-list/user-list.compone
 import { UserComponent } from './components/user/user/user.component';
 import { SegmentComponent } from './components/segment/segment/segment.component';
 import { SegmentListComponent } from './components/segment/segment-list/segment-list.component';
-import { ProfileComponent } from './components/user/profile/profile.component';
 
 const routes = [
-  { path: '', component: CampusListComponent },
-  { path: 'profile', component:  ProfileComponent},
+  { path: '', component: CampusListComponent }
 ];
 
 @NgModule({
@@ -28,8 +26,7 @@ const routes = [
     UserListComponent,
     UserComponent,
     SegmentComponent,
-    SegmentListComponent,
-    ProfileComponent
+    SegmentListComponent
   ],
   providers: [
     HomeDataService

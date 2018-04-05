@@ -1,26 +1,45 @@
-<div class="ui container">
+<div class="ui basic segment">
   <h1>Dashboard</h1>
-  <h2>Create campus</h2>
-  <app-campus-create (createCampusEvent)="createCampus($event)"></app-campus-create>
-  <h2>Campuses</h2>
-  <div class="ui two cards">
-      <div class="ui red card">
-        <app-campus *ngIf="campus.segments.length !== 0" [campus]="campus"></app-campus>
+  <div class="ui three column centered stackable divided grid">
+    <div class="column">
+      <h2>Create campus</h2>
+      <app-campus-create (createCampusEvent)="createCampus($event)"></app-campus-create>
+      <h2>Campuses</h2>
+      <div class="ui two cards">
+          <div class="ui red card">
+            <app-campus *ngIf="campus.segments.length !== 0" [campus]="campus"></app-campus>
+          </div>
+          <div class="ui green card">
+            <app-campus-list [campuses]="campuses" (deleteCampusEvent)="deleteCampus($event)"
+              (updateCampusEvent)="updateCampus($event)"></app-campus-list>
+          </div>
       </div>
-      <div class="ui green card">
-        <app-campus-list [campuses]="campuses" (deleteCampusEvent)="deleteCampus($event)"
-          (updateCampusEvent)="updateCampus($event)"></app-campus-list>
+    </div>
+    <div class="column">
+      <h2>Create segment</h2>
+      <app-create-segment (createSegmentEvent)="createSegment($event)"></app-create-segment>
+      <h2>Segments</h2>
+      <div class="ui two cards">
+          <div class="ui red card">
+            <app-segment-location *ngIf="segment.locations.length !== 0" [segment]="segment"></app-segment-location>
+          </div>
+          <div class="ui green card">
+            <app-segment-location-list [segments]="segments" (deleteSegmentEvent)="deleteSegment($event)"></app-segment-location-list>
+          </div>
       </div>
-  </div>
-  <h2>Create segment</h2>
-  <app-create-segment (createSegmentEvent)="createSegment($event)"></app-create-segment>
-  <h2>Segments</h2>
-  <div class="ui two cards">
-      <div class="ui red card">
-        <app-segment-location *ngIf="segment.locations.length !== 0" [segment]="segment"></app-segment-location>
+    </div>
+    <div class="column">
+      <h2>Create location</h2>
+      <app-create-location (createLocationEvent)="createLocation($event)"></app-create-location>
+      <h2>Locations</h2>
+      <div class="ui two cards">
+          <div class="ui red card">
+            <app-location-sticker *ngIf="location.stickers.length !== 0" [location]="location"></app-location-sticker>
+          </div>
+          <div class="ui green card">
+            <app-location-sticker-list [locations]="locations" (deleteLocationEvent)="deleteLocation($event)"></app-location-sticker-list>
+          </div>
       </div>
-      <div class="ui green card">
-        <app-segment-location-list [segments]="segments" (deleteSegmentEvent)="deleteSegment($event)"></app-segment-location-list>
-      </div>
+    </div>
   </div>
 </div>

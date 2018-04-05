@@ -2,8 +2,8 @@ require('dotenv').config({path: './app-env.env'});
 
 exports.creds = {
     // Required
-    identityMetadata: 'https://login.microsoftonline.com/gentplus.onmicrosoft.com/.well-known/openid-configuration',
-    //identityMetadata: 'https://login.microsoftonline.com/gentplus.onmicrosoft.com/v2.0/.well-known/openid-configuration', 
+    //identityMetadata: 'https://login.microsoftonline.com/gentplus.onmicrosoft.com/.well-known/openid-configuration',
+    identityMetadata: 'https://login.microsoftonline.com/gentplus.onmicrosoft.com/v2.0/.well-known/openid-configuration', 
     // or equivalently: 'https://login.microsoftonline.com/<tenant_guid>/v2.0/.well-known/openid-configuration'
     //
     // or you can use the common endpoint
@@ -58,7 +58,7 @@ exports.creds = {
     // 'profile' scope is required, the rest scopes are optional.
     // (1) if you want to receive refresh_token, use 'offline_access' scope
     // (2) if you want to get access_token for graph api, use the graph api url like 'https://graph.microsoft.com/mail.read'
-    scope: ['profile', 'offline_access'],
+    scope: ['profile', 'offline_access', 'User.ReadBasic.All'],
   
     // Optional, 'error', 'warn' or 'info'
     loggingLevel: 'info',

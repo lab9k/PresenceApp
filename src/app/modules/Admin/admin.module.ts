@@ -16,6 +16,11 @@ import { SegmentLocationComponent } from './components/segment-location/segment-
 import { SegmentLocationListComponent } from './components/segment-location/segment-location-list/segment-location-list.component';
 import { CreateSegmentComponent } from './components/segment/create-segment/create-segment.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CreateLocationComponent } from './components/location/create-location/create-location.component';
+import { LocationStickerComponent } from './components/location-sticker/location-sticker/location-sticker.component';
+import { LocationStickerListComponent } from './components/location-sticker/location-sticker-list/location-sticker-list.component';
+import { StickerComponent } from './components/sticker/sticker/sticker.component';
+import { StickerListComponent } from './components/sticker/sticker-list/sticker-list.component';
 
 const routes = [
   { path: '', component:  DashboardComponent},
@@ -41,7 +46,12 @@ const routes = [
     SegmentListComponent,
     SegmentLocationComponent,
     SegmentLocationListComponent,
-    CreateSegmentComponent
+    CreateSegmentComponent,
+    CreateLocationComponent,
+    LocationStickerComponent,
+    LocationStickerListComponent,
+    StickerComponent,
+    StickerListComponent
   ],
   providers: [
     AdminDataService

@@ -28,20 +28,15 @@ export class UserComponent implements OnInit {
         this._location = loc;
       });
     const diff = +new Date() - this.user.checkin.time;
-    if (diff <= 60000 * 30) {
-      this._opacity = '1';
+    const diffHours = diff / 3600000;
+    this._opacity = (1 / (0.4 * diffHours + 1)).toString();
+    if (diff <= 60000 * 60) {
       this._color = 'green';
-    }
-    else if (diff <= 60000 * 60) {
-      this._opacity = '0.9';
+    } else if (diff <= 60000 * 180) {
       this._color = 'olive';
-    }
-    else if (diff <= 60000 * 120) {
-      this._opacity = '0.7';
+    } else if (diff <= 60000 * 300) {
       this._color = 'yellow';
-    }
-    else {
-      this._opacity = '0.5';
+    } else {
       this._color = 'red';
     }
   }

@@ -8,11 +8,11 @@
     <div class="ui dropdown item">
       <a class='item' *ngIf='(currentUser | async) else loginlink' href="/auth/logout">Logout</a>
       <ng-template #loginlink>
-        <a class='item' routerLink="/login">Login</a>
+        <a class='item' routerLink="account/login">Login</a>
       </ng-template>
       <i class="dropdown icon" (click)="drop()"></i>
       <div class="menu">
-        <a class='item' routerLink="/profile" >Profile</a>
+        <a class='item' routerLink="account/profile" >Profile</a>
         <a class='item' routerLink="/checkin" >Last checkin</a>
       </div>
   </div>

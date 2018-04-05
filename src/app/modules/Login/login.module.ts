@@ -3,15 +3,15 @@ import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
-import { LogoutComponent } from './logout/logout.component';
 import { AuthenticationService } from '../../shared/services/authentication.service';
 import { RegisterComponent } from './components/register/register.component';
 import { RegisterResolver } from './register-resolver';
+import { ProfileComponent } from './components/profile/profile.component';
 
 const routes = [
-  { path: '', component: LoginComponent },
-  { path: 'logout', component: LogoutComponent },
+  { path: 'login', component: LoginComponent },
   { path: 'register/:phoneid', component: RegisterComponent, resolve: { phoneid: RegisterResolver} },
+  { path: 'profile', component:  ProfileComponent},
 ];
 
 @NgModule({
@@ -22,8 +22,8 @@ const routes = [
   ],
   declarations: [
     LoginComponent,
-    LogoutComponent,
-    RegisterComponent
+    RegisterComponent,
+    ProfileComponent
   ],
   providers: [
     RegisterResolver

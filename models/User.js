@@ -18,7 +18,8 @@ let UserSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Message'
         },
-    ]
+    ],
+    accountType: String
 });
 
 mongoose.model('User', UserSchema);

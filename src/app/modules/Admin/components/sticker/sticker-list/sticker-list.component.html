@@ -1,0 +1,8 @@
+<div *ngIf="stickers !== undefined">
+    <div class="ui container" id="{{sticker}}" [dragula]='"bag-stickers"' 
+        [dragulaModel]="location.stickers" style="min-height: 15px;">
+      <app-sticker *ngFor="let localSticker of location.stickers" [sticker]="localSticker"
+        id="{{localSticker}}">
+      </app-sticker>
+    </div>
+  </div>

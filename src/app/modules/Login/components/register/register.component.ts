@@ -12,8 +12,7 @@ export class RegisterComponent implements OnInit {
   private _isRegistered: boolean;
   private _loggedIn: boolean;
 
-  constructor(private router: Router, private route: ActivatedRoute, private authService: AuthenticationService) { 
-    
+  constructor(private router: Router, private route: ActivatedRoute, private authService: AuthenticationService) {
   }
 
   ngOnInit() {

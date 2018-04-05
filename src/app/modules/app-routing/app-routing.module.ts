@@ -20,7 +20,7 @@ const appRoutes: Routes = [
         loadChildren: '../Checkin/checkin.module#CheckinModule'
     },
     {
-        path: 'login',
+        path: 'account',
         loadChildren: '../Login/login.module#LoginModule'
     },
     { path: '**', component: PageNotFoundComponent}
