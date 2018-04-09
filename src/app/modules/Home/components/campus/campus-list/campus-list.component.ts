@@ -55,6 +55,8 @@ export class CampusListComponent implements OnInit {
           break;
         }
       }
+      this._users = this._users.slice(0);
+      this.cd.detectChanges();
     }.bind(this));
     setTimeout(function(){
       location.reload();
