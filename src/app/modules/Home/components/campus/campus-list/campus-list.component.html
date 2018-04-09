@@ -1,9 +1,11 @@
+<h1 class="ui top attached header">Campussen</h1>
+<div class="ui attached segment">
+  <div class="ui one column centered grid" >
+  <app-campus *ngFor="let localCampus of campuses" [campus]="localCampus" [users]="users">
+  </app-campus>
+</div>
+</div>
 
-  <h1 class="ui header">Campussen</h1>
-  <div class="ui stackable centered grid" >
-    <app-campus *ngFor="let localCampus of campuses" [campus]="localCampus" [users]="users">
-    </app-campus>
-  </div>
 
 <div class="ui active inverted dimmer" *ngIf="campuses === undefined">
   <div class="ui text loader">Loading</div>

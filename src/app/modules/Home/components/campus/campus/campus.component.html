@@ -1,10 +1,10 @@
 <div class="column">
-    <div class="ui card" style="min-height:100px;">
-        <div class="ui segment">
-            <h3 class="ui header">{{campus.name}}</h3>
+    <!--<div class="ui card" style="min-height:100px;">-->
+    <h3 class="ui left aligned top attached header">{{campus.name}}</h3>
             <app-segment-list *ngIf="users"
                 [segments]="campus.segments" [users]="users">
             </app-segment-list>
-        </div> 
-    </div>
+            
+     
+    <!--</div>-->
 </div>

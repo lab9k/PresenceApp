@@ -44,6 +44,17 @@ export class CampusListComponent implements OnInit {
       this._users = this._users.slice(0);
       this.cd.detectChanges();
     }.bind(this));
+    this.socket.on('new-checkout', function(data) {
+      console.log(data);
+      this.usr = User.fromJSON(data.user);
+      for (let i = 0; i < this._users.length; i++) {
+        if (this._users[i].id === data.user._id) {
+          this._users.splice(i, 1);
+          this.sortUsers();
+          break;
+        }
+      }
+    });
     setTimeout(function(){
       location.reload();
     }, 300000);

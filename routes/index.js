@@ -21,6 +21,10 @@ io.on('connection', function (socket) {
     console.log(data);
     io.emit('new-checkin', { user: data });
   });
+  socket.on('checkout', function (data) {
+    console.log(data);
+    io.emit('new-checkout', { user: data });
+  });
 });
 
 /* Checkin user */
