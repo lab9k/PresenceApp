@@ -130,6 +130,7 @@ router.post('/API/location/', function(req, res, next) {
     _id: mongoose.Types.ObjectId(),
     name: req.body.name,
     stickers: req.body.stickers,
+    doNotDisturb: req.body.doNotDisturb,
   });
   location.save(function(err, loc) {
     if(err) { return next(err);}

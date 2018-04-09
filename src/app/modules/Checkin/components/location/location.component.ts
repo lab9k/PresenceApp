@@ -44,8 +44,11 @@ export class LocationComponent implements OnInit {
 
   createLoc() {
     this.locationName = $('input[name=\'new-location-name\']').val();
+    const doNotDisturb = $('input[name=\'doNotDisturb\']').is(':checked');
+    console.log(doNotDisturb);
     if (this.locationName.trim() !== '') {
-      const location = new Location(null, this.locationName, this._location.stickers);
+      const location = new Location(null, this.locationName, this._location.stickers, doNotDisturb);
+      console.log(location);
       this.checkinService.createLocation(location).subscribe(res => {
         window.location.reload();
       });

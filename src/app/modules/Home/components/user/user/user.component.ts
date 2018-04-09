@@ -6,6 +6,8 @@ import { Message } from '../../../../../shared/models/message.model';
 import { HomeDataService } from '../../../home.service';
 import { AuthenticationService } from '../../../../../shared/services/authentication.service';
 
+import * as Identicon from 'identicon.js';
+
 declare var $: any;
 
 @Component({
@@ -19,10 +21,12 @@ export class UserComponent implements OnInit {
   private _location: Location;
   private _color: String;
   private _opacity: String;
+  private _img: String;
 
   constructor(private dataService: DataService, private homeService: HomeDataService, private authService: AuthenticationService) { }
 
   ngOnInit() {
+    this._img = 'data:image/png;base64,' + new Identicon(this.user.name + this.user.id, 420).toString();
     this.dataService.getLocationById(this.user.checkin.location)
       .subscribe(loc => {
         this._location = loc;
@@ -51,6 +55,10 @@ export class UserComponent implements OnInit {
 
   get opacity() {
     return this._opacity;
+  }
+
+  get img() {
+    return this._img;
   }
 
   userSelected() {

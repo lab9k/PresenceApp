@@ -41,7 +41,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._campus = new Campus(null, 'Segments without campus', []);
     this._segment = new Segment(null, 'Locations without segment', []);
-    this._location = new Location(null, 'Stickers without location', []);
+    this._location = new Location(null, 'Stickers without location', [], false);
 
     this.dataService.campuses()
       .subscribe(items => {

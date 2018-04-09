@@ -6,7 +6,8 @@ let LocationSchema = new mongoose.Schema({
         {
             type: String
         }
-    ]
+    ],
+    doNotDisturb: Boolean,
 });
 
 mongoose.model('Location', LocationSchema);

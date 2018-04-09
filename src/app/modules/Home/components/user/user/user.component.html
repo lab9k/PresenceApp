@@ -6,7 +6,7 @@
           src="{{user.picture}}">
           <ng-template #googlepic>
                 <img 
-                src="https://api.adorable.io/avatars/285/{{user.name}}.png">
+                src="{{img}}">
           </ng-template>
       </div>
       <div class="description">
@@ -21,7 +21,7 @@
       </div>
   </div> 
 </div>
-<div class="ui modal" id="{{user.id}}">
+<div class="ui modal" id="{{user.id}}" *ngIf="location && location.doNotDisturb">
     <i class="close icon"></i>
     <div class="header">
         Send Message
