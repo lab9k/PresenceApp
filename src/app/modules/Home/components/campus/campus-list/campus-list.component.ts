@@ -50,6 +50,7 @@ export class CampusListComponent implements OnInit {
       for (let i = 0; i < this._users.length; i++) {
         if (this._users[i].id === data.user._id) {
           this._users.splice(i, 1);
+          this._users.push(this.usr);
           this.sortUsers();
           break;
         }
