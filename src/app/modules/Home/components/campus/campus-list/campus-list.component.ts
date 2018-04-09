@@ -54,7 +54,7 @@ export class CampusListComponent implements OnInit {
           break;
         }
       }
-    });
+    }.bind(this));
     setTimeout(function(){
       location.reload();
     }, 300000);
@@ -80,13 +80,13 @@ export class CampusListComponent implements OnInit {
 
   sortUsers() {
     this._users = this._users.sort((a, b) => {
-      if (a.checkin !== undefined && b.checkin === undefined) {
+      if ((a.checkin !== undefined && b.checkin === undefined) || (a.checkin !== null && b.checkin === null)) {
         return -1;
       }
-      if (a.checkin === undefined && b.checkin !== undefined) {
+      if ((a.checkin === undefined && b.checkin !== undefined) || (a.checkin === null && b.checkin !== null)) {
         return 1;
       }
-      if (a.checkin === undefined && b.checkin === undefined) {
+      if ((a.checkin === undefined && b.checkin === undefined) || (a.checkin === null && b.checkin === null)) {
         return 0;
       }
       if (a.checkin.time > b.checkin.time) {
