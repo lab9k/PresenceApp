@@ -43,4 +43,4 @@ Thumbs.db
 
 *.env
 
-/semantic
+/semantic/dist
