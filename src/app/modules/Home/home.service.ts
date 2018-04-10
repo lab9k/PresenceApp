@@ -4,6 +4,7 @@ import { Http, RequestOptions, Headers } from '@angular/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 import { Campus } from '../../shared/models/campus.model';
+import { Message } from '../../shared/models/message.model';
 
 @Injectable()
 export class HomeDataService {
@@ -42,10 +43,10 @@ export class HomeDataService {
       .map(res => res.json()).map(item => User.fromJSON(item));
   }
 
-  addMessage(user, message): Observable<User> {
+  createMessage(message): Observable<Message> {
     const headers = new Headers({ 'Content-Type': 'application/json'});
     const options = new RequestOptions({ headers: headers });
-    return this.http.post(`/API/message/${user.id}`, message, options)
-      .map(res => res.json()).map(item => User.fromJSON(item));
+    return this.http.post(`/API/message/`, message, options)
+      .map(res => res.json()).map(item => Message.fromJSON(item));
   }
 }

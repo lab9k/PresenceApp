@@ -33,7 +33,7 @@ export class UserComponent implements OnInit {
       });
     const diff = +new Date() - this.user.checkin.time;
     const diffHours = diff / 3600000;
-    this._opacity = (1 / (0.4 * diffHours + 1)).toString();
+    this._opacity = (1 - (diffHours / 24)).toString();
     if (diff <= 60000 * 60) {
       this._color = 'green';
     } else if (diff <= 60000 * 180) {
@@ -79,8 +79,10 @@ export class UserComponent implements OnInit {
           name: res.name
         };
         const message = new Message(null, user, subject, content, false);
-      // this.user.addMessage(message);
-      this.homeService.addMessage(this.user, message).subscribe();
+        this.homeService.createMessage(message).subscribe(resMessage => {
+          this.user.addMessage(resMessage);
+          this.homeService.updateUser(this.user).subscribe();
+        });
       });
     }
   }

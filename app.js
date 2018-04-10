@@ -11,8 +11,8 @@ var passport = require('passport');
 const MongoStore = require('connect-mongo')(expressSession);
 var OIDCStrategy = require('passport-azure-ad').OIDCStrategy;
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
-var config = require('./config');
-const graphHelper = require('./graphHelper.js');
+var config = require('./middleware/config');
+const graphHelper = require('./middleware/graphHelper');
 require('dotenv').config({path: './app-env.env'});
 
 require('./models/User');
@@ -25,7 +25,7 @@ var app = express();
 //mongoose.connect('mongodb://localhost/presencedb2');
 mongoose.connect(process.env.PRESENCE_DATABASE);
 var index = require('./routes/index');
-var users = require('./routes/users');
+var auth = require('./routes/auth');
 
 let User = mongoose.model('User');
 
@@ -162,15 +162,12 @@ function(iss, sub, profile, accessToken, refreshToken, done) {
 }
 ));
 
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-
-
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -189,7 +186,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/', index);
-app.use('/users', users);
+app.use('/', auth);
 
 app.use(express.static(path.join(__dirname, 'dist')));
 

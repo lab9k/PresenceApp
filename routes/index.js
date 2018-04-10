@@ -1,9 +1,7 @@
 var express = require('express');
 var router = express.Router();
 let mongoose = require('mongoose');
-var io = require('../io');
-var passport = require('passport');
-var config = require('../config');
+var io = require('../middleware/io');
 
 let Location = mongoose.model('Location');
 let User = mongoose.model('User');
@@ -27,7 +25,7 @@ io.on('connection', function (socket) {
   });
 });
 
-/* Checkin user */
+/* CREATE CHECKIN */
 router.post('/API/checkin/', function(req, res, next) {
   if(!req.body.userid || !req.body.locationid) {
     return res.status(400).json(
@@ -69,24 +67,6 @@ router.post('/API/checkin/', function(req, res, next) {
       return res.status(400).json({message: 'User does not exist'});
     }  
   });
-});
-
-/* REMOVE CHECKIN */
-router.delete('/API/checkin/:userid', function(req, res, next) {
-  if(!req.params.userid) {
-    return res.status(400).json(
-      {message: 'Missing fields'}
-    );
-  }
-  
-  User.findById(req.params.userid, function(err, user) {
-    user.checkin = null;
-    user.save(function(err, usr) {
-      if (err) { return next(err); }
-      res.json(usr);
-    })
-  });
-
 });
 
 /* CREATE USER */
@@ -138,6 +118,21 @@ router.post('/API/location/', function(req, res, next) {
   })
 });
 
+/* CREATE MESSAGE */
+router.post('/API/message/', function(req, res, next) {
+  let message = new Message({
+    _id: mongoose.Types.ObjectId(),
+    sender: req.body.sender,
+    subject: req.body.subject,
+    content: req.body.content,
+    isRead: req.body.isRead
+  });
+  message.save(function(err, mess) {
+    if(err) { return next(err);}
+    res.json(message);
+  })
+});
+
 /* UPDATE USER */
 router.put('/API/user/', function(req, res, next) {
   console.log("USER:" + req.body.phoneid);
@@ -151,36 +146,35 @@ router.put('/API/user/', function(req, res, next) {
   })
 });
 
-/* REMOVE PHONEID */
-router.put('/API/user/removephoneid', function(req, res, next) {
-  console.log("USER:" + req.body.phoneid);
-  User.findByIdAndUpdate(req.body._id, { "$unset": { "phoneid": 1 } }, function (err, user) {
-    if (err) { 
-      console.log(err);
-      return next(err); 
+/* UPDATE USER PHONEID */
+router.get('/API/register/:phoneid', function(req, res, next) {
+  if(!req.params.phoneid) {
+    res.status(400).json({message: "Enter phoneid"});
+  }
+  if(req.isAuthenticated()) {
+    if(!req.user.phoneid) {
+      let usr = req.user;
+      usr.phoneid = req.params.phoneid;
+      usr.save(function(err, us) {
+        if(err) {console.log(err);}
+        res.json({register: false});
+      });
     }
-    console.log("RESULT:" + user);
-    res.json(user);
-  })
-});
-
-/* ADD MESSAGE TO USER */
-router.post('/API/message/:userid', function(req, res, next) {
-  let message = new Message({
-    _id: mongoose.Types.ObjectId(),
-    sender: req.body.sender,
-    subject: req.body.subject,
-    content: req.body.content,
-    isRead: req.body.isRead,
-  });
-  message.save(function(err, mess) {
-    User.findByIdAndUpdate(req.params.userid, 
-      {$push: {"messages": message}},
-      {safe: true, upsert: true, new : true},
-      function(err, user) {
-        res.json(user);
+    else {
+      res.json({register: true});
+    }
+  }
+  else {
+    User.find({phoneid: req.params.phoneid}, function(err, user) {
+      if (err) { return next(err); }
+      if (user[0]) {
+        res.json({register: true});
+      } else {
+        req.session.phoneid = req.params.phoneid;
+        res.json({register: false});
+      }
     });
-  }); 
+  }
 });
 
 /* UPDATE MESSAGE */
@@ -484,59 +478,6 @@ router.get('/API/location/sticker/:sticker', function(req, res, next) {
   });
 });
 
-/* DELETE CAMPUS */
-router.delete('/API/campus/:id', function(req, res, next) {
-  if(!req.params.id) {
-    res.status(400).json({message: "enter id"});
-  }
-  Campus.remove({_id: req.params.id}, function(err) {
-    if(!err) {
-      res.json({removed: true});
-    }
-    else {
-      res.json({removed: false});
-    }
-  });
-});
-
-/* DELETE CAMPUS */
-router.delete('/API/segment/:id', function(req, res, next) {
-  if(!req.params.id) {
-    res.status(400).json({message: "enter id"});
-  }
-  //Find campus with this segment and update it
-  Campus.findOneAndUpdate({segments: {"$in": [req.params.id]}},
-     { $pull: {segments: { $in: [req.params.id]}}}, {new: true},
-    function(err, campus) {
-      if(err) { return next(err);}
-      Segment.remove({_id: req.params.id}, function(err) {
-        if(!err) {
-          res.json({removed: true});
-        }
-        else {
-          res.json({removed: false});
-        }
-      });
-  });
-
-});
-
-router.get('/auth/login/microsoft',
-function(req, res, next) {
-  console.log("LOGIN");
-  
-  passport.authenticate('azuread-openidconnect', 
-    { 
-      response: res,                      // required
-      failureRedirect: '/' 
-    }
-  )(req, res, next);
-},
-function(req, res) {
-  console.log('Login was called in the Sample');
-  res.redirect('/');
-});
-
 /* GET USER WITH PHONEID */
 router.get('/API/user/phoneid/:phoneid', function(req, res, next) {
   User.aggregate([
@@ -559,137 +500,93 @@ router.get('/API/user/phoneid/:phoneid', function(req, res, next) {
   });
 });
 
-/* REGISTER */
-router.get('/API/register/:phoneid', function(req, res, next) {
-  if(!req.params.phoneid) {
-    res.status(400).json({message: "Enter phoneid"});
+/* DELETE CHECKIN */
+router.delete('/API/checkin/:id', function(req, res, next) {
+  if(!req.params.id) {
+    return res.status(400).json(
+      {message: 'Missing fields'}
+    );
   }
-  if(req.isAuthenticated()) {
-    if(!req.user.phoneid) {
-      let usr = req.user;
-      usr.phoneid = req.params.phoneid;
-      usr.save(function(err, us) {
-        if(err) {console.log(err);}
-        res.json({register: false});
-      });
+  
+  User.findById(req.params.id, function(err, user) {
+    user.checkin = null;
+    user.save(function(err, usr) {
+      if (err) { return next(err); }
+      res.json(usr);
+    })
+  });
+
+});
+
+/* DELETE CAMPUS */
+router.delete('/API/campus/:id', function(req, res, next) {
+  if(!req.params.id) {
+    res.status(400).json({message: "enter id"});
+  }
+  Campus.remove({_id: req.params.id}, function(err) {
+    if(!err) {
+      res.json({removed: true});
     }
     else {
-      res.json({register: true});
-    }
-  }
-  else {
-    User.find({phoneid: req.params.phoneid}, function(err, user) {
-      if (err) { return next(err); }
-      if (user[0]) {
-        res.json({register: true});
-      } else {
-        req.session.phoneid = req.params.phoneid;
-        res.json({register: false});
-      }
-    });
-  }
-});
-
-// 'GET returnURL'
-// `passport.authenticate` will try to authenticate the content returned in
-// query (such as authorization code). If authentication fails, user will be
-// redirected to '/' (home page); otherwise, it passes to the next middleware.
-router.get('/auth/openid/return',
-function(req, res, next) {
-  console.log("RETURN GET");
-  passport.authenticate('azuread-openidconnect', 
-    { 
-      response: res,                      // required
-      failureRedirect: '/'  
-    }
-  )(req, res, next);
-},
-function(req, res) {
-  console.log('We received a return from AzureAD.');
-  res.redirect('/');
-});
-
-// 'POST returnURL'
-// `passport.authenticate` will try to authenticate the content returned in
-// body (such as authorization code). If authentication fails, user will be
-// redirected to '/' (home page); otherwise, it passes to the next middleware.
-router.post('/auth/openid/return',
-function(req, res, next) {
-  console.log("RETURN POST");
-  passport.authenticate('azuread-openidconnect', 
-    { 
-      response: res,                      // required
-      failureRedirect: '/'  
-    }
-  )(req, res, next);
-},
-function(req, res) {
-  console.log('We received a return from AzureAD.');
-  console.log("SESSION: " + req.session);
-  console.log("SESSION: " + req.session.phoneid);
-  if(req.session.phoneid !== undefined) {
-    let user = req.user;
-    user.phoneid = req.session.phoneid;
-    user.save(function(err, usr) {
-      if(err) {console.log(err);}
-    });
-  }
-  res.redirect('/');
-});
-
-router.get('/auth/google',
-  passport.authenticate('google', { scope: ['profile'] }));
-
-router.get('/auth/callback/google', 
-  passport.authenticate('google', { failureRedirect: '/login' }),
-  function(req, res) {
-    // Successful authentication, redirect home.
-    console.log("SESSION: " + req.session.phoneid);
-  if(req.session.phoneid !== undefined) {
-    let user = req.user;
-    user.phoneid = req.session.phoneid;
-    user.save(function(err, usr) {
-      if(err) {console.log(err);}
-    });
-  }
-    res.redirect('/');
-  });
-
-// 'logout' route, logout from passport, and destroy the session with AAD.
-router.get('/auth/logout', function(req, res){
-  let user = req.user;
-  req.session.destroy(function(err) {
-    req.logOut();
-    switch(user.accountType) {
-      case 'google':
-        res.redirect('/');
-        break;
-      case 'azure-ad':
-        res.redirect(config.destroySessionUrl);
-        break;
-      default:
-        res.redirect('/');
-        break;
+      res.json({removed: false});
     }
   });
 });
 
-router.get('/auth/user', function(req, res) {
-  if(req.isAuthenticated()) {
-    res.json(req.user);
+/* DELETE SEGMENT */
+router.delete('/API/segment/:id', function(req, res, next) {
+  if(!req.params.id) {
+    res.status(400).json({message: "enter id"});
   }
-  else {
-    res.json({message: "Please log in"});
-  }
+  //Find campus with this segment and update it
+  Campus.findOneAndUpdate({segments: {"$in": [req.params.id]}},
+     { $pull: {segments: { $in: [req.params.id]}}}, {new: true},
+    function(err, campus) {
+      if(err) { return next(err);}
+      Segment.remove({_id: req.params.id}, function(err) {
+        if(!err) {
+          res.json({removed: true});
+        }
+        else {
+          res.json({removed: false});
+        }
+      });
+  });
 });
 
-router.get('/auth/isLoggedIn', function(req, res) {
-  res.json({isLoggedIn: req.isAuthenticated()});
+/* DELETE LOCATION */
+router.delete('/API/location/:id', function(req, res, next) {
+  if(!req.params.id) {
+    res.status(400).json({message: "enter id"});
+  }
+  //Find segment with this location and update it
+  Segment.findOneAndUpdate({locations: {"$in": [req.params.id]}},
+     { $pull: {locations: { $in: [req.params.id]}}}, {new: true},
+    function(err, segment) {
+      if(err) { return next(err);}
+      Location.remove({_id: req.params.id}, function(err) {
+        if(!err) {
+          res.json({removed: true});
+        }
+        else {
+          res.json({removed: false});
+        }
+      });
+  });
 });
 
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
-  res.redirect('/login');
-};
+// TODO: TRY TO MOVE TO UPDATE USER
+/* DELETE PHONEID */
+router.put('/API/user/removephoneid', function(req, res, next) {
+  console.log("USER:" + req.body.phoneid);
+  User.findByIdAndUpdate(req.body._id, { "$unset": { "phoneid": 1 } }, function (err, user) {
+    if (err) { 
+      console.log(err);
+      return next(err); 
+    }
+    console.log("RESULT:" + user);
+    res.json(user);
+  })
+});
 
 module.exports = router;

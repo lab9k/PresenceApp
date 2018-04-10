@@ -7,7 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('presence-backend:server');
 var http = require('http');
-var io = require('../io');
+var io = require('../middleware/io');
 
 /**
  * Get port from environment and store in Express.

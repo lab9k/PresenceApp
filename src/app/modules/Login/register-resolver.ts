@@ -21,6 +21,6 @@ export class RegisterResolver implements Resolve<boolean> {
             .catch(error => {
                 console.log(`Retrieval error: ${error}`);
                 return Observable.of(false);
-            });    
+            });
     }
  }
