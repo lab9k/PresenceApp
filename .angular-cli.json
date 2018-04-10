@@ -26,7 +26,7 @@
         "../node_modules/identicon.js/identicon.js",
         "../node_modules/identicon.js/pnglib.js",
         "../node_modules/jquery/dist/jquery.min.js",
-        "3rdParty/semantic.min.js"
+        "../semantic/dist/semantic.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

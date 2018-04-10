@@ -7,7 +7,7 @@
     "start": "node ./bin/www",
     "build": "ng build",
     "lint": "ng lint",
-    "postinstall": "ng build --env=prod"
+    "postinstall": "ng build --env=prod && cd semantic && gulp build"
   },
   "private": true,
   "dependencies": {
@@ -42,6 +42,7 @@
     "passport-azure-ad": "^3.0.12",
     "passport-google-oauth20": "^1.0.0",
     "rxjs": "^5.4.2",
+    "semantic-ui": "^2.3.1",
     "serve-favicon": "~2.4.5",
     "socket.io": "^2.0.4",
     "superagent": "^3.8.2",

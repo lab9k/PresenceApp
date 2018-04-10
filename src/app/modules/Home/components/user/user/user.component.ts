@@ -27,10 +27,7 @@ export class UserComponent implements OnInit {
 
   ngOnInit() {
     this._img = 'data:image/png;base64,' + new Identicon(this.user.name + this.user.id, 420).toString();
-    this.dataService.getLocationById(this.user.checkin.location)
-      .subscribe(loc => {
-        this._location = loc;
-      });
+    this._location = this.user.checkin.location;
     const diff = +new Date() - this.user.checkin.time;
     const diffHours = diff / 3600000;
     this._opacity = (1 - (diffHours / 24)).toString();

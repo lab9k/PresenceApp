@@ -1,9 +1,7 @@
 <h1 class="ui top attached header">Campussen</h1>
 <div class="ui attached segment">
-  <div class="ui one column centered grid" >
   <app-campus *ngFor="let localCampus of campuses" [campus]="localCampus" [users]="users">
   </app-campus>
-</div>
 </div>
 
 

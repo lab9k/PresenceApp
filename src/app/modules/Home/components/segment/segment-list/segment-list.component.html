@@ -1,6 +1,4 @@
 <div class="ui attached segment">
-  <div class="ui one column centered grid" >
-    <app-segment *ngFor="let localSegment of segments" [segment]="localSegment" [users]="users">
-    </app-segment>
-  </div>
+  <app-segment *ngFor="let localSegment of segments" [segment]="localSegment" [users]="users">
+  </app-segment>
 </div>

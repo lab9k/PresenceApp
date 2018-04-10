@@ -1,24 +1,33 @@
 import { User } from './user.model';
+import { Location } from './location.model';
 
 export class Checkin {
     private _time: number;
-    private _user: User;
+    private _location: Location;
 
     static fromJSON(json): Checkin {
-        const checkin = new Checkin(json.time, json.user);
+        let location;
+        if (json.location !== undefined) {
+            location = Location.fromJSON(json.location);
+        }
+        const checkin = new Checkin(json.time, location);
         return checkin;
     }
 
-    constructor(time: number, user: User) {
+    constructor(time: number, location: Location) {
         this._time =  time;
-        this._user = user;
+        this._location = location;
     }
 
     get time() {
         return this._time;
     }
 
-    get user() {
-        return this._user;
+    get location() {
+        return this._location;
+    }
+
+    set location(location) {
+        this._location = location;
     }
 }

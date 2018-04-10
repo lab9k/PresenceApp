@@ -282,7 +282,17 @@ router.get('/API/locations/', function(req, res, next) {
 
 /* GET USERS */
 router.get('/API/users', function(req, res, next) {
-  User.find(function(err, users) {
+  let time;
+  if (!req.params['hours']) {
+    time = +new Date() - 1000 * 60 * 60 * 24;
+  } 
+  else {
+    time = +new Date() - 1000 * 60 * 60 * hours;
+  }
+  
+  User.find(
+      {'checkin.time': {$gt: time}},
+    ).populate('checkin.location').exec(function(err, users) {
     if (err) { return next(err); }
     res.json(users);
   });

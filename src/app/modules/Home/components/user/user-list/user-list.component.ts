@@ -23,7 +23,7 @@ export class UserListComponent implements OnInit {
     this.users.map(user => {
       this.segment.locations.map(location => {
         const loc = Location.fromJSON(location);
-        if (user.checkin && loc.id === user.checkin.location) {
+        if (user.checkin && loc.id === user.checkin.location.id) {
           this._filteredUsers.push(user);
         }
       });
@@ -35,7 +35,7 @@ export class UserListComponent implements OnInit {
     this.users.map(user => {
       this.segment.locations.map(location => {
         const loc = Location.fromJSON(location);
-        if (user.checkin && loc.id === user.checkin.location) {
+        if (user.checkin && loc.id === user.checkin.location.id) {
           this._filteredUsers.push(user);
         }
       });
