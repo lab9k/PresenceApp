@@ -7,7 +7,7 @@
     "start": "node ./bin/www",
     "build": "ng build",
     "lint": "ng lint",
-    "postinstall": "ng build --env=prod && cd semantic && gulp build"
+    "postinstall": "ng build --env=prod"
   },
   "private": true,
   "dependencies": {
