@@ -25,27 +25,6 @@ export class UserListComponent implements OnInit {
         const loc = Location.fromJSON(location);
         if (user.checkin && loc.id === user.checkin.location.id) {
           this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
         }
       });
     });
@@ -57,27 +36,6 @@ export class UserListComponent implements OnInit {
       this.segment.locations.map(location => {
         const loc = Location.fromJSON(location);
         if (user.checkin && loc.id === user.checkin.location.id) {
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
-          this._filteredUsers.push(user);
           this._filteredUsers.push(user);
         }
       });
