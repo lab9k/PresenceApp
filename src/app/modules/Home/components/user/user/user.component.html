@@ -1,7 +1,7 @@
-<div class="column">
+<div class="column" style="padding: 0.5em 0em 0.5em 0em" *ngIf="user.visible" [attr.data-tooltip]="user.name">
   <div class='ui {{color}} fluid card' [ngStyle]="{'opacity': opacity}"
     (click)="userSelected()">
-      <div class="ui tiny image">
+      <div class="ui tiny image" style="width: 60px; height: 60px;">
           <img *ngIf="user.picture else googlepic"
           src="{{user.picture}}">
           <ng-template #googlepic>
@@ -10,15 +10,17 @@
           </ng-template>
       </div>
       <div class="description">
-          <div class="center aligned" style="word-wrap: break-word;flex: inherit; width:80px">
+          <div class="center aligned" style="overflow:hidden;width:60px;height:20px;line-height:20px;">
                 {{user.name}} 
           </div>   
       </div>
+      <!--
       <div class="extra content" *ngIf="location != undefined" style="width:80px">
         <div class="left aligned" style="word-wrap: break-word;flex: inherit; width:80px">
             {{location.name}} 
         </div> 
       </div>
+    -->
   </div> 
 </div>
 <div class="ui modal" id="{{user.id}}" *ngIf="location && location.doNotDisturb">

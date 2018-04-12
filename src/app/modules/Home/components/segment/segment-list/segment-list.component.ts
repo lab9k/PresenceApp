@@ -15,6 +15,7 @@ export class SegmentListComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
   }
 
 }

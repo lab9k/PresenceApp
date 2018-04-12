@@ -7,10 +7,17 @@ export class Checkin {
 
     static fromJSON(json): Checkin {
         let location;
+        let time;
+        let checkin;
         if (json.location !== undefined) {
             location = Location.fromJSON(json.location);
+            time = json.time;
+        } else if (json._location !== undefined) {
+            location = Location.fromJSON(json._location);
+            time = json._time;
         }
-        const checkin = new Checkin(json.time, location);
+
+        checkin = new Checkin(time, location);
         return checkin;
     }
 

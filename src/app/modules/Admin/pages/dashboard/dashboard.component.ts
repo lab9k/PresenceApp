@@ -39,8 +39,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this._campus = new Campus(null, 'Segments without campus', []);
-    this._segment = new Segment(null, 'Locations without segment', []);
+    this._campus = new Campus(null, 'Segments without campus', false, false, []);
+    this._segment = new Segment(null, 'Locations without segment', false, []);
     this._location = new Location(null, 'Stickers without location', [], false);
 
     this.dataService.campuses()
@@ -103,7 +103,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   createCampus(name) {
-    const campus = new Campus(null, name, []);
+    const campus = new Campus(null, name, false, false, []);
     this._adminDataService.createCampus(campus).subscribe(res => {
       this._campuses.push(res);
     });
@@ -128,7 +128,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   createSegment(name) {
-    const segment = new Segment(null, name, []);
+    const segment = new Segment(null, name, false, []);
     this._adminDataService.createSegment(segment).subscribe(res => {
       this._segments.push(res);
     });

@@ -83,6 +83,8 @@ router.post('/API/campus/', function(req, res, next) {
   let campus = new Campus({
     _id: mongoose.Types.ObjectId(),
     name: req.body.name,
+    isLunch: req.body.isLunch,
+    isThuiswerk: req.body.isThuiswerk,
     segments: req.body.segments,
   });
   campus.save(function(err, camp) {
@@ -96,6 +98,7 @@ router.post('/API/segment/', function(req, res, next) {
   let segment = new Segment({
     _id: mongoose.Types.ObjectId(),
     name: req.body.name,
+    isVergadering: req.body.isVergadering,
     locations: req.body.locations,
   });
   segment.save(function(err, seg) {
@@ -240,9 +243,12 @@ router.get('/API/campuses', function(req, res, next) {
       $group: {
         _id: "$_id",
         name: {$first: "$name"},
+        isLunch: {$first: "$isLunch"},
+        isThuiswerk: {$first: "$isThuiswerk"},
         segments: { $push: {
           _id: {$arrayElemAt:["$segment._id", 0]},
           name: {$arrayElemAt:["$segment.name", 0]},
+          isVergadering: {$arrayElemAt:["$segment.isVergadering", 0]},
           locations: "$locations"}
         },
       }
@@ -283,11 +289,11 @@ router.get('/API/locations/', function(req, res, next) {
 /* GET USERS */
 router.get('/API/users', function(req, res, next) {
   let time;
-  if (!req.params['hours']) {
+  if (!req.query['hours']) {
     time = +new Date() - 1000 * 60 * 60 * 24;
   } 
   else {
-    time = +new Date() - 1000 * 60 * 60 * hours;
+    time = +new Date() - 1000 * 60 * 60 * req.query['hours'];
   }
   
   User.find(
@@ -300,7 +306,7 @@ router.get('/API/users', function(req, res, next) {
 
 /* GET USER BY ID */
 router.get('/API/user/:id', function(req, res, next) {
-  User.findById(req.params.id, function(err, user) {
+  User.findById(req.params.id).populate('checkin.location').exec(function(err, user) {
     if (err) { return next(err); } 
     if(user) {
       res.json(user);

@@ -16,9 +16,15 @@ export class CampusComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-  }
-
-  ngOnChanges() {
+    this.campus.segments = this.campus.segments.sort((a, b) => {
+      if (a.isVergadering) {
+          return 1;
+      }
+      if (b.isVergadering) {
+          return -1;
+      }
+      return 0;
+    });
   }
 
 }

@@ -1,10 +1,33 @@
-<h1 class="ui top attached header">Campussen</h1>
-<div class="ui attached segment">
-  <app-campus *ngFor="let localCampus of campuses" [campus]="localCampus" [users]="users">
-  </app-campus>
+<div class="ui search">
+  <div class="ui icon input">
+    <input name="search" class="prompt" type="text" placeholder="Search users..." (keyup)="filter($event)">
+    <i class="search icon"></i>
+  </div>
+  <div class="results"></div>
+</div>
+<div class="ui one column grid" style="width: 100%">
+  <div class="column">
+    <div class="ui three column grid">
+      <div class="row">
+        <app-campus class="column" *ngFor="let localCampus of campuses" [campus]="localCampus" [users]="users">
+        </app-campus>
+      </div>  
+    </div>
+  </div>
+  <div class="column">
+    <div class="ui two column grid">
+      <div class="column">
+        <app-campus *ngFor="let localCampus of lunchCampuses" [campus]="localCampus" [users]="users">
+        </app-campus>
+      </div>
+      <div class="column">
+        <app-campus *ngFor="let localCampus of thuiswerkCampuses" [campus]="localCampus" [users]="users">
+        </app-campus>
+      </div>
+    </div>
+  </div>
 </div>
 
-
-<div class="ui active inverted dimmer" *ngIf="campuses === undefined">
+<div class="ui active inverted dimmer" *ngIf="campuses === undefined || users === undefined">
   <div class="ui text loader">Loading</div>
-</div>
+</div>  

@@ -10,6 +10,7 @@ export class User {
     private _role: string;
     private _messages: Message[];
     private _accountType;
+    private _visible: boolean;
 
     static fromJSON(json) {
         let user;
@@ -51,6 +52,7 @@ export class User {
         this._role = role;
         this._messages = messages;
         this._accountType = accountType;
+        this._visible = true;
     }
 
     get id() {
@@ -103,6 +105,14 @@ export class User {
 
     set accountType(accountType) {
         this._accountType = accountType;
+    }
+
+    get visible() {
+        return this._visible;
+    }
+
+    set visible(visible) {
+        this._visible = visible;
     }
 
     addMessage(message) {

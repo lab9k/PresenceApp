@@ -1,5 +1,10 @@
-<!--<div class="ui card" style="min-height:100px;">-->
-<h3 class="ui left aligned top attached header">{{campus.name}}</h3>
-<app-segment-list *ngIf="users"
-    [segments]="campus.segments" [users]="users">
-</app-segment-list>
+<h3 class="ui left aligned  header">{{campus.name}}</h3>
+<div *ngIf="campus.segments.length > 1 else oneSegment">
+    <app-segment-list 
+        [segments]="campus.segments" [users]="users">
+    </app-segment-list>
+</div>
+<ng-template #oneSegment>
+    <app-segment [segment]="campus.segments[0]" [users]="users">
+    </app-segment>  
+</ng-template>

@@ -3,6 +3,7 @@ import { Location } from './location.model';
 export class Segment {
     private _id: string;
     private _name: string;
+    private _isVergadering: boolean;
     private _locations: Location[];
 
     static fromJSON(json) {
@@ -10,7 +11,7 @@ export class Segment {
         json.locations.forEach(element => {
             locs.push(Location.fromJSON(element));
         });
-        const segment = new Segment(json._id, json.name, locs);
+        const segment = new Segment(json._id, json.name, json.isVergadering, locs);
         return segment;
     }
 
@@ -18,13 +19,15 @@ export class Segment {
         return {
             _id: this._id,
             name: this._name,
+            isVergadering: this._isVergadering,
             locations: this._locations
         };
     }
 
-    constructor(id: string, name: string, locations: Location[]) {
+    constructor(id: string, name: string, isVergadering: boolean, locations: Location[]) {
         this._id = id;
         this._name = name;
+        this._isVergadering = isVergadering;
         this._locations = locations;
     }
 
@@ -42,6 +45,14 @@ export class Segment {
 
     get locations() {
         return this._locations;
+    }
+
+    get isVergadering() {
+        return this._isVergadering;
+    }
+
+    set isVergadering(isVergadering) {
+        this._isVergadering = isVergadering;
     }
 
     addLocation(loc: Location) {
