@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { User } from '../../../../../shared/models/user.model';
 import { DataService } from '../../../../../shared/services/data.service';
 import { Location } from '../../../../../shared/models/location.model';
@@ -22,10 +22,16 @@ export class UserComponent implements OnInit {
   private _color: String;
   private _opacity: String;
   private _img: String;
+  public mobile: boolean;
 
   constructor(private dataService: DataService, private homeService: HomeDataService, private authService: AuthenticationService) { }
 
   ngOnInit() {
+    if (window.innerWidth <= 480) { // 768px portrait
+      this.mobile = true;
+    } else {
+      this.mobile = false;
+    }
     this._img = 'data:image/png;base64,' + new Identicon(this.user.name + this.user.id, 420).toString();
     this._location = this.user.checkin.location;
     const diff = +new Date() - this.user.checkin.time;
@@ -40,6 +46,17 @@ export class UserComponent implements OnInit {
     } else {
       this._color = 'red';
     }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    console.log(window.innerWidth);
+    if (window.innerWidth <= 480) { // 768px portrait
+      this.mobile = true;
+    } else {
+      this.mobile = false;
+    }
+    console.log(this.mobile);
   }
 
   get location() {

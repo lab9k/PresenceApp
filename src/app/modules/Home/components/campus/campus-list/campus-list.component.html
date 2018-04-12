@@ -5,9 +5,10 @@
   </div>
   <div class="results"></div>
 </div>
+
 <div class="ui one column grid" style="width: 100%">
   <div class="column">
-    <div class="ui three column grid">
+    <div class="ui three column stackable grid">
       <div class="row">
         <app-campus class="column" *ngFor="let localCampus of campuses" [campus]="localCampus" [users]="users">
         </app-campus>
@@ -15,7 +16,7 @@
     </div>
   </div>
   <div class="column">
-    <div class="ui two column grid">
+    <div class="ui two column stackable grid">
       <div class="column">
         <app-campus *ngFor="let localCampus of lunchCampuses" [campus]="localCampus" [users]="users">
         </app-campus>

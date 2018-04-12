@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { HomeDataService } from '../../../home.service';
 import { User } from '../../../../../shared/models/user.model';
 import { Campus } from '../../../../../shared/models/campus.model';
@@ -15,10 +15,16 @@ export class UserListComponent implements OnInit {
   @Input() public segment: Segment;
   @Input() public users: User[];
   private _filteredUsers: User[];
+  public mobile: boolean;
 
   constructor(private _userDataService: HomeDataService) { }
 
   ngOnInit() {
+    if (window.innerWidth <= 480) { // 768px portrait
+      this.mobile = true;
+    } else {
+      this.mobile = false;
+    }
     this._filteredUsers = [];
     this.users.map(user => {
       this.segment.locations.map(location => {
@@ -40,6 +46,15 @@ export class UserListComponent implements OnInit {
         }
       });
     });
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    if (window.innerWidth <= 480) { // 768px portrait
+      this.mobile = true;
+    } else {
+      this.mobile = false;
+    }
   }
 
   get filteredUsers() {

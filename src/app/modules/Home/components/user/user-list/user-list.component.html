@@ -1,6 +1,16 @@
-<div class="ui attached segment">
+<div class="ui attached segment" *ngIf="!mobile else mobileLayout">
   <div class="ui stackable centered grid">
     <app-user *ngFor="let localUser of filteredUsers" [user]="localUser">
     </app-user>
   </div>
 </div>
+
+<ng-template #mobileLayout>
+  <div class="ui attached segment">
+    <div class="ui middle aligned divided list">
+        <app-user class="item" *ngFor="let localUser of filteredUsers" [user]="localUser">
+        </app-user>
+    </div>
+  </div>
+  
+</ng-template>

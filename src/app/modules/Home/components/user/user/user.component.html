@@ -1,28 +1,36 @@
-<div class="column" style="padding: 0.5em 0em 0.5em 0em" *ngIf="user.visible" [attr.data-tooltip]="user.name">
-  <div class='ui {{color}} fluid card' [ngStyle]="{'opacity': opacity}"
-    (click)="userSelected()">
-      <div class="ui tiny image" style="width: 60px; height: 60px;">
-          <img *ngIf="user.picture else googlepic"
-          src="{{user.picture}}">
-          <ng-template #googlepic>
-                <img 
-                src="{{img}}">
-          </ng-template>
-      </div>
-      <div class="description">
-          <div class="center aligned" style="overflow:hidden;width:60px;height:20px;line-height:20px;">
-                {{user.name}} 
-          </div>   
-      </div>
-      <!--
-      <div class="extra content" *ngIf="location != undefined" style="width:80px">
-        <div class="left aligned" style="word-wrap: break-word;flex: inherit; width:80px">
-            {{location.name}} 
-        </div> 
-      </div>
-    -->
-  </div> 
+<div *ngIf="!mobile else mobileLayout">
+    <div class="column" style="padding: 0.5em 0em 0.5em 0em" *ngIf="user.visible" [attr.data-tooltip]="user.name">
+    <div class='ui {{color}} fluid card' [ngStyle]="{'opacity': opacity}"
+        (click)="userSelected()">
+        <div class="ui tiny image" style="width: 60px; height: 60px;">
+            <img *ngIf="user.picture else googlepic"
+            src="{{user.picture}}">
+            <ng-template #googlepic>
+                    <img 
+                    src="{{img}}">
+            </ng-template>
+        </div>
+        <div class="description">
+            <div class="center aligned" style="overflow:hidden;width:60px;height:20px;line-height:20px;">
+                    {{user.name}} 
+            </div>   
+        </div>
+    </div> 
+    </div>
 </div>
+
+
+<ng-template #mobileLayout>
+    <img *ngIf="user.picture && user.visible else googlepic"
+        src="{{user.picture}}" class="ui avatar image">
+    <ng-template #googlepic>
+        <img src="{{img}}" class="ui avatar image" *ngIf="user.visible">
+    </ng-template>
+    <div class="content" *ngIf="user.visible">
+        <a class="header">{{user.name}}</a>
+    </div>
+</ng-template>
+
 <div class="ui modal" id="{{user.id}}" *ngIf="location && location.doNotDisturb">
     <i class="close icon"></i>
     <div class="header">
