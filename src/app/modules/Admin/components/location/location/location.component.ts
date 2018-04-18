@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Location } from '../../../../../shared/models/location.model';
 
 @Component({
@@ -9,10 +9,15 @@ import { Location } from '../../../../../shared/models/location.model';
 export class LocationComponent implements OnInit {
 
   @Input() public location: Location;
+  @Output() selectLocationEvent = new EventEmitter<Location>();
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  selected() {
+    this.selectLocationEvent.next(this.location);
   }
 
 }

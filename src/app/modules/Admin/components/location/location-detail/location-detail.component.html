@@ -1,0 +1,22 @@
+<div *ngIf="location !== undefined">
+    <h2 class="ui header">Location</h2>
+    <form class="ui form" #f="ngForm" (ngSubmit)="onSubmit()">
+      <div class="field">
+        <label>Name</label>
+        <input type="text" name="location-name" placeholder="Location Name" 
+          [(ngModel)]="location.name" required>
+      </div>
+      <div class="field">
+        <label>Is Do Not Disturb</label>  
+        <input type="checkbox" name="DoNotDisturb" tabindex="0"
+          [(ngModel)]="location.DoNotDisturb">
+      </div>
+      <button name="submit-button" class="ui right floated primary button" type="submit" [disabled]="!f.valid">
+        Save
+      </button>
+      <button name="delete-button" class="ui right floated negative button" type="button" (click)="deleteLocation()">
+        Delete
+      </button>
+    </form>
+  </div>
+  

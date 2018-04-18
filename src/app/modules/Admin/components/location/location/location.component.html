@@ -1,7 +1,12 @@
-<div class="ui segment">
-    <div class="ui fluid item">
-        <div class="content">
-            <p>{{location.name}}</p>
+<div class="title" (click)="selected()">
+    <i class="dropdown icon"></i> {{location.name}} <a class="ui circular label">{{location.stickers.length}}</a>
+</div>
+<div class="content">
+    <div class="ui selection list">
+        <div class="item" *ngFor=" let sticker of location.stickers">
+            <div class="content">
+                {{sticker}}
+            </div>
         </div>
     </div>
 </div>

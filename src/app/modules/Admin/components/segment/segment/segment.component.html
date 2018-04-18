@@ -1,7 +1,12 @@
-<div class="ui segment">
-  <div class="ui fluid item">
-    <div class="content">
-      <p>{{segment.name}}</p>
+<div class="title" (click)="selected()">
+  <i class="dropdown icon"></i> {{segment.name}} <a class="ui circular label">{{segment.locations.length}}</a>
+</div>
+<div class="content">
+    <div class="subtitle">Locations</div>
+    <div class="accordion">
+        <app-location-list [segment]="segment"
+          (selectLocationEvent)="selectLocation($event)"
+          (createLocationEvent)="createLocation($event)">
+        </app-location-list>
     </div>
-  </div>
 </div>

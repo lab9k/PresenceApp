@@ -1,3 +1,7 @@
 <app-campus *ngFor="let localCampus of campuses" [campus]="localCampus" 
-    (deleteCampusEvent)="deleteCampus($event)" (updateCampusEvent)="updateCampus($event)">
+    (selectCampusEvent)="selectCampus($event)" 
+    (selectSegmentEvent)="selectSegment($event)"
+    (selectLocationEvent)="selectLocation($event)"
+    (createSegmentEvent)="createSegment($event)"
+    (createLocationEvent)="createLocation($event)">
 </app-campus>

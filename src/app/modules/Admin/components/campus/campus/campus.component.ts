@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Campus } from '../../../../../shared/models/campus.model';
+import { Location } from '../../../../../shared/models/location.model';
 import { FormGroup, FormControl } from '@angular/forms';
+import { Segment } from '../../../../../shared/models/segment.model';
 
 @Component({
   selector: 'app-campus',
@@ -10,21 +12,35 @@ import { FormGroup, FormControl } from '@angular/forms';
 export class CampusComponent implements OnInit {
 
   @Input() public campus: Campus;
-  @Output() deleteCampusEvent = new EventEmitter<Campus>();
-  @Output() updateCampusEvent = new EventEmitter<Campus>();
+  @Output() selectCampusEvent = new EventEmitter<Campus>();
+  @Output() selectSegmentEvent = new EventEmitter<Segment>();
+  @Output() selectLocationEvent = new EventEmitter<Location>();
+  @Output() createSegmentEvent = new EventEmitter<Campus>();
+  @Output() createLocationEvent = new EventEmitter<Segment>();
 
   constructor() { }
 
   ngOnInit() {
   }
 
-  delete() {
-    this.deleteCampusEvent.next(this.campus);
+  selected() {
+    this.selectCampusEvent.next(this.campus);
   }
 
-  test(event, data) {
-    event.target.blur();
-    this.campus.name = data;
-    this.updateCampusEvent.next(this.campus);
+  selectSegment(segment) {
+    this.selectSegmentEvent.next(segment);
   }
+
+  selectLocation(location) {
+    this.selectLocationEvent.next(location);
+  }
+
+  createSegment(event) {
+    this.createSegmentEvent.next(this.campus);
+  }
+
+  createLocation(segment) {
+    this.createLocationEvent.next(segment);
+  }
+
 }

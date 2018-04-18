@@ -1,0 +1,26 @@
+<div *ngIf="campus !== undefined">
+  <h2 class="ui header">Campus</h2>
+  <form class="ui form" #f="ngForm" (ngSubmit)="onSubmit($event)">
+    <div class="field">
+      <label>Name</label>
+      <input type="text" name="campus-name" placeholder="Campus Name" 
+        [(ngModel)]="campus.name" required>
+    </div>
+    <div class="field">
+      <label>Is Lunch</label>  
+      <input type="checkbox" name="isLunch" tabindex="0"
+        [(ngModel)]="campus.isLunch">
+    </div>
+    <div class="field">
+      <label>Is Thuiswerk</label> 
+      <input type="checkbox" name="isThuiswerk" tabindex="0"
+        [(ngModel)]="campus.isThuiswerk">
+    </div>
+    <button name="submit-button" class="ui right floated primary button" type="submit" [disabled]="!f.valid">
+      Save
+    </button>
+    <button name="delete-button" class="ui right floated negative button" type="button" (click)="deleteCampus()">
+      Delete
+    </button>
+  </form>
+</div>

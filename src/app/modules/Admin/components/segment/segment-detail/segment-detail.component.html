@@ -1,0 +1,22 @@
+<div *ngIf="segment !== undefined">
+    <h2 class="ui header">Segment</h2>
+    <form class="ui form" #f="ngForm" (ngSubmit)="onSubmit()">
+      <div class="field">
+        <label>Name</label>
+        <input type="text" name="segment-name" placeholder="Segment Name" 
+          [(ngModel)]="segment.name" required>
+      </div>
+      <div class="field">
+        <label>Is Vergadering</label>  
+        <input type="checkbox" name="isLunch" tabindex="0"
+          [(ngModel)]="segment.isVergadering">
+      </div>
+      <button name="submit-button" class="ui right floated primary button" type="submit" [disabled]="!f.valid">
+        Save
+      </button>
+      <button name="delete-button" class="ui right floated negative button" type="button" (click)="deleteSegment()">
+        Delete
+      </button>
+    </form>
+  </div>
+  

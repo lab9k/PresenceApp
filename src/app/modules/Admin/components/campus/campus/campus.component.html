@@ -1,17 +1,14 @@
-<div class="ui segment">
-    <!--
-    <div class="ui input">
-        <input #name type="text" placeholder="Search..."
-            value="{{campus.name}}" (keyup.enter)="test($event, name.value)">
-    </div>-->
-    <p>{{campus.name}}</p>
-    <div *ngIf="campus.name !== 'Segments without campus'">
-        <a class="ui right corner label" (click)="delete()">
-            <i class="red trash icon"></i>
-        </a>
-    </div>
-    <div class="ui container" id="segment-list">
-        <app-segment-list [campus]="campus">
+<div class="title" (click)="selected()">
+    <i class="dropdown icon"></i> {{campus.name}} <a class="ui circular label">{{campus.segments.length}}</a>
+</div>
+<div class="content">
+    <div class="subtitle">Segments</div>
+    <div class="accordion">
+        <app-segment-list [campus]="campus" 
+            (selectSegmentEvent)="selectSegment($event)"
+            (selectLocationEvent)="selectLocation($event)"
+            (createSegmentEvent)="createSegment($event)"
+            (createLocationEvent)="createLocation($event)">
         </app-segment-list>
-    </div>  
+    </div>
 </div>

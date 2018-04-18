@@ -1,8 +1,8 @@
-<div *ngIf="segments !== undefined">
-  <div class="ui container" id="{{campus.name}}" [dragula]='"bag-segments"' 
-      [dragulaModel]="campus.segments" style="min-height: 15px;">
-          <app-segment *ngFor="let localSegment of campus.segments" [segment]="localSegment"
-          id="{{localSegment._id}}">
-        </app-segment>
-  </div>
+<app-segment *ngFor="let localSegment of campus.segments" [segment]="localSegment"
+  (selectSegmentEvent)="selectSegment($event)"
+  (selectLocationEvent)="selectLocation($event)"
+  (createLocationEvent)="createLocation($event)">
+</app-segment>
+<div class="title" (click)="createSegment()">
+    <i class="plus icon"></i> Add Segment
 </div>

@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Campus } from '../../../../../shared/models/campus.model';
 import { Segment } from '../../../../../shared/models/segment.model';
-import { DragulaService } from 'ng2-dragula';
+import { Location } from '../../../../../shared/models/location.model';
 import { AdminDataService } from '../../../admin.service';
 import { DataService } from '../../../../../shared/services/data.service';
 
@@ -14,13 +14,12 @@ export class SegmentListComponent implements OnInit, OnDestroy {
 
   @Input() public campus: Campus;
   private _segments: Segment[];
+  @Output() selectSegmentEvent = new EventEmitter<Segment>();
+  @Output() selectLocationEvent = new EventEmitter<Location>();
+  @Output() createSegmentEvent = new EventEmitter<Location>();
+  @Output() createLocationEvent = new EventEmitter<Segment>();
 
-  constructor(private dragulaService: DragulaService, private adminDataService: AdminDataService, private dataService: DataService) {
-    dragulaService.dropModel.subscribe((value) => {
-      if (value.slice()[0] === 'bag-segments') {
-        this.onDropModel(value);
-      }
-    });
+  constructor(private adminDataService: AdminDataService, private dataService: DataService) {
   }
 
   ngOnInit() {
@@ -37,10 +36,20 @@ export class SegmentListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
   }
 
-  private onDropModel(args) {
-    if (this.campus.name !== 'Segments without campus') {
-      this.adminDataService.updateCampus(this.campus).subscribe();
-    }
+  selectSegment(segment) {
+    this.selectSegmentEvent.next(segment);
+  }
+
+  selectLocation(location) {
+    this.selectLocationEvent.next(location);
+  }
+
+  createSegment() {
+    this.createSegmentEvent.next();
+  }
+
+  createLocation(segment) {
+    this.createLocationEvent.next(segment);
   }
 
   get segments() {

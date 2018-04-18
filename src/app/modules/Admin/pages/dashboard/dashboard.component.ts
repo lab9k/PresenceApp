@@ -1,121 +1,54 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { Campus } from '../../../../shared/models/campus.model';
 import { Location } from '../../../../shared/models/location.model';
 import { AdminDataService } from '../../admin.service';
 import { DragulaService } from 'ng2-dragula/components/dragula.provider';
 import { DataService } from '../../../../shared/services/data.service';
 import { Segment } from '../../../../shared/models/segment.model';
+import { CampusComponent } from '../../components/campus/campus/campus.component';
+import { CampusDetailComponent } from '../../components/campus/campus-detail/campus-detail.component';
+import { SegmentDetailComponent } from '../../components/segment/segment-detail/segment-detail.component';
+import { LocationDetailComponent } from '../../components/location/location-detail/location-detail.component';
 
+declare var $: any;
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
 })
-export class DashboardComponent implements OnInit, OnDestroy {
+export class DashboardComponent implements OnInit {
 
   private _campuses: Campus[];
-  private _campus: Campus;
-  private _segments: Segment[];
-  private _segment: Segment;
-  private _locations: Location[];
-  private _location: Location;
 
-  constructor(private _adminDataService: AdminDataService, private dataService: DataService, private dragulaService: DragulaService) {
-    this.dragulaService.setOptions('bag-segments', {
-      accepts: function (el, container, handle) {
-        return container.id !== 'Segments without campus';
-      }
-    });
-    this.dragulaService.setOptions('bag-locations', {
-      accepts: function (el, container, handle) {
-        return container.id !== 'Locations without segment';
-      }
-    });
-    this.dragulaService.setOptions('bag-stickers', {
-      accepts: function (el, container, handle) {
-        return container.id !== 'Stickers without location';
-      }
-    });
-  }
+  @ViewChild('selectedElement', { read: ViewContainerRef })
+  selectedElement;
+
+  constructor(private _adminDataService: AdminDataService, private dataService: DataService,
+      private _componentFactoryResolver: ComponentFactoryResolver) {
+    }
 
   ngOnInit() {
-    this._campus = new Campus(null, 'Segments without campus', false, false, []);
-    this._segment = new Segment(null, 'Locations without segment', false, []);
-    this._location = new Location(null, 'Stickers without location', [], false);
-
     this.dataService.campuses()
       .subscribe(items => {
         this._campuses = items;
-        this.dataService.segments().subscribe(segments => {
-          this._segments = segments;
-          segments.forEach(segment => {
-            this._campus.segments.push(segment);
-            this._campuses.forEach(cmp => {
-              if (cmp.segments.find(x => x.id === segment.id)) {
-                this._campus.segments.pop();
-              }
-            });
-          });
-          this.dataService.locations().subscribe(locations => {
-            this._locations = locations;
-            locations.forEach(location => {
-              this._segment.locations.push(location);
-              this._segments.forEach(seg => {
-                if (seg.locations.find(x => x.id === location.id)) {
-                  this._segment.locations.pop();
-                }
-              });
-            });
-          });
-        });
       });
 
-  }
-
-  ngOnDestroy() {
-    this.dragulaService.destroy('bag-segments');
-    this.dragulaService.destroy('bag-locations');
-    this.dragulaService.destroy('bag-stickers');
+      $('.ui.accordion').accordion({ exclusive: true });
+      $('.ui.buttons .button').on('click', function() {
+        $(this).addClass('positive')
+              .siblings()
+              .removeClass('positive');
+      });
   }
 
   get campuses() {
     return this._campuses;
   }
 
-  get campus() {
-    return this._campus;
-  }
-
-  get segments() {
-    return this._segments;
-  }
-
-  get segment() {
-    return this._segment;
-  }
-
-  get locations() {
-    return this._locations;
-  }
-
-  get location() {
-    return this._location;
-  }
-
-  createCampus(name) {
-    const campus = new Campus(null, name, false, false, []);
+  createCampus() {
+    const campus = new Campus(null, 'New Campus', false, false, []);
     this._adminDataService.createCampus(campus).subscribe(res => {
       this._campuses.push(res);
-    });
-  }
-
-  updateCampus(campus) {
-    this._adminDataService.updateCampus(campus).subscribe(res => {
-      const index = this._campuses.indexOf(campus, 0);
-      if (index > -1) {
-        this._campuses.splice(index, 1);
-      }
-      this._campuses.push(campus);
     });
   }
 
@@ -127,19 +60,97 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this._adminDataService.deleteCampus(campus).subscribe();
   }
 
-  createSegment(name) {
-    const segment = new Segment(null, name, false, []);
+  selectCampus(campus) {
+    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(CampusDetailComponent);
+    const viewContainerRef = this.selectedElement;
+    viewContainerRef.clear();
+    const componentRef = viewContainerRef.createComponent(componentFactory);
+    componentRef.instance.campus = campus;
+    componentRef.instance.isDeleted.subscribe(res => {
+      if (res) {
+        const index = this._campuses.indexOf(campus, 0);
+        if (index > -1) {
+          this._campuses.splice(index, 1);
+        }
+      }
+    });
+    const yourComponentType1Instance = (<CampusDetailComponent>componentRef.instance);
+  }
+
+  selectSegment(segment) {
+    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(SegmentDetailComponent);
+    const viewContainerRef = this.selectedElement;
+    viewContainerRef.clear();
+    const componentRef = viewContainerRef.createComponent(componentFactory);
+    componentRef.instance.segment = segment;
+    componentRef.instance.isDeleted.subscribe(res => {
+      if (res) {
+        this._campuses.forEach(c => {
+          if (c.segments.includes(segment)) {
+            const index = c.segments.indexOf(segment, 0);
+            if (index > -1) {
+              c.segments.splice(index, 1);
+            }
+          }
+        });
+      }
+    });
+    const yourComponentType1Instance = (<SegmentDetailComponent>componentRef.instance);
+  }
+
+  selectLocation(location) {
+    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(LocationDetailComponent);
+    const viewContainerRef = this.selectedElement;
+    viewContainerRef.clear();
+    const componentRef = viewContainerRef.createComponent(componentFactory);
+    componentRef.instance.location = location;
+    componentRef.instance.isDeleted.subscribe(res => {
+      if (res) {
+        this._campuses.forEach(c => {
+          c.segments.forEach(s => {
+            if (s.locations.includes(location)) {
+              const index = s.locations.indexOf(location, 0);
+              if (index > -1) {
+                s.locations.splice(index, 1);
+              }
+            }
+          });
+        });
+      }
+    });
+    const yourComponentType1Instance = (<LocationDetailComponent>componentRef.instance);
+  }
+
+  createSegment(campus) {
+    console.log(campus);
+    const segment = new Segment(null, 'New Segment', false, []);
+    const index = this._campuses.indexOf(campus, 0);
     this._adminDataService.createSegment(segment).subscribe(res => {
-      this._segments.push(res);
+      this._campuses[index].addSegment(res);
+      this._adminDataService.updateCampus(this._campuses[index]).subscribe();
     });
   }
 
+  createLocation(segment) {
+    console.log(segment);
+    const location = new Location(null, 'New Location', [], false);
+    this._campuses.forEach(c => {
+      if (c.segments.includes(segment)) {
+        const index = c.segments.indexOf(segment, 0);
+        this._adminDataService.createLocation(location).subscribe(res => {
+          c.segments[index].addLocation(res);
+          this._adminDataService.updateSegment(c.segments[index]).subscribe();
+        });
+      }
+    });
+  }
+/*
   deleteSegment(segment) {
     const index = this._segments.indexOf(segment, 0);
     if (index > -1) {
       this._segments.splice(index, 1);
     }
     this._adminDataService.deleteSegment(segment).subscribe();
-  }
+  }*/
 
 }

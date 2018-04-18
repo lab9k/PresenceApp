@@ -54,7 +54,7 @@ router.post('/API/checkin/', function(req, res, next) {
           user.save(function(er, usr) {
             if(err) { return next(err);}
           });
-          return res.status(200).json({message: 'Location has no name.'});
+          return res.status(400).json({message: 'Location has no name.'});
         }
         user.checkin = { location: location, time: +new Date()};
         user.save(function(err, usr) {
@@ -194,17 +194,18 @@ router.put('/API/message', function(req, res, next) {
 
 /* UPDATE CAMPUS */
 router.put('/API/campus/', function(req, res, next) {
-  console.log(req.body);
-  Campus.findByIdAndUpdate(req.body._id, req.body, function (err, campus) {
-    if (err) { return next(err); }
-    res.json(campus);
+  Campus.findByIdAndUpdate(req.body._id, req.body, {new: true})
+    .populate('segments').exec(function (err, campus) {
+      if (err) { return next(err); }
+      console.log(campus);
+      res.json(campus);
   })
 });
 
 /* UPDATE SEGMENT */
 router.put('/API/segment/', function(req, res, next) {
   console.log(req.body);
-  Segment.findByIdAndUpdate(req.body._id, req.body, function (err, segment) {
+  Segment.findByIdAndUpdate(req.body._id, req.body, {new: true}, function (err, segment) {
     if (err) { return next(err); }
     res.json(segment);
   })
@@ -496,17 +497,9 @@ router.get('/API/location/sticker/:sticker', function(req, res, next) {
 
 /* GET USER WITH PHONEID */
 router.get('/API/user/phoneid/:phoneid', function(req, res, next) {
-  User.aggregate([
-    {$match: {phoneid: req.params.phoneid}},
-    {$lookup:
-      {
-        from: "messages",
-        localField: "messages",
-        foreignField: "_id",
-        as: "messages"
-      }
-    }
-  ],function(err, user) {
+  User.find({$match: {phoneid: req.params.phoneid}})
+  .populate('messages', 'checkin.time')
+  .exec(function(err, user) {
     if (err) {next(err);}
     if (user) {
       res.json(user);
