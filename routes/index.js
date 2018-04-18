@@ -36,7 +36,9 @@ router.post('/API/checkin/', function(req, res, next) {
   let user = null;
   let id = req.body.locationid;
   
-  User.findById(req.body.userid, function(err, usr) {
+  User.findById(req.body.userid)
+    .populate('messages')
+    .exec(function(err, usr) {
     if(err) {return next(err);}
     if(usr) {
       user = usr;
@@ -54,7 +56,7 @@ router.post('/API/checkin/', function(req, res, next) {
           user.save(function(er, usr) {
             if(err) { return next(err);}
           });
-          return res.status(400).json({message: 'Location has no name.'});
+          return res.status(200).json({message: 'Location has no name.'});
         }
         user.checkin = { location: location, time: +new Date()};
         user.save(function(err, usr) {
