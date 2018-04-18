@@ -46,7 +46,7 @@ router.post('/API/checkin/', function(req, res, next) {
       Location.findOne({stickers: req.body.locationid}, function(err, location) {
         if (err) { return next(err);}
         if(!location) {
-          return res.status(400).json({message: 'New sticker'});
+          return res.status(201).json({message: 'New sticker'});
         }
         if(!location.name) {
           user.checkin = { location: location, time: +new Date()};
@@ -56,7 +56,7 @@ router.post('/API/checkin/', function(req, res, next) {
           user.save(function(er, usr) {
             if(err) { return next(err);}
           });
-          return res.status(400).json({message: 'Location has no name.'});
+          return res.status(202).json({message: 'Location has no name.'});
         }
         user.checkin = { location: location, time: +new Date()};
         user.save(function(err, usr) {
