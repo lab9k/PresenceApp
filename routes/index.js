@@ -497,8 +497,9 @@ router.get('/API/location/sticker/:sticker', function(req, res, next) {
 
 /* GET USER WITH PHONEID */
 router.get('/API/user/phoneid/:phoneid', function(req, res, next) {
-  User.find({$match: {phoneid: req.params.phoneid}})
-  .populate('messages', 'checkin.time')
+  User.findOne({phoneid: req.params.phoneid})
+  .populate('messages')
+  .populate('checkin.location')
   .exec(function(err, user) {
     if (err) {next(err);}
     if (user) {
