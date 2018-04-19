@@ -207,10 +207,12 @@ router.put('/API/campus/', function(req, res, next) {
 /* UPDATE SEGMENT */
 router.put('/API/segment/', function(req, res, next) {
   console.log(req.body);
-  Segment.findByIdAndUpdate(req.body._id, req.body, {new: true}, function (err, segment) {
+  Segment.findByIdAndUpdate(req.body._id, req.body, {new: true})
+  .populate('locations')
+  .exec(function (err, segment) {
     if (err) { return next(err); }
     res.json(segment);
-  })
+  });
 });
 
 /* UPDATE LOCATION */
