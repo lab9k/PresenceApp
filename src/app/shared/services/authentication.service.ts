@@ -82,7 +82,7 @@ export class AuthenticationService {
   }
 
   getIp(): Observable<String[]> {
-    return this.http.get('http://ipinfo.io')
+    return this.http.get('https://api.ipify.org/')
       .map(res => res.json());
   }
 }

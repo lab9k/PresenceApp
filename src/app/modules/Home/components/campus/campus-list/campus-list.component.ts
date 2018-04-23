@@ -26,7 +26,13 @@ export class CampusListComponent implements OnInit {
   constructor(private _homeDataService: HomeDataService, private cd: ChangeDetectorRef, private authService: AuthenticationService) { }
 
   ngOnInit() {
+    $.getJSON('https://api.ipify.org?format=jsonp&callback=?',
+      function(json) {
+       console.log('My public IP address is: ', json.ip);
+      }
+    );
     this.authService.getIp().subscribe(data => {
+      console.log(data);
       this.authService.getCurrentUser().subscribe(currentUser => {
         if (currentUser === null) {
           this._correctIp = (data['ip'] === '212.123.26.150');
@@ -184,21 +190,8 @@ export class CampusListComponent implements OnInit {
 
   sortSegments() {
     for (let i = 0, len = this._campuses.length; i < len; i++) {
-      this._campuses[i].segments = this._campuses[i].segments.sort((a, b) => {
-        if (a.weight > b.weight) {
-          return -1;
-        } else if (a.weight < b.weight) {
-          return 1;
-        }
-        return 0;
-      });
-    }
-  }
-
-  sortLocations() {
-    for (let i = 0, len = this._campuses.length; i < len; i++) {
-      for (let j = 0, len2 = this._campuses[i].segments.length; j < len2; j++) {
-        this._campuses[i].segments[i].locations = this._campuses[i].segments[i].locations.sort((a, b) => {
+      if (this._campuses[i].segments !== undefined) {
+        this._campuses[i].segments = this._campuses[i].segments.sort((a, b) => {
           if (a.weight > b.weight) {
             return -1;
           } else if (a.weight < b.weight) {
@@ -206,6 +199,25 @@ export class CampusListComponent implements OnInit {
           }
           return 0;
         });
+      }
+    }
+  }
+
+  sortLocations() {
+    for (let i = 0, len = this._campuses.length; i < len; i++) {
+      if (this._campuses[i].segments !== undefined) {
+        for (let j = 0, len2 = this._campuses[i].segments.length; j < len2; j++) {
+          if (this._campuses[i].segments[j] !== undefined) {
+            this._campuses[i].segments[j].locations = this._campuses[i].segments[j].locations.sort((a, b) => {
+              if (a.weight > b.weight) {
+                return -1;
+              } else if (a.weight < b.weight) {
+                return 1;
+              }
+              return 0;
+            });
+          }
+        }
       }
     }
   }
