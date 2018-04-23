@@ -20,7 +20,7 @@ export class CheckinComponent implements OnInit {
     this.authService.user.subscribe(user => {
       this.dataService.getUserById(user).subscribe(usr => {
         if (usr.checkin) {
-          this.dataService.getLocationById(usr.checkin.location).subscribe(loc => {
+          this.dataService.getLocationById(usr.checkin.location.id).subscribe(loc => {
             this._location = loc;
             this._time = this.timeConverter(usr.checkin.time);
           });

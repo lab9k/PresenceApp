@@ -7,6 +7,10 @@
           [(ngModel)]="location.name" required>
       </div>
       <div class="field">
+        <label>Weight:</label>
+        <input type="number" name="location-weight" [(ngModel)]="location.weight" required>
+      </div>
+      <div class="field">
         <label>Is Do Not Disturb</label>  
         <input type="checkbox" name="DoNotDisturb" tabindex="0"
           [(ngModel)]="location.DoNotDisturb">

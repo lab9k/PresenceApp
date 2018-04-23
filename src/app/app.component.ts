@@ -12,6 +12,7 @@ declare var $: any;
 export class AppComponent  {
 
   private _currentUser: string;
+  private _correctIp: boolean;
 
   constructor(private authService: AuthenticationService) {
   }
@@ -25,4 +26,7 @@ export class AppComponent  {
     .dropdown();
   }
 
+  get correctIp() {
+    return this._correctIp;
+  }
 }

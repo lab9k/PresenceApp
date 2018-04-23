@@ -21,7 +21,7 @@ export class LocationResolver implements Resolve<Location> {
             })
             .catch(error => {
                 console.log(`Retrieval error: ${error}`);
-                return Observable.of(new Location(null, null, [route.params['id']], null));
+                return Observable.of(new Location(null, null, null, [route.params['id']], null));
             });
     }
  }

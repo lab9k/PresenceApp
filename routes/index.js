@@ -250,9 +250,11 @@ router.get('/API/campuses', function(req, res, next) {
         name: {$first: "$name"},
         isLunch: {$first: "$isLunch"},
         isThuiswerk: {$first: "$isThuiswerk"},
+        weight: {$first: "$weight"},
         segments: { $push: {
           _id: {$arrayElemAt:["$segment._id", 0]},
           name: {$arrayElemAt:["$segment.name", 0]},
+          weight: {$arrayElemAt:["$segment.weight", 0]},
           isVergadering: {$arrayElemAt:["$segment.isVergadering", 0]},
           locations: "$locations"}
         },
@@ -502,7 +504,10 @@ router.get('/API/location/sticker/:sticker', function(req, res, next) {
 /* GET USER WITH PHONEID */
 router.get('/API/user/phoneid/:phoneid', function(req, res, next) {
   User.findOne({phoneid: req.params.phoneid})
-  .populate('messages')
+  .populate({
+    path: 'messages',
+    match: { isRead: false }
+  })
   .populate('checkin.location')
   .exec(function(err, user) {
     if (err) {next(err);}

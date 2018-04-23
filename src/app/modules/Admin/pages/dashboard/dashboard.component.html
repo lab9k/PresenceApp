@@ -1,6 +1,6 @@
 <div class="ui basic segment">
   <h1>Dashboard</h1>
-  <div class="ui horizontal segments">
+  <div class="ui {{orientation}} segments">
     <div class="ui fluid segment">
       <div class="ui fluid styled accordion">
           <app-campus-list [campuses]="campuses" 
@@ -15,11 +15,10 @@
           </div>
       </div>
     </div>
-    <div class="ui fluid segment">
+    <div class="ui fluid clearing segment">
       <ng-template #selectedElement>
       </ng-template>
     </div>
   </div>
-  
 </div>
  

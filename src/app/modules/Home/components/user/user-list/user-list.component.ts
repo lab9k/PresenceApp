@@ -20,7 +20,7 @@ export class UserListComponent implements OnInit {
   constructor(private _userDataService: HomeDataService) { }
 
   ngOnInit() {
-    if (window.innerWidth <= 480) { // 768px portrait
+    if (window.innerWidth <= 768) { // 768px portrait
       this.mobile = true;
     } else {
       this.mobile = false;
@@ -50,7 +50,7 @@ export class UserListComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
-    if (window.innerWidth <= 480) { // 768px portrait
+    if (window.innerWidth <= 768) { // 768px portrait
       this.mobile = true;
     } else {
       this.mobile = false;

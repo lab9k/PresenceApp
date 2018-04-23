@@ -7,6 +7,10 @@
           [(ngModel)]="segment.name" required>
       </div>
       <div class="field">
+        <label>Weight:</label>
+        <input type="number" name="segment-weight" [(ngModel)]="segment.weight" required>
+      </div>
+      <div class="field">
         <label>Is Vergadering</label>  
         <input type="checkbox" name="isLunch" tabindex="0"
           [(ngModel)]="segment.isVergadering">

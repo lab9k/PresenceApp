@@ -5,6 +5,7 @@ export class Campus {
     private _name: string;
     private _isLunch: boolean;
     private _isThuiswerk: boolean;
+    private _weight: number;
     private _segments: Segment[];
 
     static fromJSON(json) {
@@ -12,7 +13,7 @@ export class Campus {
         json.segments.forEach(element => {
             segs.push(Segment.fromJSON(element));
         });
-        const campus = new Campus(json._id, json.name, json.isLunch, json.isThuiswerk, segs);
+        const campus = new Campus(json._id, json.name, json.isLunch, json.isThuiswerk, json.weight, segs);
         return campus;
     }
 
@@ -22,15 +23,17 @@ export class Campus {
             name: this._name,
             isLunch: this._isLunch,
             isThuiswerk: this._isThuiswerk,
+            weight: this._weight,
             segments: this._segments
         };
     }
 
-    constructor(id: string, name: string, isLunch: boolean, isThuiswerk: boolean, segments: Segment[]) {
+    constructor(id: string, name: string, isLunch: boolean, isThuiswerk: boolean, weight: number, segments: Segment[]) {
         this._id = id;
         this._name = name;
         this._isLunch = isLunch;
         this._isThuiswerk = isThuiswerk;
+        this._weight = weight;
         this._segments = segments;
     }
 
@@ -68,6 +71,14 @@ export class Campus {
 
     set isThuiswerk(isThuiswerk) {
         this._isThuiswerk = isThuiswerk;
+    }
+
+    get weight() {
+        return this._weight;
+    }
+
+    set weight(weight) {
+        this._weight = weight;
     }
 
     addSegment(seg: Segment) {

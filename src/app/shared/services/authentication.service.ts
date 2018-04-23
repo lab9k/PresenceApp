@@ -8,6 +8,7 @@ import 'rxjs/add/operator/map';
 export class AuthenticationService {
 
   private _appUrl = 'http://localhost:3000/API';
+  private _ipUrl: 'https://api.ipify.org';
   private _user: BehaviorSubject<string>;
   public auth2: any;
   public redirectUrl: string;
@@ -78,5 +79,10 @@ export class AuthenticationService {
     const options = new RequestOptions({ headers: headers });
     return this.http.put(`/API/user/removephoneid`, user)
       .map(res => res.json()).map(item => User.fromJSON(item));
+  }
+
+  getIp(): Observable<String[]> {
+    return this.http.get('http://ipinfo.io')
+      .map(res => res.json());
   }
 }

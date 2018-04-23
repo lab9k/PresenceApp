@@ -11,6 +11,7 @@ import { SegmentComponent } from './components/segment/segment/segment.component
 import { SegmentListComponent } from './components/segment/segment-list/segment-list.component';
 import { UserDetailComponent } from './components/user/user-detail/user-detail.component';
 import { UserResolver } from './user-resolver.service';
+import { AuthenticationService } from '../../shared/services/authentication.service';
 
 const routes = [
   { path: '', component: CampusListComponent },
@@ -34,6 +35,7 @@ const routes = [
   ],
   providers: [
     HomeDataService,
+    AuthenticationService,
     UserResolver
   ]
 })

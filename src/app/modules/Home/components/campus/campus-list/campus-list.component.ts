@@ -3,6 +3,7 @@ import { HomeDataService } from '../../../home.service';
 import { Campus } from '../../../../../shared/models/campus.model';
 import { User } from '../../../../../shared/models/user.model';
 import * as io from 'socket.io-client';
+import { AuthenticationService } from '../../../../../shared/services/authentication.service';
 
 declare var $: any;
 @Component({
@@ -17,13 +18,23 @@ export class CampusListComponent implements OnInit {
   private _thuiswerkCampuses: Campus[];
   private _users: any;
   private usr: User;
+  private _correctIp: boolean;
 
   private _userNames;
   socket = io();
 
-  constructor(private _homeDataService: HomeDataService, private cd: ChangeDetectorRef) { }
+  constructor(private _homeDataService: HomeDataService, private cd: ChangeDetectorRef, private authService: AuthenticationService) { }
 
   ngOnInit() {
+    this.authService.getIp().subscribe(data => {
+      this.authService.getCurrentUser().subscribe(currentUser => {
+        if (currentUser === null) {
+          this._correctIp = (data['ip'] === '212.123.26.150');
+        } else {
+          this._correctIp = true;
+        }
+      });
+    });
     this._campuses = [];
     this._lunchCampuses = [];
     this._thuiswerkCampuses = [];
@@ -61,7 +72,7 @@ export class CampusListComponent implements OnInit {
     }.bind(this));
     setTimeout(function(){
       this.fetchUsers();
-    }, 300000);
+    }.bind(this), 300000);
   }
 
   get campuses() {
@@ -78,6 +89,10 @@ export class CampusListComponent implements OnInit {
 
   get users() {
     return this._users;
+  }
+
+  get correctIp() {
+    return this._correctIp;
   }
 
   filter(event) {
@@ -113,6 +128,9 @@ export class CampusListComponent implements OnInit {
             this.sortUsers();
           }
         }
+        this.sortCampuses();
+        this.sortSegments();
+        this.sortLocations();
       });
     }, (err) => {
       console.log(err);
@@ -153,4 +171,42 @@ export class CampusListComponent implements OnInit {
     this.filterUsers('');
   }
 
+  sortCampuses() {
+    this._campuses = this._campuses.sort((a, b) => {
+      if (a.weight > b.weight) {
+        return -1;
+      } else if (a.weight < b.weight) {
+        return 1;
+      }
+      return 0;
+    });
+  }
+
+  sortSegments() {
+    for (let i = 0, len = this._campuses.length; i < len; i++) {
+      this._campuses[i].segments = this._campuses[i].segments.sort((a, b) => {
+        if (a.weight > b.weight) {
+          return -1;
+        } else if (a.weight < b.weight) {
+          return 1;
+        }
+        return 0;
+      });
+    }
+  }
+
+  sortLocations() {
+    for (let i = 0, len = this._campuses.length; i < len; i++) {
+      for (let j = 0, len2 = this._campuses[i].segments.length; j < len2; j++) {
+        this._campuses[i].segments[i].locations = this._campuses[i].segments[i].locations.sort((a, b) => {
+          if (a.weight > b.weight) {
+            return -1;
+          } else if (a.weight < b.weight) {
+            return 1;
+          }
+          return 0;
+        });
+      }
+    }
+  }
 }

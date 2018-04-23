@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ViewContainerRef, ComponentFactoryResolver, HostListener } from '@angular/core';
 import { Campus } from '../../../../shared/models/campus.model';
 import { Location } from '../../../../shared/models/location.model';
 import { AdminDataService } from '../../admin.service';
@@ -19,6 +19,8 @@ declare var $: any;
 export class DashboardComponent implements OnInit {
 
   private _campuses: Campus[];
+  public mobile: boolean;
+  public orientation: String;
 
   @ViewChild('selectedElement', { read: ViewContainerRef })
   selectedElement;
@@ -28,6 +30,13 @@ export class DashboardComponent implements OnInit {
     }
 
   ngOnInit() {
+    if (window.innerWidth <= 768) { // 768px portrait
+      this.mobile = true;
+      this.orientation = 'vertical';
+    } else {
+      this.mobile = false;
+      this.orientation = 'horizontal';
+    }
     this.dataService.campuses()
       .subscribe(items => {
         this._campuses = items;
@@ -41,12 +50,23 @@ export class DashboardComponent implements OnInit {
       });
   }
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    if (window.innerWidth <= 768) { // 768px portrait
+      this.mobile = true;
+      this.orientation = 'vertical';
+    } else {
+      this.mobile = false;
+      this.orientation = 'horizontal';
+    }
+  }
+
   get campuses() {
     return this._campuses;
   }
 
   createCampus() {
-    const campus = new Campus(null, 'New Campus', false, false, []);
+    const campus = new Campus(null, 'New Campus', false, false, 1, []);
     this._adminDataService.createCampus(campus).subscribe(res => {
       this._campuses.push(res);
     });
@@ -123,7 +143,7 @@ export class DashboardComponent implements OnInit {
 
   createSegment(campus) {
     console.log(campus);
-    const segment = new Segment(null, 'New Segment', false, []);
+    const segment = new Segment(null, 'New Segment', false, 1, []);
     const index = this._campuses.indexOf(campus, 0);
     this._adminDataService.createSegment(segment).subscribe(res => {
       this._campuses[index].addSegment(res);
@@ -133,7 +153,7 @@ export class DashboardComponent implements OnInit {
 
   createLocation(segment) {
     console.log(segment);
-    const location = new Location(null, 'New Location', [], false);
+    const location = new Location(null, 'New Location', 1, [], false);
     this._campuses.forEach(c => {
       if (c.segments.includes(segment)) {
         const index = c.segments.indexOf(segment, 0);

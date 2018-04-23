@@ -1,4 +1,4 @@
-<div class="ui search">
+<div class="ui search" *ngIf="correctIp">
   <div class="ui icon input">
     <input name="search" class="prompt" type="text" placeholder="Search users..." (keyup)="filter($event)">
     <i class="search icon"></i>
@@ -6,7 +6,7 @@
   <div class="results"></div>
 </div>
 
-<div class="ui one column grid" style="width: 100%">
+<div class="ui one column grid" style="width: 100%" *ngIf="correctIp">
   <div class="column">
     <div class="ui three column stackable grid">
       <div class="row">

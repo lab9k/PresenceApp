@@ -1,6 +1,7 @@
 export class Location {
     private _id: string;
     private _name: string;
+    private _weight: number;
     private _stickers: string[];
     private _doNotDisturb: boolean;
 
@@ -8,7 +9,7 @@ export class Location {
         if (json.id !== undefined) {
             json._id = json.id;
         }
-        const location = new Location(json._id, json.name, json.stickers, json.doNotDisturb);
+        const location = new Location(json._id, json.name, json.weight, json.stickers, json.doNotDisturb);
         return location;
     }
 
@@ -16,14 +17,16 @@ export class Location {
         return {
             _id: this._id,
             name: this._name,
+            weight: this._weight,
             stickers: this._stickers,
             doNotDisturb: this._doNotDisturb
         };
     }
 
-    constructor(id: string, name: string, stickers: string[], doNotDisturb: boolean) {
+    constructor(id: string, name: string, weight: number, stickers: string[], doNotDisturb: boolean) {
         this._id = id;
         this._name = name;
+        this._weight = weight;
         this._stickers = stickers;
         this._doNotDisturb = doNotDisturb;
     }
@@ -49,6 +52,14 @@ export class Location {
 
     set doNotDisturb(doNotDisturb) {
         this._doNotDisturb = doNotDisturb;
+    }
+
+    get weight() {
+        return this._weight;
+    }
+
+    set weight(weight) {
+        this._weight = weight;
     }
 
     addSticker(sticker: string) {

@@ -27,7 +27,7 @@ export class UserComponent implements OnInit {
   constructor(private dataService: DataService, private homeService: HomeDataService, private authService: AuthenticationService) { }
 
   ngOnInit() {
-    if (window.innerWidth <= 480) { // 768px portrait
+    if (window.innerWidth <= 768) { // 768px portrait
       this.mobile = true;
     } else {
       this.mobile = false;
@@ -50,13 +50,11 @@ export class UserComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
-    console.log(window.innerWidth);
-    if (window.innerWidth <= 480) { // 768px portrait
+    if (window.innerWidth <= 768) { // 768px portrait
       this.mobile = true;
     } else {
       this.mobile = false;
     }
-    console.log(this.mobile);
   }
 
   get location() {
@@ -76,16 +74,13 @@ export class UserComponent implements OnInit {
   }
 
   userSelected() {
-    console.log('User ' +  this.user.name + ' selected');
     $('#' + this.user.id).modal('show');
   }
 
   sendMessage() {
-    console.log('User ' +  this.user.name + ' message');
     const subject = $('input[name=\'subject-' + this.user.id + '\']').val();
     const content = $('textarea[name=\'message-' + this.user.id + '\']').val();
     if (content.trim() !== '') {
-      console.log(subject + '\n' + content);
       let user;
       this.authService.getCurrentUser().subscribe(res => {
         user = {
