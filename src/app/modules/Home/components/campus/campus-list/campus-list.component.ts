@@ -26,13 +26,7 @@ export class CampusListComponent implements OnInit {
   constructor(private _homeDataService: HomeDataService, private cd: ChangeDetectorRef, private authService: AuthenticationService) { }
 
   ngOnInit() {
-    $.getJSON('https://api.ipify.org?format=jsonp&callback=?',
-      function(json) {
-       console.log('My public IP address is: ', json.ip);
-      }
-    );
-    this.authService.getIp().subscribe(data => {
-      console.log(data);
+    $.getJSON('https://json.geoiplookup.io/api?callback=?', function(data) {
       this.authService.getCurrentUser().subscribe(currentUser => {
         if (currentUser === null) {
           this._correctIp = (data['ip'] === '212.123.26.150');
@@ -40,7 +34,7 @@ export class CampusListComponent implements OnInit {
           this._correctIp = true;
         }
       });
-    });
+    }.bind(this));
     this._campuses = [];
     this._lunchCampuses = [];
     this._thuiswerkCampuses = [];
