@@ -26,7 +26,7 @@ export class CampusListComponent implements OnInit {
   constructor(private _homeDataService: HomeDataService, private cd: ChangeDetectorRef, private authService: AuthenticationService) { }
 
   ngOnInit() {
-    $.getJSON('https://json.geoiplookup.io/api?callback=?', function(data) {
+    $.getJSON('https://api.ipdata.co', function(data) {
       this.authService.getCurrentUser().subscribe(currentUser => {
         if (currentUser === null) {
           this._correctIp = (data['ip'] === '212.123.26.150');
@@ -149,6 +149,7 @@ export class CampusListComponent implements OnInit {
       }
     }
   }
+
   sortUsers() {
     this._users = this._users.sort((a, b) => {
       if ((a.checkin !== undefined && b.checkin === undefined) || (a.checkin !== null && b.checkin === null)) {
@@ -215,4 +216,5 @@ export class CampusListComponent implements OnInit {
       }
     }
   }
+
 }

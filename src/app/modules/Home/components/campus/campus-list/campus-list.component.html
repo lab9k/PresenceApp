@@ -1,4 +1,4 @@
-<div class="ui search" *ngIf="correctIp">
+<div class="ui search" *ngIf="correctIp" style="margin-bottom: 15px;">
   <div class="ui icon input">
     <input name="search" class="prompt" type="text" placeholder="Search users..." (keyup)="filter($event)">
     <i class="search icon"></i>
@@ -8,7 +8,7 @@
 
 <div class="ui one column grid" style="width: 100%" *ngIf="correctIp">
   <div class="column">
-    <div class="ui three column stackable grid">
+    <div class="ui three column relaxed stackable grid">
       <div class="row">
         <app-campus class="column" *ngFor="let localCampus of campuses" [campus]="localCampus" [users]="users">
         </app-campus>

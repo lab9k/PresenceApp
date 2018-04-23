@@ -1,4 +1,4 @@
-<div class="ui attached segment" *ngIf="!mobile else mobileLayout">
+<div style="margin-bottom: 10px;" class="ui basic segment" *ngIf="!mobile else mobileLayout">
   <div class="ui stackable centered grid">
     <app-user *ngFor="let localUser of filteredUsers" [user]="localUser">
     </app-user>
@@ -12,5 +12,4 @@
         </app-user>
     </div>
   </div>
-  
 </ng-template>

@@ -1,6 +1,6 @@
 <div *ngIf="!mobile else mobileLayout">
     <div class="column" style="padding: 0.5em 0em 0.5em 0em" *ngIf="user.visible" [attr.data-tooltip]="user.name">
-    <div class='ui {{color}} fluid card' [ngStyle]="{'opacity': opacity}"
+    <div class='ui raised fluid card' [ngStyle]="{'opacity': opacity}"
         (click)="userSelected()">
         <div class="ui tiny image" style="width: 60px; height: 60px;">
             <img *ngIf="user.picture else googlepic"
