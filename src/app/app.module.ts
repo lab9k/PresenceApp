@@ -12,6 +12,7 @@ import { LocationComponent } from './modules/Checkin/components/location/locatio
 import { DataService } from './shared/services/data.service';
 import { DragulaModule } from 'ng2-dragula/components/dragular.module';
 import { AdminGuardService } from './modules/app-routing/admin-guard.service';
+import { AdminDataService } from './modules/Admin/admin.service';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { AdminGuardService } from './modules/app-routing/admin-guard.service';
   providers: [
     AuthenticationService,
     DataService,
+    AdminDataService,
     AuthGuardService,
     AdminGuardService
   ],

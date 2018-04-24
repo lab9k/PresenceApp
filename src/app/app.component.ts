@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Rx';
 import { AuthenticationService } from './shared/services/authentication.service';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
+import { AdminDataService } from './modules/Admin/admin.service';
 
 declare var $: any;
 
@@ -17,12 +18,15 @@ export class AppComponent implements OnInit {
   private _correctIp: boolean;
   private _campusList: any;
 
-  constructor(private authService: AuthenticationService, private router: Router) {
+  constructor(private authService: AuthenticationService, private router: Router, private dataService: AdminDataService) {
   }
 
   ngOnInit() {
     $('.ui.dropdown')
       .dropdown();
+    this.authService.getCurrentUser().subscribe(res => {
+      $('#theme').attr('href', 'assets/semantic.' + res.theme + '.min.css');
+    });
   }
 
   get currentUser(): Observable<string> {
@@ -35,7 +39,6 @@ export class AppComponent implements OnInit {
   }
 
   onChange(theme) {
-    console.log(theme);
     switch (theme) {
       case 'default':
         $('#theme').attr('href', 'assets/semantic.min.css');
@@ -44,6 +47,10 @@ export class AppComponent implements OnInit {
         $('#theme').attr('href', 'assets/semantic.' + theme + '.min.css');
         break;
     }
+    this.authService.getCurrentUser().subscribe(res => {
+      res.theme = theme;
+      this.dataService.updateUser(res).subscribe();
+    });
   }
 
   get correctIp() {

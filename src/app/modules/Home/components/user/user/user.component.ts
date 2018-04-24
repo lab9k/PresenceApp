@@ -32,7 +32,22 @@ export class UserComponent implements OnInit {
     } else {
       this.mobile = false;
     }
-    this._img = 'data:image/png;base64,' + new Identicon(this.user.name + this.user.id, 420).toString();
+    // set up options
+    let hash = '';
+    while (hash.length < 15) {
+      for (let i = 0; i < this.user.name.length; i++) {
+        hash += this.user.name.charCodeAt(i);
+      }
+    }
+    const options = {
+          margin: 0.2,                              // 20% margin
+          size: 420,                                // 420px square
+          format: 'png'                             // use SVG instead of PNG
+        };
+
+    // create a base64 encoded SVG
+    const data = new Identicon(hash, options).toString();
+    this._img = 'data:image/png;base64,' + data;
     this._location = this.user.checkin.location;
     const diff = +new Date() - this.user.checkin.time;
     const diffHours = diff / 3600000;
