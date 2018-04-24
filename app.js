@@ -37,22 +37,7 @@ passport.deserializeUser(function(id, done) {
   User.findById(id, function(err, user) {
     done(err, user);
   });
-  /*
-  findByOid(oid, function (err, user) {
-    done(err, user);
-  });*/
 });
-
-var findByOid = function(oid, fn) {
-  for (var i = 0, len = users.length; i < len; i++) {
-    var user = users[i];
-   log.info('we are using user: ', user);
-    if (user.oid === oid) {
-      return fn(null, user);
-    }
-  }
-  return fn(null, null);
-};
 
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,

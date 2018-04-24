@@ -71,7 +71,7 @@ export class CampusListComponent implements OnInit {
       this.cd.detectChanges();
     }.bind(this));
     setTimeout(function(){
-      this.fetchUsers();
+      this.ngOnInit();
     }.bind(this), 300000);
   }
 

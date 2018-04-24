@@ -16,10 +16,12 @@ io.on('connection', function (socket) {
     console.log('User disconnected');
   });
   socket.on('checkin', function (data) {
+    console.log("CHECKIN");
     console.log(data);
     io.emit('new-checkin', { user: data });
   });
   socket.on('checkout', function (data) {
+    console.log("CHECKOUT");
     console.log(data);
     io.emit('new-checkout', { user: data });
   });
