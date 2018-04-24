@@ -19,8 +19,7 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.css",
-        "../node_modules/dragula/dist/dragula.css"
+        
       ],
       "scripts": [
         "../node_modules/identicon.js/identicon.js",
