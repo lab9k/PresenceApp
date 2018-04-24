@@ -142,7 +142,7 @@ router.post('/API/message/', function(req, res, next) {
 
 /* UPDATE USER */
 router.put('/API/user/', function(req, res, next) {
-  console.log("USER:" + req.body);
+  console.log("USER:" + req.body.checkin);
   User.findByIdAndUpdate(req.body._id, req.body, function (err, user) {
     if (err) { 
       console.log(err);
