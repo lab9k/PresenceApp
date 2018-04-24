@@ -43,8 +43,12 @@ export class CampusListComponent implements OnInit {
 
     this.socket.on('new-checkin', function(data) {
       console.log(data);
+      console.log(data.user);
+      console.log(data.user._id);
+      const user = User.fromJSON(data.user);
+      console.log(user);
       for (let i = 0; i < this._users.length; i++) {
-        if (this._users[i].id === data.user._id) {
+        if (this._users[i].id === user._id) {
           console.log(data);
           this._users.splice(i, 1);
           this.usr = User.fromJSON(data.user);
