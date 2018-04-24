@@ -44,6 +44,7 @@ export class CampusListComponent implements OnInit {
     this.socket.on('new-checkin', function(data) {
       const user = User.fromJSON(data.user);
       this.usr = User.fromJSON(data.user);
+      this.usr.visible = true;
       this._users.push(this.usr);
       console.log(user);
       for (let i = 0; i < this._users.length; i++) {
