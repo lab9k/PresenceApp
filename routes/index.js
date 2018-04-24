@@ -533,7 +533,7 @@ router.delete('/API/checkin/:id', function(req, res, next) {
     user.checkin = null;
     user.save(function(err, usr) {
       if (err) { return next(err); }
-      res.json(usr);
+      res.json(user);
     })
   });
 
