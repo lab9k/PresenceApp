@@ -42,6 +42,7 @@ export class CampusListComponent implements OnInit {
     this.fetchUsers();
 
     this.socket.on('new-checkin', function(data) {
+      console.log(data);
       for (let i = 0; i < this._users.length; i++) {
         if (this._users[i].id === data.user._id) {
           console.log(data);
