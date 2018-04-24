@@ -16,7 +16,7 @@ export class User {
         let user;
         let checkin;
         if (json.name) {
-            if (json.checkin !== undefined) {
+            if (json.checkin !== undefined && json.checkin !== null) {
                 checkin = Checkin.fromJSON(json.checkin);
             }
             user = new User(json._id, json.name, checkin, json.picture, json.phoneid, json.role, json.messages, json.accountType);
