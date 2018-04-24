@@ -25,7 +25,9 @@ export class AppComponent implements OnInit {
     $('.ui.dropdown')
       .dropdown();
     this.authService.getCurrentUser().subscribe(res => {
-      $('#theme').attr('href', 'assets/semantic.' + res.theme + '.min.css');
+      if (res.theme !== '' && res.theme !== 'default') {
+        $('#theme').attr('href', 'assets/semantic.' + res.theme + '.min.css');
+      }
     });
   }
 
