@@ -1,12 +1,3 @@
-<!--
-<div class="ui search" *ngIf="correctIp" style="margin-bottom: 15px;">
-  <div class="ui icon input">
-    <input name="search" class="prompt" type="text" placeholder="Search users..." (keyup)="filter($event)">
-    <i class="search icon"></i>
-  </div>
-  <div class="results"></div>
-</div>
--->
 <div class="ui one column grid" style="width: 100%" *ngIf="correctIp">
   <div class="column">
     <div class="ui three column relaxed stackable grid">
@@ -19,12 +10,22 @@
   <div class="column">
     <div class="ui two column stackable grid">
       <div class="column">
-        <app-campus *ngFor="let localCampus of lunchCampuses" [campus]="localCampus" [users]="users">
-        </app-campus>
+        <div *ngFor="let localCampus of lunchCampuses">
+          <h3 class="ui left aligned  header">{{localCampus.name}}</h3>
+          <div *ngFor="let localSegment of localCampus.segments">
+            <app-user-list [segment]="localSegment" [users]="users">
+            </app-user-list>
+          </div>
+        </div>
       </div>
       <div class="column">
-        <app-campus *ngFor="let localCampus of thuiswerkCampuses" [campus]="localCampus" [users]="users">
-        </app-campus>
+        <div *ngFor="let localCampus of thuiswerkCampuses">
+          <h3 class="ui left aligned  header">{{localCampus.name}}</h3>
+            <div *ngFor="let localSegment of localCampus.segments">
+              <app-user-list [segment]="localSegment" [users]="users">
+              </app-user-list>
+            </div>
+          </div>
       </div>
     </div>
   </div>

@@ -11,7 +11,6 @@ export class User {
     private _messages: Message[];
     private _accountType;
     private _visible: boolean;
-    private _theme: string;
 
     static fromJSON(json) {
         let user;
@@ -20,14 +19,12 @@ export class User {
             if (json.checkin !== undefined && json.checkin !== null) {
                 checkin = Checkin.fromJSON(json.checkin);
             }
-            user = new User(json._id, json.name, checkin, json.picture, json.phoneid, json.role, json.messages, json.accountType
-                , json.theme);
+            user = new User(json._id, json.name, checkin, json.picture, json.phoneid, json.role, json.messages, json.accountType);
         } else {
             if (json.checkin !== undefined) {
                 checkin = Checkin.fromJSON(json._checkin);
             }
-            user = new User(json._id, json._name, checkin, json._picture, json._phoneid, json._role, json._messages, json._accountType
-                , json._theme);
+            user = new User(json._id, json._name, checkin, json._picture, json._phoneid, json._role, json._messages, json._accountType);
         }
 
             return user;
@@ -42,13 +39,12 @@ export class User {
             phoneid: this._phoneid,
             role: this._role,
             messages: this._messages,
-            accountType: this._accountType,
-            theme: this._theme
+            accountType: this._accountType
         };
     }
 
     constructor(id: string, name: string, checkin: Checkin, picture: string,
-        phoneid: string, role: string, messages: Message[], accountType: string, theme: string) {
+        phoneid: string, role: string, messages: Message[], accountType: string) {
         this._id = id;
         this._name = name;
         this._checkin = checkin;
@@ -58,7 +54,6 @@ export class User {
         this._messages = messages;
         this._accountType = accountType;
         this._visible = true;
-        this._theme = theme;
     }
 
     get id() {
@@ -119,14 +114,6 @@ export class User {
 
     set visible(visible) {
         this._visible = visible;
-    }
-
-    get theme() {
-        return this._theme;
-    }
-
-    set theme(theme) {
-        this._theme = theme;
     }
 
     addMessage(message) {

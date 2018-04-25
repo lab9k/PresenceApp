@@ -1,10 +1,10 @@
 <h3 class="ui left aligned  header">{{campus.name}}</h3>
-<div *ngIf="campus.segments.length > 1 else oneSegment">
+<div>
     <app-segment-list 
-        [segments]="campus.segments" [users]="users">
+        [segments]="segments" [users]="users">
     </app-segment-list>
+    <div *ngFor="let localSegment of vergaderingSegments" class="ui secondary basic segment">
+            <h3 class="ui left aligned top attached header">In Vergadering</h3>
+        <app-user-list [segment]="localSegment" [users]="users"></app-user-list>
+    </div>
 </div>
-<ng-template #oneSegment>
-    <app-segment [segment]="campus.segments[0]" [users]="users">
-    </app-segment>  
-</ng-template>

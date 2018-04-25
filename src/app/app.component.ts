@@ -22,13 +22,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    $('#themeDrop.ui.dropdown')
-      .dropdown();
-    this.authService.getCurrentUser().subscribe(res => {
-      if (res !== null && (res.theme !== '' && res.theme !== 'default')) {
-        $('#theme').attr('href', 'assets/semantic.' + res.theme + '.min.css');
-      }
-    });
   }
 
   get currentUser(): Observable<string> {
@@ -38,21 +31,6 @@ export class AppComponent implements OnInit {
   drop() {
     $('#menuDrop.ui.dropdown')
     .dropdown();
-  }
-
-  onChange(theme) {
-    switch (theme) {
-      case 'default':
-        $('#theme').attr('href', 'assets/semantic.min.css');
-        break;
-      default:
-        $('#theme').attr('href', 'assets/semantic.' + theme + '.min.css');
-        break;
-    }
-    this.authService.getCurrentUser().subscribe(res => {
-      res.theme = theme;
-      this.dataService.updateUser(res).subscribe();
-    });
   }
 
   get correctIp() {

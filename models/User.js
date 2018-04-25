@@ -19,8 +19,7 @@ let UserSchema = new mongoose.Schema({
             ref: 'Message'
         },
     ],
-    accountType: String,
-    theme: String
+    accountType: String
 });
 
 mongoose.model('User', UserSchema);

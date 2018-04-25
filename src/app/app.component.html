@@ -11,33 +11,6 @@
     </div>
   </div>
   <div class="right menu">
-
-    <div id="themeDrop" class="ui search selection dropdown item">
-      <input type="hidden" name="theme" (change)="onChange($event.target.value)">
-      <i class="dropdown icon"></i>
-      <div class="default text">Theme</div>
-      <div class="menu">
-        <div class="item" data-value="default">Default</div>
-        <div class="item" data-value="cerulean">Cerulean</div>
-        <div class="item" data-value="cosmo">Cosmo</div>
-        <div class="item" data-value="cyborg">Cyborg</div>
-        <div class="item" data-value="darkly">Darkly</div>
-        <div class="item" data-value="flatly">Flatly</div>
-        <div class="item" data-value="journal">Journal</div>
-        <div class="item" data-value="lumen">Lumen</div>
-        <div class="item" data-value="paper">Paper</div>
-        <div class="item" data-value="readable">Readable</div>
-        <div class="item" data-value="sandstone">Sandstone</div>
-        <div class="item" data-value="simplex">Simplex</div>
-        <div class="item" data-value="slate">Slate</div>
-        <div class="item" data-value="solar">Solar</div>
-        <div class="item" data-value="spacelab">Spacelab</div>
-        <div class="item" data-value="superhero">Superhero</div>
-        <div class="item" data-value="united">United</div>
-        <div class="item" data-value="yeti">Yeti</div>
-      </div>
-    </div>
-    
     <div id="menuDrop" class="ui dropdown item">
       <i class="large bars icon" (click)="drop()"></i>
       <div class="menu">
@@ -54,6 +27,9 @@
 
 </div>
 
-<div class="ui padded segment fluid container">
+<div class="ui padded basic segment fluid container">
   <router-outlet (activate)="onActivate($event)"></router-outlet>
 </div>
+<!--
+  lege niet tonen
+-->

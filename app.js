@@ -56,8 +56,7 @@ function(accessToken, refreshToken, profile, cb) {
         checkin: [], 
         role: "user",
         messages: [],
-        accountType: "google",
-        theme: 'default'
+        accountType: "google"
       });
       user.save(function(err, usr) {
         if(err) {console.log(err);}
@@ -119,8 +118,7 @@ function(iss, sub, profile, accessToken, refreshToken, done) {
               role: "user",
               messages: [],
               picture: photo,
-              accountType: 'azure-ad',
-              theme: 'default'
+              accountType: 'azure-ad'
             });
             console.log(user);
             user.save(function(err, usr) {
@@ -133,8 +131,7 @@ function(iss, sub, profile, accessToken, refreshToken, done) {
               checkin: [], 
               role: "user",
               messages: [],
-              accountType: "azure-ad",
-              theme: 'default'
+              accountType: "azure-ad"
             });
             console.log(user);
             user.save(function(err, usr) {
