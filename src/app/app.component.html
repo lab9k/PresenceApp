@@ -1,4 +1,4 @@
-<div class="ui inverted menu">
+<div class="ui inverted stackable menu">
   <a class='item' routerLink="/" >Wie is waar</a>
   <a class='item' routerLink="/admin" >Admin</a>
   <div class="item" *ngIf="router.url === '/'">
@@ -10,8 +10,9 @@
       <div class="results"></div>
     </div>
   </div>
-  <div class="item">
-    <div class="ui selection dropdown">
+  <div class="right menu">
+
+    <div id="themeDrop" class="ui search selection dropdown item">
       <input type="hidden" name="theme" (change)="onChange($event.target.value)">
       <i class="dropdown icon"></i>
       <div class="default text">Theme</div>
@@ -36,21 +37,23 @@
         <div class="item" data-value="yeti">Yeti</div>
       </div>
     </div>
-  </div>
-  <div class="right menu">
-    <div class="ui dropdown item">
-      <a class='item' *ngIf='(currentUser | async) else loginlink' href="/auth/logout">Logout</a>
-      <ng-template #loginlink>
-        <a class='item' routerLink="account/login">Login</a>
-      </ng-template>
-      <i class="dropdown icon" (click)="drop()"></i>
+    
+    <div id="menuDrop" class="ui dropdown item">
+      <i class="large bars icon" (click)="drop()"></i>
       <div class="menu">
-        <a class='item' routerLink="account/profile" >Profile</a>
-        <a class='item' routerLink="/checkin" >Last checkin</a>
+        <a class='item' routerLink="account/profile" *ngIf="(currentUser | async)">Profile</a>
+        <a class='item' routerLink="/checkin" *ngIf="(currentUser | async)">Last checkin</a>
+        <a class='item' *ngIf='(currentUser | async) else loginlink' href="/auth/logout">Logout</a>
+        <ng-template #loginlink>
+          <a class='item' routerLink="account/login">Login</a>
+        </ng-template>
       </div>
     </div>
+
   </div>
+
 </div>
+
 <div class="ui padded segment fluid container">
   <router-outlet (activate)="onActivate($event)"></router-outlet>
 </div>

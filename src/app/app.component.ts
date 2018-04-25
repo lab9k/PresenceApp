@@ -22,10 +22,10 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    $('.ui.dropdown')
+    $('#themeDrop.ui.dropdown')
       .dropdown();
     this.authService.getCurrentUser().subscribe(res => {
-      if (res.theme !== '' && res.theme !== 'default') {
+      if (res !== null && (res.theme !== '' && res.theme !== 'default')) {
         $('#theme').attr('href', 'assets/semantic.' + res.theme + '.min.css');
       }
     });
@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
   }
 
   drop() {
-    $('.ui.dropdown')
+    $('#menuDrop.ui.dropdown')
     .dropdown();
   }
 

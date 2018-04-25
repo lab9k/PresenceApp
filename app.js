@@ -43,6 +43,7 @@ passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
   callbackURL: "https://agile-everglades-38755.herokuapp.com/auth/callback/google"
+  //callbackURL: "http://localhost:4200/auth/callback/google"
 },
 function(accessToken, refreshToken, profile, cb) {
   console.log(profile);
