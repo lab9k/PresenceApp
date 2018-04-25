@@ -10,7 +10,7 @@
   <div class="column">
     <div class="ui two column stackable grid">
       <div class="column">
-        <div *ngFor="let localCampus of lunchCampuses">
+        <div class="ui tertiary basic segment" *ngFor="let localCampus of lunchCampuses">
           <h3 class="ui left aligned  header">{{localCampus.name}}</h3>
           <div *ngFor="let localSegment of localCampus.segments">
             <app-user-list [segment]="localSegment" [users]="users">
@@ -19,7 +19,7 @@
         </div>
       </div>
       <div class="column">
-        <div *ngFor="let localCampus of thuiswerkCampuses">
+        <div class="ui tertiary basic segment" *ngFor="let localCampus of thuiswerkCampuses">
           <h3 class="ui left aligned  header">{{localCampus.name}}</h3>
             <div *ngFor="let localSegment of localCampus.segments">
               <app-user-list [segment]="localSegment" [users]="users">
