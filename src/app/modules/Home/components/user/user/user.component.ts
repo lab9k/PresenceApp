@@ -33,15 +33,18 @@ export class UserComponent implements OnInit {
     } else {
       this.mobile = false;
     }
-
-    const a = this.user.birthday.split('-');
-    const b = new Date();
-    const month = a[1];
-    const date = a[2];
-    const monthToday = b.getMonth() + 1;
-    const dateToday = b.getDate();
-    if ((month === monthToday.toString()) && (date === dateToday.toString())) {
-      this.birthday = true;
+    if (this.user.birthday !== null && this.user.birthday !== undefined) {
+      const a = this.user.birthday.split('-');
+      const b = new Date();
+      const month = a[1];
+      const date = a[2];
+      const monthToday = b.getMonth() + 1;
+      const dateToday = b.getDate();
+      if ((month === monthToday.toString()) && (date === dateToday.toString())) {
+        this.birthday = true;
+      } else {
+        this.birthday = false;
+      }
     } else {
       this.birthday = false;
     }
