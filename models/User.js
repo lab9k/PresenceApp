@@ -19,7 +19,8 @@ let UserSchema = new mongoose.Schema({
             ref: 'Message'
         },
     ],
-    accountType: String
+    accountType: String,
+    birthday: String
 });
 
 mongoose.model('User', UserSchema);

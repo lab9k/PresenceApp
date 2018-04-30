@@ -21,7 +21,7 @@ export class UserResolver implements Resolve<User> {
             })
             .catch(error => {
                 console.log(`Retrieval error: ${error}`);
-                return Observable.of(new User(route.params['id'], null, null, null, null, null, null, null));
+                return Observable.of(new User(route.params['id'], null, null, null, null, null, null, null, null));
             });
     }
  }

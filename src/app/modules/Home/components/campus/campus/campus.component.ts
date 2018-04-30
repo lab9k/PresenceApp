@@ -13,12 +13,15 @@ export class CampusComponent implements OnInit {
 
   @Input() public campus: Campus;
   @Input() public users: User[];
+  @Input() public maxSegments: any;
   private _segments: Segment[];
   private _vergaderingSegments: Segment[];
+  private _empty: any[];
 
   constructor() { }
 
   ngOnInit() {
+    this._empty = new Array(this.maxSegments - this.campus.segments.length);
     this._segments = [];
     this._vergaderingSegments = [];
     this.campus.segments.forEach(segment => {
@@ -36,5 +39,9 @@ export class CampusComponent implements OnInit {
 
   get vergaderingSegments() {
     return this._vergaderingSegments;
+  }
+
+  get empty() {
+    return this._empty;
   }
 }

@@ -1,5 +1,5 @@
 <div style="margin-bottom: 10px;" class="ui basic segment" *ngIf="!mobile else mobileLayout">
-  <div class="ui stackable centered grid">
+  <div class="ui stackable left floated grid">
     <app-user *ngFor="let localUser of filteredUsers" [user]="localUser">
     </app-user>
   </div>

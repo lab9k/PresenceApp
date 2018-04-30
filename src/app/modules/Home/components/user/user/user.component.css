@@ -1,0 +1,13 @@
+.image {
+    position: relative;
+}
+.overlayImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.black {
+    border-style: solid;
+    border-color: black;
+    border-width: 0.1em;
+}

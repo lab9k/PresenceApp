@@ -23,6 +23,7 @@ export class UserComponent implements OnInit {
   private _opacity: String;
   private _img: String;
   public mobile: boolean;
+  public birthday: boolean;
 
   constructor(private dataService: DataService, private homeService: HomeDataService, private authService: AuthenticationService) { }
 
@@ -31,6 +32,18 @@ export class UserComponent implements OnInit {
       this.mobile = true;
     } else {
       this.mobile = false;
+    }
+
+    const a = this.user.birthday.split('-');
+    const b = new Date();
+    const month = a[1];
+    const date = a[2];
+    const monthToday = b.getMonth() + 1;
+    const dateToday = b.getDate();
+    if ((month === monthToday.toString()) && (date === dateToday.toString())) {
+      this.birthday = true;
+    } else {
+      this.birthday = false;
     }
     // set up options
     let hash = '';
@@ -86,6 +99,20 @@ export class UserComponent implements OnInit {
 
   get img() {
     return this._img;
+  }
+
+  timeConverter(UNIX_timestamp) {
+    const a = new Date(UNIX_timestamp);
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
+      'September', 'October', 'November', 'December'];
+    const year = a.getFullYear();
+    const month = months[a.getMonth()];
+    const date = a.getDate();
+    const hour = a.getHours();
+    const min = a.getMinutes() < 10 ? '0' + a.getMinutes() : a.getMinutes();
+    const sec = a.getSeconds() < 10 ? '0' + a.getSeconds() : a.getSeconds();
+    const time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+    return time;
   }
 
   userSelected() {

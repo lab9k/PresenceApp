@@ -10,6 +10,7 @@ export class User {
     private _role: string;
     private _messages: Message[];
     private _accountType;
+    private _birthday;
     private _visible: boolean;
 
     static fromJSON(json) {
@@ -19,12 +20,14 @@ export class User {
             if (json.checkin !== undefined && json.checkin !== null) {
                 checkin = Checkin.fromJSON(json.checkin);
             }
-            user = new User(json._id, json.name, checkin, json.picture, json.phoneid, json.role, json.messages, json.accountType);
+            user = new User(json._id, json.name, checkin, json.picture, json.phoneid, json.role, json.messages, json.accountType
+                , json.birthday);
         } else {
             if (json.checkin !== undefined) {
                 checkin = Checkin.fromJSON(json._checkin);
             }
-            user = new User(json._id, json._name, checkin, json._picture, json._phoneid, json._role, json._messages, json._accountType);
+            user = new User(json._id, json._name, checkin, json._picture, json._phoneid, json._role, json._messages, json._accountType
+                , json._birthday);
         }
 
             return user;
@@ -44,7 +47,7 @@ export class User {
     }
 
     constructor(id: string, name: string, checkin: Checkin, picture: string,
-        phoneid: string, role: string, messages: Message[], accountType: string) {
+        phoneid: string, role: string, messages: Message[], accountType: string, birthday: Number) {
         this._id = id;
         this._name = name;
         this._checkin = checkin;
@@ -53,6 +56,7 @@ export class User {
         this._role = role;
         this._messages = messages;
         this._accountType = accountType;
+        this._birthday = birthday;
         this._visible = true;
     }
 
@@ -106,6 +110,14 @@ export class User {
 
     set accountType(accountType) {
         this._accountType = accountType;
+    }
+
+    get birthday() {
+        return this._birthday;
+    }
+
+    set birthday(birthday) {
+        this._birthday = birthday;
     }
 
     get visible() {

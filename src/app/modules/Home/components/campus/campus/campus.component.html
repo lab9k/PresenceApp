@@ -1,10 +1,13 @@
-<h3 class="ui left aligned  header">{{campus.name}}</h3>
+
+<h2 class="ui left aligned  header">{{campus.name}}</h2>
+
+<app-segment-list style="display:contents;"
+    [segments]="segments" [users]="users">
+</app-segment-list>
+<div *ngFor="let emptySeg of empty"></div>
 <div>
-    <app-segment-list 
-        [segments]="segments" [users]="users">
-    </app-segment-list>
-    <div *ngFor="let localSegment of vergaderingSegments" class="ui secondary basic segment">
-            <h3 class="ui left aligned top attached header">In Vergadering</h3>
+    <div *ngFor="let localSegment of vergaderingSegments" class="ui secondary bottom aligned basic segment" style="height: 100%;">
+        <h3 class="ui left aligned top attached inverted header">In Vergadering</h3>
         <app-user-list [segment]="localSegment" [users]="users"></app-user-list>
     </div>
 </div>
