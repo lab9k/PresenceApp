@@ -47,7 +47,7 @@ export class User {
     }
 
     constructor(id: string, name: string, checkin: Checkin, picture: string,
-        phoneid: string, role: string, messages: Message[], accountType: string, birthday: Number) {
+        phoneid: string, role: string, messages: Message[], accountType: string, birthday: String) {
         this._id = id;
         this._name = name;
         this._checkin = checkin;

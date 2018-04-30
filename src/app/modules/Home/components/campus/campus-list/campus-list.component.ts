@@ -4,6 +4,9 @@ import { Campus } from '../../../../../shared/models/campus.model';
 import { User } from '../../../../../shared/models/user.model';
 import * as io from 'socket.io-client';
 import { AuthenticationService } from '../../../../../shared/services/authentication.service';
+import { DataService } from '../../../../../shared/services/data.service';
+import { Checkin } from '../../../../../shared/models/checkin.model';
+import { Location } from '../../../../../shared/models/location.model';
 
 declare var $: any;
 @Component({
@@ -19,11 +22,13 @@ export class CampusListComponent implements OnInit {
   private _users: any;
   private usr: User;
   private _correctIp: boolean;
+  private locations: Location[];
 
   private _userNames;
   socket = io();
 
-  constructor(private _homeDataService: HomeDataService, private cd: ChangeDetectorRef, private authService: AuthenticationService) { }
+  constructor(private _homeDataService: HomeDataService, private cd: ChangeDetectorRef, private authService: AuthenticationService, 
+    private dataService: DataService) { }
 
   ngOnInit() {
     $.getJSON('https://api.ipdata.co', function(data) {
@@ -40,7 +45,6 @@ export class CampusListComponent implements OnInit {
     this._thuiswerkCampuses = [];
     this._userNames = [];
     this.fetchUsers();
-
     this.socket.on('new-checkin', function(data) {
       const user = User.fromJSON(data.user);
       console.log(user);
@@ -230,4 +234,9 @@ export class CampusListComponent implements OnInit {
     });
     return max;
   }
+
+  get maxRows() {
+    return 'repeat(' + (this.maxSegments + 1) + ', auto)';
+  }
+
 }

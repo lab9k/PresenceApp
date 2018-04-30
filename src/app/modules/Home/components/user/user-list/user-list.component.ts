@@ -4,6 +4,7 @@ import { User } from '../../../../../shared/models/user.model';
 import { Campus } from '../../../../../shared/models/campus.model';
 import { Location } from '../../../../../shared/models/location.model';
 import { Segment } from '../../../../../shared/models/segment.model';
+import { DataService } from '../../../../../shared/services/data.service';
 
 @Component({
   selector: 'app-user-list',
