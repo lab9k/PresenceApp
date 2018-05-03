@@ -1,34 +1,71 @@
-<div class="ui one column grid" style="width: 100%" *ngIf="correctIp">
-  <div class="column">
-    <div class="grid-container">
-        <app-campus style="display:contents;" *ngFor="let localCampus of campuses" [campus]="localCampus" [users]="users">
-        </app-campus>
-    </div>
-  </div>
-  <div class="column">
-    <div class="ui two column stackable grid">
-      <div class="column">
-        <div class="ui tertiary basic segment" *ngFor="let localCampus of lunchCampuses">
-          <h2 class="ui left aligned  header">{{localCampus.name}}</h2>
-          <div *ngFor="let localSegment of localCampus.segments">
-            <app-user-list [segment]="localSegment" [users]="users">
-            </app-user-list>
-          </div>
-        </div>
+<div *ngIf="correctIp">
+  <div class="ui one column grid" style="width: 100%" *ngIf="!mobile else mobileView">
+    <div class="column">
+      <div class="grid-container">
+          <app-campus style="display:contents;" *ngFor="let localCampus of campuses" [campus]="localCampus" [users]="users">
+          </app-campus>
       </div>
-      <div class="column">
-        <div class="ui tertiary basic segment" *ngFor="let localCampus of thuiswerkCampuses">
-          <h2 class="ui left aligned  header">{{localCampus.name}}</h2>
+    </div>
+    <div class="column">
+      <div class="ui two column stackable grid">
+        <div class="column">
+          <div class="ui tertiary basic segment" *ngFor="let localCampus of lunchCampuses">
+            <h2 class="ui left aligned  header">{{localCampus.name}}</h2>
             <div *ngFor="let localSegment of localCampus.segments">
               <app-user-list [segment]="localSegment" [users]="users">
               </app-user-list>
             </div>
           </div>
+        </div>
+        <div class="column">
+          <div class="ui tertiary basic segment" *ngFor="let localCampus of thuiswerkCampuses">
+            <h2 class="ui left aligned  header">{{localCampus.name}}</h2>
+              <div *ngFor="let localSegment of localCampus.segments">
+                <app-user-list [segment]="localSegment" [users]="users">
+                </app-user-list>
+              </div>
+            </div>
+        </div>
       </div>
     </div>
   </div>
+
+  <ng-template #mobileView>
+    <div class="ui top attached tabular menu">
+        <a *ngFor="let localCampus of lunchCampuses" (click)="changeTab(localCampus.id)"
+          class="active item" attr.data-tab="{{localCampus.id}}">
+          {{localCampus.name}}
+        </a>
+        <a *ngFor="let localCampus of thuiswerkCampuses" (click)="changeTab(localCampus.id)"
+          class="item" attr.data-tab="{{localCampus.id}}">
+          {{localCampus.name}}
+        </a>
+        <a *ngFor="let localCampus of campuses" (click)="changeTab(localCampus.id)"
+          class="item" attr.data-tab="{{localCampus.id}}">
+          {{localCampus.name}}
+        </a>
+    
+    </div>
+    <div *ngFor="let localCampus of lunchCampuses"
+      class="ui bottom attached active tab segment" attr.data-tab="{{localCampus.id}}">
+      <app-campus style="display:contents;" [campus]="localCampus" [users]="users">
+      </app-campus>
+    </div>
+    <div *ngFor="let localCampus of thuiswerkCampuses"
+      class="ui bottom attached tab segment" attr.data-tab="{{localCampus.id}}">
+      <app-campus style="display:contents;" [campus]="localCampus" [users]="users">
+      </app-campus>
+    </div>
+    <div *ngFor="let localCampus of campuses"
+      class="ui bottom attached tab segment" attr.data-tab="{{localCampus.id}}">
+      <app-campus style="display:contents;" [campus]="localCampus" [users]="users">
+      </app-campus>
+    </div>
+  </ng-template>
+
+  <div class="ui active inverted dimmer" *ngIf="campuses === undefined || users === undefined">
+      <div class="ui text loader">Loading</div>
+    </div>  
 </div>
 
-<div class="ui active inverted dimmer" *ngIf="campuses === undefined || users === undefined">
-  <div class="ui text loader">Loading</div>
-</div>  
+

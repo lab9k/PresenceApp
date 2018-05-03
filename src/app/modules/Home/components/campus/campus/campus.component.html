@@ -1,5 +1,9 @@
 
-<h2 class="ui left aligned  header" (click)="selectCampus()">{{campus.name}}</h2>
+<h2 class="ui left aligned  header">
+    <div class="content" (click)="selectCampus()">
+        {{campus.name}}
+    </div>
+</h2>
 
 <app-segment-list
     [segments]="segments" [users]="users">

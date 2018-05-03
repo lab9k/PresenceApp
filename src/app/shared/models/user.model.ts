@@ -14,7 +14,6 @@ export class User {
     private _visible: boolean;
 
     static fromJSON(json) {
-        console.log(json);
         let user;
         let checkin;
         if (json.name) {

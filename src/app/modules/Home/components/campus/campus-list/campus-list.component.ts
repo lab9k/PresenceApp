@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, HostListener } from '@angular/core';
 import { HomeDataService } from '../../../home.service';
 import { Campus } from '../../../../../shared/models/campus.model';
 import { User } from '../../../../../shared/models/user.model';
@@ -22,6 +22,7 @@ export class CampusListComponent implements OnInit {
   private _users: any;
   private usr: User;
   private _correctIp: boolean;
+  public mobile: boolean;
   private locations: Location[];
 
   private _userNames;
@@ -31,6 +32,12 @@ export class CampusListComponent implements OnInit {
     private dataService: DataService) { }
 
   ngOnInit() {
+    //$('.menu .item').tab();
+    if (window.innerWidth <= 768) { // 768px portrait
+      this.mobile = true;
+    } else {
+      this.mobile = false;
+    }
     $.getJSON('https://api.ipdata.co', function(data) {
       this.authService.getCurrentUser().subscribe(currentUser => {
         if (currentUser === null) {
@@ -81,6 +88,21 @@ export class CampusListComponent implements OnInit {
     setTimeout(function(){
       this.ngOnInit();
     }.bind(this), 300000);
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    if (window.innerWidth <= 768) { // 768px portrait
+      this.mobile = true;
+    } else {
+      this.mobile = false;
+    }
+  }
+
+  changeTab(id) {
+    $('.active').removeClass('active');
+    $('a[data-tab="' + id + '"]').addClass('active');
+    $('div[data-tab="' + id + '"]').addClass('active');
   }
 
   get campuses() {
