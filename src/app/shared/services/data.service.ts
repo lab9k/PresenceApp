@@ -65,7 +65,7 @@ export class DataService {
   // GET SEGMENT BY ID
   getSegmentById(id): Observable<Segment> {
     return this.http.get(`/API/segment/${id}`)
-      .map(response => response.json()).map(item => Segment.fromJSON(item[0]));
+      .map(response => response.json()).map(item => Segment.fromJSON(item));
   }
 
   // GET SEGMENT BY NAME
