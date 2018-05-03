@@ -1,12 +1,12 @@
 <div *ngIf="correctIp">
-  <div class="ui one column grid" style="width: 100%" *ngIf="!mobile else mobileView">
-    <div class="column">
+  <div class="ui one column grid" style="width: 100%">
+    <div class="computer only column">
       <div class="grid-container">
           <app-campus style="display:contents;" *ngFor="let localCampus of campuses" [campus]="localCampus" [users]="users">
           </app-campus>
       </div>
     </div>
-    <div class="column">
+    <div class="computer only column">
       <div class="ui two column stackable grid">
         <div class="column">
           <div class="ui tertiary basic segment" *ngFor="let localCampus of lunchCampuses">
@@ -28,40 +28,48 @@
         </div>
       </div>
     </div>
-  </div>
 
-  <ng-template #mobileView>
-    <div class="ui top attached tabular menu">
-        <a *ngFor="let localCampus of lunchCampuses" (click)="changeTab(localCampus.id)"
-          class="active item" attr.data-tab="{{localCampus.id}}">
-          {{localCampus.name}}
-        </a>
-        <a *ngFor="let localCampus of thuiswerkCampuses" (click)="changeTab(localCampus.id)"
-          class="item" attr.data-tab="{{localCampus.id}}">
-          {{localCampus.name}}
-        </a>
-        <a *ngFor="let localCampus of campuses" (click)="changeTab(localCampus.id)"
-          class="item" attr.data-tab="{{localCampus.id}}">
-          {{localCampus.name}}
-        </a>
-    
+    <div class="mobile tablet only column">
+      <div class="ui grid">
+        <div class="four wide column">
+          <div class="ui vertical fluid tabular menu">
+            <a *ngFor="let localCampus of lunchCampuses" (click)="changeTab(localCampus.id)"
+                class="active item" attr.data-tab="{{localCampus.id}}">
+                {{localCampus.name}}
+            </a>
+            <a *ngFor="let localCampus of thuiswerkCampuses" (click)="changeTab(localCampus.id)"
+                class="item" attr.data-tab="{{localCampus.id}}">
+                {{localCampus.name}}
+            </a>
+            <a *ngFor="let localCampus of campuses" (click)="changeTab(localCampus.id)"
+                class="item" attr.data-tab="{{localCampus.id}}">
+                {{localCampus.name}}
+            </a>
+          </div>
+        </div>
+        <div class="twelve wide column">
+          <div *ngFor="let localCampus of lunchCampuses"
+            class="ui active tab segment" attr.data-tab="{{localCampus.id}}">
+            <app-campus style="display:contents;" [campus]="localCampus" [users]="users">
+            </app-campus>
+          </div>
+          <div *ngFor="let localCampus of thuiswerkCampuses" style="margin-top: 0;"
+            class="ui tab segment" attr.data-tab="{{localCampus.id}}">
+            <app-campus style="display:contents;" [campus]="localCampus" [users]="users">
+            </app-campus>
+          </div>
+          <div *ngFor="let localCampus of campuses" style="margin-top: 0;"
+            class="ui tab segment" attr.data-tab="{{localCampus.id}}">
+            <app-campus style="display:contents;" [campus]="localCampus" [users]="users">
+            </app-campus>
+          </div>
+        </div>
+      </div>
+      
+      
     </div>
-    <div *ngFor="let localCampus of lunchCampuses"
-      class="ui bottom attached active tab segment" attr.data-tab="{{localCampus.id}}">
-      <app-campus style="display:contents;" [campus]="localCampus" [users]="users">
-      </app-campus>
-    </div>
-    <div *ngFor="let localCampus of thuiswerkCampuses"
-      class="ui bottom attached tab segment" attr.data-tab="{{localCampus.id}}">
-      <app-campus style="display:contents;" [campus]="localCampus" [users]="users">
-      </app-campus>
-    </div>
-    <div *ngFor="let localCampus of campuses"
-      class="ui bottom attached tab segment" attr.data-tab="{{localCampus.id}}">
-      <app-campus style="display:contents;" [campus]="localCampus" [users]="users">
-      </app-campus>
-    </div>
-  </ng-template>
+
+  </div>
 
   <div class="ui active inverted dimmer" *ngIf="campuses === undefined || users === undefined">
       <div class="ui text loader">Loading</div>
