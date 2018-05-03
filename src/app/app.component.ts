@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { AuthenticationService } from './shared/services/authentication.service';
 import { Router } from '@angular/router';
@@ -22,15 +22,11 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    $('.ui.dropdown').dropdown();
   }
 
   get currentUser(): Observable<string> {
     return this.authService.user;
-  }
-
-  drop() {
-    $('#menuDrop.ui.dropdown')
-    .dropdown();
   }
 
   get correctIp() {

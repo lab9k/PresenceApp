@@ -12,7 +12,7 @@
   </div>
   <div class="right menu">
     <div id="menuDrop" class="ui dropdown item">
-      <i class="large bars icon" (click)="drop()"></i>
+      <i class="large bars icon"></i>
       <div class="menu">
         <a class='item' routerLink="account/profile" *ngIf="(currentUser | async)">Profile</a>
         <a class='item' routerLink="/checkin" *ngIf="(currentUser | async)">Last checkin</a>

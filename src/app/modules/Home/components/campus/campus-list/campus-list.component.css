@@ -16,3 +16,10 @@
     }
 }
 
+.tab.segment.active {
+    display: block;
+}
+
+.tab.segment {
+    display: none;
+}

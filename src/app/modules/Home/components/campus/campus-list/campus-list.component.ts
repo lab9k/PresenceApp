@@ -9,6 +9,8 @@ import { Checkin } from '../../../../../shared/models/checkin.model';
 import { Location } from '../../../../../shared/models/location.model';
 
 declare var $: any;
+$('.ui.dropdown').dropdown();
+
 @Component({
   selector: 'app-campus-list',
   templateUrl: './campus-list.component.html',
@@ -32,7 +34,6 @@ export class CampusListComponent implements OnInit {
     private dataService: DataService) { }
 
   ngOnInit() {
-    //$('.menu .item').tab();
     if (window.innerWidth <= 768) { // 768px portrait
       this.mobile = true;
     } else {
@@ -101,6 +102,7 @@ export class CampusListComponent implements OnInit {
 
   changeTab(id) {
     $('.active').removeClass('active');
+    $('#campusDrop').dropdown('toggle');
     $('a[data-tab="' + id + '"]').addClass('active');
     $('div[data-tab="' + id + '"]').addClass('active');
   }

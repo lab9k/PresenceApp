@@ -30,44 +30,44 @@
     </div>
 
     <div class="mobile tablet only column">
-      <div class="ui grid">
-        <div class="four wide column">
-          <div class="ui vertical fluid tabular menu">
+
+        <div id="campusDrop" class="ui simple dropdown">
+          Select Campus<i class="dropdown icon"></i>
+          <div class="menu">
             <a *ngFor="let localCampus of lunchCampuses" (click)="changeTab(localCampus.id)"
-                class="active item" attr.data-tab="{{localCampus.id}}">
-                {{localCampus.name}}
+                  class="item" attr.data-tab="{{localCampus.id}}"
+                  style="word-wrap: break-word; padding-left: 0.5em;padding-right: 0.5em;">
+                  {{localCampus.name}}
             </a>
             <a *ngFor="let localCampus of thuiswerkCampuses" (click)="changeTab(localCampus.id)"
-                class="item" attr.data-tab="{{localCampus.id}}">
-                {{localCampus.name}}
+                  class="item" attr.data-tab="{{localCampus.id}}"
+                  style="word-wrap: break-word; padding-left: 0.5em;padding-right: 0.5em;">
+                  {{localCampus.name}}
             </a>
             <a *ngFor="let localCampus of campuses" (click)="changeTab(localCampus.id)"
-                class="item" attr.data-tab="{{localCampus.id}}">
-                {{localCampus.name}}
+                  class="item" attr.data-tab="{{localCampus.id}}"
+                  style="word-wrap: break-word; padding-left: 0.5em;padding-right: 0.5em;">
+                  {{localCampus.name}}
             </a>
           </div>
         </div>
-        <div class="twelve wide column">
-          <div *ngFor="let localCampus of lunchCampuses"
-            class="ui active tab segment" attr.data-tab="{{localCampus.id}}">
-            <app-campus style="display:contents;" [campus]="localCampus" [users]="users">
-            </app-campus>
-          </div>
-          <div *ngFor="let localCampus of thuiswerkCampuses" style="margin-top: 0;"
+        
+        <div *ngFor="let localCampus of lunchCampuses"
             class="ui tab segment" attr.data-tab="{{localCampus.id}}">
-            <app-campus style="display:contents;" [campus]="localCampus" [users]="users">
-            </app-campus>
-          </div>
-          <div *ngFor="let localCampus of campuses" style="margin-top: 0;"
+          <app-campus style="display:contents;" [campus]="localCampus" [users]="users">
+          </app-campus>
+        </div>
+        <div *ngFor="let localCampus of thuiswerkCampuses" style="margin-top: 0;"
             class="ui tab segment" attr.data-tab="{{localCampus.id}}">
-            <app-campus style="display:contents;" [campus]="localCampus" [users]="users">
-            </app-campus>
-          </div>
+          <app-campus style="display:contents;" [campus]="localCampus" [users]="users">
+          </app-campus>
+        </div>
+        <div *ngFor="let localCampus of campuses" style="margin-top: 0;"
+            class="ui tab segment" attr.data-tab="{{localCampus.id}}">
+          <app-campus style="display:contents;" [campus]="localCampus" [users]="users">
+          </app-campus>
         </div>
       </div>
-      
-      
-    </div>
 
   </div>
 

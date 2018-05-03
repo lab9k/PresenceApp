@@ -1,4 +1,4 @@
-<p *ngIf="location && location.id else nameLocation">
+<p *ngIf="location.id else nameLocation">
     U bent ingechecked in locatie: {{location.name}}
 </p>
 <ng-template #nameLocation>

@@ -2,7 +2,7 @@
   <h2 class="ui header">Campus</h2>
   <form class="ui form" #f="ngForm" (ngSubmit)="onSubmit($event)">
     <div class="field">
-      <label>Name</label>
+      <label>Name:</label>
       <input type="text" name="campus-name" placeholder="Campus Name" 
         [(ngModel)]="campus.name" required>
     </div>
@@ -11,12 +11,18 @@
       <input type="number" name="campus-weight" [(ngModel)]="campus.weight" required>
     </div>
     <div class="field">
-      <label>Is Lunch</label>  
+      <label data-tooltip="Wordt op de home pagina apart getoond."
+            data-position="top left">
+        Lunch locatie?
+      </label>  
       <input type="checkbox" name="isLunch" tabindex="0"
         [(ngModel)]="campus.isLunch">
     </div>
     <div class="field">
-      <label>Is Thuiswerk</label> 
+      <label data-tooltip="Wordt op de home pagina apart getoond."
+            data-position="top left">
+        Thuiswerk locatie?
+      </label> 
       <input type="checkbox" name="isThuiswerk" tabindex="0"
         [(ngModel)]="campus.isThuiswerk">
     </div>
