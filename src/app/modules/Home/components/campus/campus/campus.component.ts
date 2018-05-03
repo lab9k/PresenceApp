@@ -3,6 +3,7 @@ import { Campus } from '../../../../../shared/models/campus.model';
 import { HomeDataService } from '../../../home.service';
 import { User } from '../../../../../shared/models/user.model';
 import { Segment } from '../../../../../shared/models/segment.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-campus',
@@ -13,15 +14,12 @@ export class CampusComponent implements OnInit {
 
   @Input() public campus: Campus;
   @Input() public users: User[];
-  @Input() public maxSegments: any;
   private _segments: Segment[];
   private _vergaderingSegments: Segment[];
-  private _empty: any[];
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
-    this._empty = new Array(this.maxSegments - this.campus.segments.length);
     this._segments = [];
     this._vergaderingSegments = [];
     this.campus.segments.forEach(segment => {
@@ -41,7 +39,7 @@ export class CampusComponent implements OnInit {
     return this._vergaderingSegments;
   }
 
-  get empty() {
-    return this._empty;
+  selectCampus() {
+    this.router.navigate(['/campus', this.campus.id]);
   }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Segment } from '../../../../../shared/models/segment.model';
 import { User } from '../../../../../shared/models/user.model';
 import { Checkin } from '../../../../../shared/models/checkin.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-segment',
@@ -13,7 +14,7 @@ export class SegmentComponent implements OnInit {
   @Input() public segment: Segment;
   @Input() public users: User[];
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
 
@@ -26,6 +27,10 @@ export class SegmentComponent implements OnInit {
     const user = new User(null, name, checkin, null, null, null, null, null, birthday);
     this.users.push(user);
     this.users = this.users.slice(0);
+  }
+
+  selectSegment() {
+    this.router.navigate(['/segment', this.segment.id]);
   }
 
 }

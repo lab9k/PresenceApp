@@ -225,18 +225,4 @@ export class CampusListComponent implements OnInit {
     }
   }
 
-  get maxSegments() {
-    let max = 0;
-    this.campuses.forEach(campus => {
-      if (max < campus.segments.length) {
-        max = campus.segments.length;
-      }
-    });
-    return max;
-  }
-
-  get maxRows() {
-    return 'repeat(' + (this.maxSegments + 1) + ', auto)';
-  }
-
 }

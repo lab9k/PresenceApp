@@ -1,4 +1,4 @@
-<h3 class="ui left aligned top attached header" (click)="addDummy()">{{segment.name}}</h3>
-<app-user-list *ngIf="users"
+<h3 class="ui left aligned top attached header" (click)="selectSegment()">{{segment.name}}</h3>
+<app-user-list *ngIf="users" (click)="addDummy()"
     [segment]="segment" [users]="users">
 </app-user-list>

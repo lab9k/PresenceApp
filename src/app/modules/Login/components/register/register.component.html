@@ -3,7 +3,7 @@
   You can remove your phone on your profile if you want to change.
 </div>
 <div *ngIf="loggedIn !== undefined &&  !loggedIn">
-  Login to register phone.
+  <a href="account/login">Login</a> to register phone.
 </div>
 <div *ngIf="loggedIn !== undefined && isRegistered !== undefined && !isRegistered && loggedIn">
   Succesfully registered phone

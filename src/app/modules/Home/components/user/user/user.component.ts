@@ -19,7 +19,6 @@ export class UserComponent implements OnInit {
 
   @Input() public user: User;
   private _location: Location;
-  private _color: String;
   private _opacity: String;
   private _img: String;
   public mobile: boolean;
@@ -68,15 +67,6 @@ export class UserComponent implements OnInit {
     const diff = +new Date() - this.user.checkin.time;
     const diffHours = diff / 3600000;
     this._opacity = (1 - (diffHours / 24)).toString();
-    if (diff <= 60000 * 60) {
-      this._color = 'green';
-    } else if (diff <= 60000 * 180) {
-      this._color = 'olive';
-    } else if (diff <= 60000 * 300) {
-      this._color = 'yellow';
-    } else {
-      this._color = 'red';
-    }
   }
 
   @HostListener('window:resize', ['$event'])
@@ -92,30 +82,12 @@ export class UserComponent implements OnInit {
     return this._location;
   }
 
-  get color() {
-    return this._color;
-  }
-
   get opacity() {
     return this._opacity;
   }
 
   get img() {
     return this._img;
-  }
-
-  timeConverter(UNIX_timestamp) {
-    const a = new Date(UNIX_timestamp);
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
-      'September', 'October', 'November', 'December'];
-    const year = a.getFullYear();
-    const month = months[a.getMonth()];
-    const date = a.getDate();
-    const hour = a.getHours();
-    const min = a.getMinutes() < 10 ? '0' + a.getMinutes() : a.getMinutes();
-    const sec = a.getSeconds() < 10 ? '0' + a.getSeconds() : a.getSeconds();
-    const time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
-    return time;
   }
 
   userSelected() {

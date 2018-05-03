@@ -1,7 +1,7 @@
 <div class="ui one column grid" style="width: 100%" *ngIf="correctIp">
   <div class="column">
-    <div [ngStyle]="{'grid-template-rows': maxRows}" class="grid-container">
-        <app-campus style="display:contents;" *ngFor="let localCampus of campuses" [campus]="localCampus" [users]="users" [maxSegments]="maxSegments">
+    <div class="grid-container">
+        <app-campus style="display:contents;" *ngFor="let localCampus of campuses" [campus]="localCampus" [users]="users">
         </app-campus>
     </div>
   </div>

@@ -1,11 +1,11 @@
 
-<h2 class="ui left aligned  header" (click)="selectCampus()">{{campus.name}}</h2>
+<h2 class="ui left aligned  header" *ngIf="campus !== undefined">{{campus.name}}</h2>
 
-<app-segment-list
+<app-segment-list *ngIf="campus !== undefined"
     [segments]="segments" [users]="users">
 </app-segment-list>
 
-<div>
+<div *ngIf="campus !== undefined">
     <div *ngFor="let localSegment of vergaderingSegments" class="ui secondary bottom aligned basic segment" style="height: 100%;">
         <h3 class="ui left aligned top attached inverted header">In Vergadering</h3>
         <app-user-list [segment]="localSegment" [users]="users"></app-user-list>
