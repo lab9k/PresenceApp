@@ -1,4 +1,5 @@
-<div class="ui container" *ngIf="time !== undefined && location !== undefined else noCheckin">
+<div class="ui container compact segment">
+  <div *ngIf="time !== undefined && location !== undefined else noCheckin">
     <p>
       Your last checkin was on {{time}} at {{location.name}}
     </p>
@@ -6,7 +7,8 @@
       (click)="removeCheckin()">
       Remove checkin
     </button>
+  </div>
+  <ng-template #noCheckin>
+    Not checked in.
+  </ng-template>
 </div>
-<ng-template #noCheckin>
-  Not checked in.
-</ng-template>

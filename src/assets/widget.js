@@ -38,12 +38,12 @@
       if(segmentId !== undefined) {
         $.ajax({ 
           type: 'GET', 
-          url: 'http://localhost:3000/API/segment/' + segmentId, 
+          url: 'https://agile-everglades-38755.herokuapp.com/API/segment/' + segmentId, 
           dataType: 'json',
           success: function (segment) { 
             $.ajax({ 
               type: 'GET', 
-              url: 'http://localhost:3000/API/users', 
+              url: 'https://agile-everglades-38755.herokuapp.com/API/users', 
               dataType: 'json',
               success: function (users) { 
                 $container.append($('<ul>'));
@@ -61,12 +61,12 @@
       } else if (campusId !== undefined) {
         $.ajax({ 
           type: 'GET', 
-          url: 'http://localhost:3000/API/campus/' + campusId, 
+          url: 'https://agile-everglades-38755.herokuapp.com/API/campus/' + campusId, 
           dataType: 'json',
           success: function (campus) { 
             $.ajax({ 
               type: 'GET', 
-              url: 'http://localhost:3000/API/users', 
+              url: 'https://agile-everglades-38755.herokuapp.com/API/users', 
               dataType: 'json',
               success: function (users) { 
                 $container.append($('<ul>'));
@@ -86,7 +86,7 @@
       } else if(all !== undefined && all) {
         $.ajax({ 
           type: 'GET', 
-          url: 'http://localhost:3000/API/users', 
+          url: 'https://agile-everglades-38755.herokuapp.com/API/users', 
           dataType: 'json',
           success: function (users) { 
             $container.append($('<ul>'));
@@ -98,11 +98,11 @@
       } else {
         $container.append('<h1>Voorbeelden gebruik widget</h1>');
         $container.append('<p>Alle aanwezige gebruikers</p>');
-        $container.append('<textarea style="width: 90%; height: 50px;"><div id="wieiswaar-container"></div>\n<script type="text/javascript" src="http://localhost:4200/assets/widget.js" data-all="true"></script></textarea></br>');
+        $container.append('<textarea style="width: 90%; height: 50px;"><div id="wieiswaar-container"></div>\n<script type="text/javascript" src="https://agile-everglades-38755.herokuapp.com/assets/widget.js" data-all="true"></script></textarea></br>');
         $container.append('<p>Aanwezige gebruikers in een segment</p>');
-        $container.append('<textarea style="width: 90%; height: 50px;"><div id="wieiswaar-container"></div>\n<script type="text/javascript" src="http://localhost:4200/assets/widget.js" data-segment="5ac479eac501826e88a7cc51"></script></textarea></br>');
+        $container.append('<textarea style="width: 90%; height: 50px;"><div id="wieiswaar-container"></div>\n<script type="text/javascript" src="https://agile-everglades-38755.herokuapp.com/assets/widget.js" data-segment="5acf458d3ae50f0014ff1bb3"></script></textarea></br>');
         $container.append('<p>Aanwezige gebruikers in een campus</p>');
-        $container.append('<textarea style="width: 90%; height: 50px;"><div id="wieiswaar-container"></div>\n<script type="text/javascript" src="http://localhost:4200/assets/widget.js" data-campus="5aa101b1ae6a5737bc308f0b"></script></textarea></br>');
+        $container.append('<textarea style="width: 90%; height: 50px;"><div id="wieiswaar-container"></div>\n<script type="text/javascript" src="https://agile-everglades-38755.herokuapp.com/assets/widget.js" data-campus="5acf45873ae50f0014ff1bb1"></script></textarea></br>');
       }
       
     });

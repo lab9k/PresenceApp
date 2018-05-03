@@ -1,17 +1,46 @@
-<h1>Profile</h1>
-<div class="ui form" *ngIf="user !== undefined">
-  <div class="field">
-    <label>Name:</label>
-    {{user.name}}
+<div class="ui container compact segment">
+    <h1>Profile</h1>
+    <div style="float: right;" *ngIf="user">
+    <img *ngIf="user.picture else googlepic"
+      src="{{user.picture}}">
+    <ng-template #googlepic>
+      <img src="{{img}}">
+    </ng-template>
   </div>
-  <div class="field">
-    <label>PhoneId:</label>
-    <div *ngIf="user.phoneid">
-      {{user.phoneid}}
-      <a (click)="deletePhoneId()">
-          <i class="red trash icon"></i>
-        </a>
+  <div style="float: left;" class="ui form" *ngIf="user">
+    <div class="field">
+      <label>Name:</label>
+      {{user.name}}
+    </div>
+    <div class="field">
+      <label>Role:</label>
+      {{user.role}}
+    </div>
+    <div class="field">
+      <label>Account type:</label>
+      {{user.accountType}}
+    </div>
+    <div class="field">
+      <label>PhoneId:</label>
+      <div *ngIf="user.phoneid">
+        {{user.phoneid}}
+        <a (click)="deletePhoneId()">
+            <i class="red trash icon"></i>
+          </a>
+      </div>
+    </div>
+    <div class="field">
+      <label>Checkin</label>
+      <div *ngIf="time !== undefined && location !== undefined else noCheckin">
+        <p>
+          Your last checkin was on {{time}} at {{location.name}}
+        </p>  
+      </div>
+      <ng-template #noCheckin>
+        Not checked in.
+      </ng-template>
     </div>
   </div>
-</div>
 
+
+</div>
