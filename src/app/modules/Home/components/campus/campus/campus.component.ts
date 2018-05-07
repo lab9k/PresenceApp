@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Campus } from '../../../../../shared/models/campus.model';
 import { HomeDataService } from '../../../home.service';
 import { User } from '../../../../../shared/models/user.model';
@@ -8,7 +8,8 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-campus',
   templateUrl: './campus.component.html',
-  styleUrls: ['./campus.component.css']
+  styleUrls: ['./campus.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CampusComponent implements OnInit {
 
@@ -29,6 +30,7 @@ export class CampusComponent implements OnInit {
         this._segments.push(segment);
       }
     });
+    console.log('Load campus');
   }
 
   get segments() {

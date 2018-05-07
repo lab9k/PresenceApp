@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, HostListener } from '@angular/core';
+import { Component, OnInit, Input, HostListener, ChangeDetectionStrategy } from '@angular/core';
 import { User } from '../../../../../shared/models/user.model';
 import { DataService } from '../../../../../shared/services/data.service';
 import { Location } from '../../../../../shared/models/location.model';
@@ -6,14 +6,16 @@ import { Message } from '../../../../../shared/models/message.model';
 import { HomeDataService } from '../../../home.service';
 import { AuthenticationService } from '../../../../../shared/services/authentication.service';
 
-import * as Identicon from 'identicon.js';
+// import * as Identicon from 'identicon.js';
+// const jdenticon = require('jdenticon');
 
 declare var $: any;
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css']
+  styleUrls: ['./user.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserComponent implements OnInit {
 
@@ -27,6 +29,7 @@ export class UserComponent implements OnInit {
   constructor(private dataService: DataService, private homeService: HomeDataService, private authService: AuthenticationService) { }
 
   ngOnInit() {
+    console.log('Load user');
     if (window.innerWidth <= 768) { // 768px portrait
       this.mobile = true;
     } else {
@@ -48,6 +51,7 @@ export class UserComponent implements OnInit {
       this.birthday = false;
     }
     // set up options
+    /*
     let hash = '';
     while (hash.length < 15) {
       for (let i = 0; i < this.user.name.length; i++) {
@@ -63,6 +67,8 @@ export class UserComponent implements OnInit {
     // create a base64 encoded SVG
     const data = new Identicon(hash, options).toString();
     this._img = 'data:image/png;base64,' + data;
+    */
+
     this._location = this.user.checkin.location;
     const diff = +new Date() - this.user.checkin.time;
     const diffHours = diff / 3600000;

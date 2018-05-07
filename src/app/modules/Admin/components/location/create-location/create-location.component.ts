@@ -18,7 +18,7 @@ export class CreateLocationComponent implements OnInit {
     ngOnInit() {
     }
 
-    createSLocation() {
+    createLocation() {
       this.locationName = $('input[name=\'location-name\']').val();
       if (this.locationName.trim() !== '') {
         this.createSegmentEvent.next(this.locationName);

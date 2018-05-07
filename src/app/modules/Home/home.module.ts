@@ -16,6 +16,7 @@ import { CampusDetailComponent } from './components/campus/campus-detail/campus-
 import { CampusResolver } from './campus-resolver.service';
 import { SegmentDetailComponent } from './components/segment/segment-detail/segment-detail.component';
 import { SegmentResolver } from './segment-resolver.service';
+import { AvatarModule } from 'ngx-avatar';
 
 const routes = [
   { path: '', component: CampusListComponent },
@@ -28,7 +29,8 @@ const routes = [
   imports: [
     HttpModule,
     CommonModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    AvatarModule
   ],
   declarations: [
     CampusListComponent,

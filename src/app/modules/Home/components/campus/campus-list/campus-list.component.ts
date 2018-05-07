@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, HostListener } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, AfterViewInit, AfterViewChecked, AfterContentChecked, AfterContentInit } from '@angular/core';
 import { HomeDataService } from '../../../home.service';
 import { Campus } from '../../../../../shared/models/campus.model';
 import { User } from '../../../../../shared/models/user.model';
@@ -24,7 +24,6 @@ export class CampusListComponent implements OnInit {
   private _users: any;
   private usr: User;
   private _correctIp: boolean;
-  public mobile: boolean;
   private locations: Location[];
 
   private _userNames;
@@ -34,11 +33,6 @@ export class CampusListComponent implements OnInit {
     private dataService: DataService) { }
 
   ngOnInit() {
-    if (window.innerWidth <= 768) { // 768px portrait
-      this.mobile = true;
-    } else {
-      this.mobile = false;
-    }
     $.getJSON('https://api.ipdata.co', function(data) {
       this.authService.getCurrentUser().subscribe(currentUser => {
         if (currentUser === null) {
@@ -46,6 +40,7 @@ export class CampusListComponent implements OnInit {
         } else {
           this._correctIp = true;
         }
+        console.log('Got IP');
       });
     }.bind(this));
     this._campuses = [];
@@ -91,15 +86,6 @@ export class CampusListComponent implements OnInit {
     }.bind(this), 300000);
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    if (window.innerWidth <= 768) { // 768px portrait
-      this.mobile = true;
-    } else {
-      this.mobile = false;
-    }
-  }
-
   changeTab(id) {
     $('.active').removeClass('active');
     $('#campusDrop').dropdown('toggle');
@@ -133,6 +119,7 @@ export class CampusListComponent implements OnInit {
 
   fetchUsers() {
     this._homeDataService.getUsers().then((res) => {
+      console.log('Got users');
       this._users = res;
       for (let i = 0; i < this._users.length; i++) {
         this._userNames.push({
@@ -148,6 +135,7 @@ export class CampusListComponent implements OnInit {
       // sort users
       this._homeDataService.campuses()
       .subscribe(items => {
+        console.log('Got campuses');
         for (let i = 0, len = items.length; i < len; i++) {
           if (items[i].isLunch) {
             this._lunchCampuses.push(items[i]);
@@ -170,6 +158,7 @@ export class CampusListComponent implements OnInit {
   }
 
   filterUsers(search) {
+    console.log('Filter users');
     if (search !== undefined && search.trim() !== '') {
       for (let i = 0, len = this._users.length; i < len; i++) {
         this._users[i].visible = (this._users[i].name.toLowerCase().includes(search));
@@ -183,6 +172,7 @@ export class CampusListComponent implements OnInit {
   }
 
   sortUsers() {
+    console.log('Sort users');
     this._users = this._users.sort((a, b) => {
       if ((a.checkin !== undefined && b.checkin === undefined) || (a.checkin !== null && b.checkin === null)) {
         return -1;
@@ -205,6 +195,7 @@ export class CampusListComponent implements OnInit {
   }
 
   sortCampuses() {
+    console.log('Sort campuses');
     this._campuses = this._campuses.sort((a, b) => {
       if (a.weight > b.weight) {
         return -1;
@@ -216,6 +207,7 @@ export class CampusListComponent implements OnInit {
   }
 
   sortSegments() {
+    console.log('Sort segments');
     for (let i = 0, len = this._campuses.length; i < len; i++) {
       if (this._campuses[i].segments !== undefined) {
         this._campuses[i].segments = this._campuses[i].segments.sort((a, b) => {
@@ -231,6 +223,7 @@ export class CampusListComponent implements OnInit {
   }
 
   sortLocations() {
+    console.log('Sort locations');
     for (let i = 0, len = this._campuses.length; i < len; i++) {
       if (this._campuses[i].segments !== undefined) {
         for (let j = 0, len2 = this._campuses[i].segments.length; j < len2; j++) {
@@ -249,4 +242,15 @@ export class CampusListComponent implements OnInit {
     }
   }
 
+  trackCampus(index, item) {
+    return index;
+  }
+
+  trackLunchSegment(index, item) {
+    return index;
+  }
+
+  trackThuiswerkSegment(index, item) {
+    return index;
+  }
 }

@@ -13,6 +13,7 @@ import { DataService } from './shared/services/data.service';
 import { DragulaModule } from 'ng2-dragula/components/dragular.module';
 import { AdminGuardService } from './modules/app-routing/admin-guard.service';
 import { AdminDataService } from './modules/Admin/admin.service';
+import { AvatarModule } from 'ngx-avatar';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { AdminDataService } from './modules/Admin/admin.service';
     FormsModule,
     ReactiveFormsModule,
     DragulaModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AvatarModule
   ],
   providers: [
     AuthenticationService,

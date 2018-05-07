@@ -1,14 +1,16 @@
+
 <div *ngIf="!mobile else mobileLayout">
     <div class="column" style="padding: 0.5em 0em 0.5em 0em" *ngIf="user.visible" [attr.data-tooltip]="user.name">
         <div [ngClass]="{'black': birthday}" class='ui raised fluid card' [ngStyle]="{'opacity': opacity}"
             (click)="userSelected()">
             <div class="ui tiny image" style="width: 60px; height: 60px;">
                 <img class="overlayImage" *ngIf="birthday" src="./assets/crown2.png">
-                <img *ngIf="user.picture else googlepic"
-                src="{{user.picture}}">
-                <ng-template #googlepic>
-                        <img 
-                        src="{{img}}">
+                <ngx-avatar *ngIf="!user.picture else picture"
+                    googleId="google" name="{{user.name}}"
+                    size="60" [round]="false">
+                </ngx-avatar>
+                <ng-template #picture>
+                    <img src="{{user.picture}}" />
                 </ng-template>
             </div>
             <div class="description">
@@ -22,10 +24,12 @@
 
 
 <ng-template #mobileLayout>
-    <img *ngIf="user.picture && user.visible else googlepic"
-        src="{{user.picture}}" class="ui avatar image">
-    <ng-template #googlepic>
-        <img src="{{img}}" class="ui avatar image" *ngIf="user.visible">
+    <ngx-avatar *ngIf="!user.picture else picture" class="ui avatar image"
+        googleId="google" name="{{user.name}}"
+        size="30" [round]="true">
+    </ngx-avatar>
+    <ng-template #picture>
+        <img src="{{user.picture}}" class="ui avatar image"/>
     </ng-template>
     <div class="content" *ngIf="user.visible">
         <a class="header">{{user.name}}</a>

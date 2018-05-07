@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, HostListener } from '@angular/core';
+import { Component, OnInit, Input, HostListener, ChangeDetectionStrategy } from '@angular/core';
 import { HomeDataService } from '../../../home.service';
 import { User } from '../../../../../shared/models/user.model';
 import { Campus } from '../../../../../shared/models/campus.model';
@@ -9,7 +9,8 @@ import { DataService } from '../../../../../shared/services/data.service';
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.css']
+  styleUrls: ['./user-list.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserListComponent implements OnInit {
 
@@ -17,10 +18,12 @@ export class UserListComponent implements OnInit {
   @Input() public users: User[];
   private _filteredUsers: User[];
   public mobile: boolean;
+  public loading: boolean;
 
   constructor(private _userDataService: HomeDataService) { }
 
   ngOnInit() {
+    this.loading = true;
     if (window.innerWidth <= 768) { // 768px portrait
       this.mobile = true;
     } else {

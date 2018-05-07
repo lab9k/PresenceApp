@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   private _correctIp: boolean;
   private _campusList: any;
 
-  constructor(private authService: AuthenticationService, private router: Router, private dataService: AdminDataService) {
+  constructor(private authService: AuthenticationService, private _router: Router, private dataService: AdminDataService) {
   }
 
   ngOnInit() {
@@ -31,6 +31,10 @@ export class AppComponent implements OnInit {
 
   get correctIp() {
     return this._correctIp;
+  }
+
+  get router() {
+    return this._router;
   }
 
   onActivate(componentRef) {

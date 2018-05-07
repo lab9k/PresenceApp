@@ -2,25 +2,26 @@
   <div class="ui one column grid" style="width: 100%">
     <div class="computer only column">
       <div class="grid-container">
-          <app-campus style="display:contents;" *ngFor="let localCampus of campuses" [campus]="localCampus" [users]="users">
+          <app-campus style="display:contents;" *ngFor="let localCampus of campuses; trackBy: trackCampus" [campus]="localCampus" [users]="users">
           </app-campus>
       </div>
     </div>
+
     <div class="computer only column">
-      <div class="ui two column stackable grid">
+      <div class="ui two column equal height grid">
         <div class="column">
-          <div class="ui tertiary basic segment" *ngFor="let localCampus of lunchCampuses">
+          <div class="ui tertiary basic segment" *ngFor="let localCampus of lunchCampuses" style="height: 100%;">
             <h2 class="ui left aligned  header">{{localCampus.name}}</h2>
-            <div *ngFor="let localSegment of localCampus.segments">
+            <div *ngFor="let localSegment of localCampus.segments; trackBy: trackLunchSegment">
               <app-user-list [segment]="localSegment" [users]="users">
               </app-user-list>
             </div>
           </div>
         </div>
         <div class="column">
-          <div class="ui tertiary basic segment" *ngFor="let localCampus of thuiswerkCampuses">
+          <div class="ui tertiary basic segment" *ngFor="let localCampus of thuiswerkCampuses" style="height: 100%;">
             <h2 class="ui left aligned  header">{{localCampus.name}}</h2>
-              <div *ngFor="let localSegment of localCampus.segments">
+              <div *ngFor="let localSegment of localCampus.segments; trackBy: trackThuiswerkSegment">
                 <app-user-list [segment]="localSegment" [users]="users">
                 </app-user-list>
               </div>
@@ -72,8 +73,8 @@
   </div>
 
   <div class="ui active inverted dimmer" *ngIf="campuses === undefined || users === undefined">
-      <div class="ui text loader">Loading</div>
-    </div>  
+    <div class="ui text loader">Loading</div>
+  </div>  
 </div>
 
 

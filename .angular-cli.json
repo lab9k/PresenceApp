@@ -22,8 +22,6 @@
         
       ],
       "scripts": [
-        "../node_modules/identicon.js/identicon.js",
-        "../node_modules/identicon.js/pnglib.js",
         "../node_modules/jquery/dist/jquery.min.js",
         "./assets/semantic.min.js"
       ],
