@@ -1,15 +1,18 @@
-<div style="margin-bottom: 4px;" class="ui basic segment" *ngIf="!mobile else mobileLayout">
-  <div class="ui stackable left floated grid">
-    <app-user *ngFor="let localUser of filteredUsers" [user]="localUser">
-    </app-user>
-  </div>
-</div>
-
-<ng-template #mobileLayout>
-  <div class="ui attached segment">
-    <div class="ui middle aligned divided list">
-        <app-user class="item" *ngFor="let localUser of filteredUsers" [user]="localUser">
+<div class="ui one column grid">
+  <div class="computer only column">
+    <div style="margin-bottom: 4px;" class="ui basic segment" >
+      <div class="ui stackable left floated grid">
+        <app-user *ngFor="let localUser of filteredUsers" [user]="localUser">
         </app-user>
+      </div>
     </div>
   </div>
-</ng-template>
+  <div class="mobile tablet only column">
+    <div class="ui attached segment">
+      <div class="ui middle aligned divided list">
+          <app-user class="item" *ngFor="let localUser of filteredUsers" [user]="localUser">
+          </app-user>
+      </div>
+    </div>
+  </div>
+</div>

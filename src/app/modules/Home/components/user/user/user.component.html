@@ -1,42 +1,45 @@
-
-<div *ngIf="!mobile else mobileLayout">
-    <div class="column" style="padding: 0.5em 0em 0.5em 0em" *ngIf="user.visible" [attr.data-tooltip]="user.name">
-        <div [ngClass]="{'black': birthday}" class='ui raised fluid card' [ngStyle]="{'opacity': opacity}"
-            (click)="userSelected()">
-            <div class="ui tiny image" style="width: 60px; height: 60px;">
-                <img class="overlayImage" *ngIf="birthday" src="./assets/crown2.png">
-                <ngx-avatar *ngIf="!user.picture else picture"
-                    googleId="google" name="{{user.name}}"
-                    size="60" [round]="false">
-                </ngx-avatar>
-                <ng-template #picture>
-                    <img src="{{user.picture}}" />
-                </ng-template>
-            </div>
-            <div class="description">
-                <div class="center aligned" style="overflow:hidden;width:60px;height:20px;line-height:20px;">
-                        {{user.name}} 
-                </div>   
-            </div>
-        </div> 
+<div class="ui one column grid" id="{{user.id}}">
+    <div class="computer only column">
+        <div class="column" style="padding: 0.5em 0em 0.5em 0em" *ngIf="user.visible" [attr.data-tooltip]="user.name">
+            <div [ngClass]="{'black': birthday}" class='ui raised fluid card' [ngStyle]="{'opacity': opacity}"
+                (click)="userSelected()">
+                <div class="ui tiny image" style="width: 60px; height: 60px;">
+                    <img class="overlayImage" *ngIf="birthday" src="./assets/crown2.png">
+                    <ngx-avatar *ngIf="!user.picture else picture"
+                        googleId="google" name="{{user.name}}"
+                        size="60" [round]="false">
+                    </ngx-avatar>
+                    <ng-template #picture>
+                        <img src="{{user.picture}}" />
+                    </ng-template>
+                </div>
+                <div class="description">
+                    <div class="center aligned" style="overflow:hidden;width:60px;height:20px;line-height:20px;">
+                            {{user.name}} 
+                    </div>   
+                </div>
+            </div> 
+        </div>  
+    </div>
+    <div class="mobile tablet only column">
+        <div style="display: flex;
+                    justify-content: left;
+                    align-items: center;">
+            <ngx-avatar *ngIf="!user.picture else picture" class="ui avatar image"
+                googleId="google" name="{{user.name}}" style="float: left; margin-right: 10px;"
+                size="30" [round]="true">
+            </ngx-avatar>
+            <ng-template #picture>
+                <img src="{{user.picture}}" class="ui avatar image" style="float: left;"/>
+            </ng-template>
+            <a class="header" *ngIf="user.visible" style="float: left;">
+                {{user.name}}
+            </a>
+        </div>
     </div>
 </div>
 
-
-<ng-template #mobileLayout>
-    <ngx-avatar *ngIf="!user.picture else picture" class="ui avatar image"
-        googleId="google" name="{{user.name}}"
-        size="30" [round]="true">
-    </ngx-avatar>
-    <ng-template #picture>
-        <img src="{{user.picture}}" class="ui avatar image"/>
-    </ng-template>
-    <div class="content" *ngIf="user.visible">
-        <a class="header">{{user.name}}</a>
-    </div>
-</ng-template>
-
-<div class="ui modal" id="{{user.id}}" *ngIf="location && location.doNotDisturb">
+<div class="ui modal" id="{{user.id}}{{user.name}}" *ngIf="location && location.doNotDisturb">
     <i class="close icon"></i>
     <div class="header">
         Send Message
@@ -65,4 +68,4 @@
             <i class="checkmark icon"></i>
         </div>
     </div>
-  </div>
+</div>

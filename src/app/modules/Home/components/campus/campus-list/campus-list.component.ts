@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, AfterViewInit, AfterViewChecked, AfterContentChecked, AfterContentInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { HomeDataService } from '../../../home.service';
 import { Campus } from '../../../../../shared/models/campus.model';
 import { User } from '../../../../../shared/models/user.model';
@@ -25,6 +25,7 @@ export class CampusListComponent implements OnInit {
   private usr: User;
   private _correctIp: boolean;
   private locations: Location[];
+  private _checkUsers: any;
 
   private _userNames;
   socket = io();
@@ -40,7 +41,6 @@ export class CampusListComponent implements OnInit {
         } else {
           this._correctIp = true;
         }
-        console.log('Got IP');
       });
     }.bind(this));
     this._campuses = [];
@@ -50,40 +50,44 @@ export class CampusListComponent implements OnInit {
     this.fetchUsers();
     this.socket.on('new-checkin', function(data) {
       const user = User.fromJSON(data.user);
-      console.log(user);
-      for (let i = 0; i < this._users.length; i++) {
-        if (this._users[i].id === user._id) {
-          console.log(data);
-          this._users.splice(i, 1);
-          // sort users
-          this.sortUsers();
-          break;
+      $('#' + user.id).addClass('fade');
+      setTimeout(function() {
+        for (let i = 0; i < this._users.length; i++) {
+          if (this._users[i].id === user._id) {
+            this._users.splice(i, 1);
+            break;
+          }
         }
-      }
-      this.usr = User.fromJSON(data.user);
-      this.usr.visible = true;
-      this._users.push(this.usr);
-      console.log(this._users);
-      this._users = this._users.slice(0);
-      this.cd.detectChanges();
+        this.usr = User.fromJSON(data.user);
+        this.usr.visible = true;
+        this._users.push(this.usr);
+        // sort users
+        this.sortUsers();
+        this._users = this._users.slice(0);
+        this.cd.detectChanges();
+        $('#' + user.id).addClass('show');
+        setTimeout(function() {
+          $('#' + user.id).removeClass('show');
+        }, 2000);
+      }.bind(this), 2000);
     }.bind(this));
     this.socket.on('new-checkout', function(data) {
-      console.log(data);
       this.usr = User.fromJSON(data.user);
       for (let i = 0; i < this._users.length; i++) {
         if (this._users[i].id === data.user._id) {
-          this._users.splice(i, 1);
-          this._users.push(this.usr);
-          this.sortUsers();
+          $('#' + this._users[i].id).addClass('show');
+          setTimeout(function() {
+            $('#' + this._users[i].id).removeClass('show');
+            this._users.splice(i, 1);
+            this._users.push(this.usr);
+            this.sortUsers();
+          }, 2000);
           break;
         }
       }
       this._users = this._users.slice(0);
       this.cd.detectChanges();
     }.bind(this));
-    setTimeout(function(){
-      this.ngOnInit();
-    }.bind(this), 300000);
   }
 
   changeTab(id) {
@@ -119,7 +123,6 @@ export class CampusListComponent implements OnInit {
 
   fetchUsers() {
     this._homeDataService.getUsers().then((res) => {
-      console.log('Got users');
       this._users = res;
       for (let i = 0; i < this._users.length; i++) {
         this._userNames.push({
@@ -135,7 +138,6 @@ export class CampusListComponent implements OnInit {
       // sort users
       this._homeDataService.campuses()
       .subscribe(items => {
-        console.log('Got campuses');
         for (let i = 0, len = items.length; i < len; i++) {
           if (items[i].isLunch) {
             this._lunchCampuses.push(items[i]);
@@ -156,23 +158,28 @@ export class CampusListComponent implements OnInit {
       console.log(err);
     });
   }
-
   filterUsers(search) {
-    console.log('Filter users');
     if (search !== undefined && search.trim() !== '') {
       for (let i = 0, len = this._users.length; i < len; i++) {
-        this._users[i].visible = (this._users[i].name.toLowerCase().includes(search));
+        const visible = (this._users[i].name.toLowerCase().includes(search));
+        if (visible !== this._users[i].visible) {
+          this._users[i].visible = visible;
+        }
       }
       this._users = this._users.slice(0);
+      this.cd.detectChanges();
     } else {
       for (let i = 0, len = this._users.length; i < len; i++) {
-        this._users[i].visible = true;
+        if (!this._users[i].visible) {
+          this._users[i].visible = true;
+        }
       }
+      this._users = this._users.slice(0);
+      this.cd.detectChanges();
     }
   }
 
   sortUsers() {
-    console.log('Sort users');
     this._users = this._users.sort((a, b) => {
       if ((a.checkin !== undefined && b.checkin === undefined) || (a.checkin !== null && b.checkin === null)) {
         return -1;
@@ -191,11 +198,10 @@ export class CampusListComponent implements OnInit {
       }
       return 0;
     });
-    this.filterUsers('');
+    // this.filterUsers('');
   }
 
   sortCampuses() {
-    console.log('Sort campuses');
     this._campuses = this._campuses.sort((a, b) => {
       if (a.weight > b.weight) {
         return -1;
@@ -207,7 +213,6 @@ export class CampusListComponent implements OnInit {
   }
 
   sortSegments() {
-    console.log('Sort segments');
     for (let i = 0, len = this._campuses.length; i < len; i++) {
       if (this._campuses[i].segments !== undefined) {
         this._campuses[i].segments = this._campuses[i].segments.sort((a, b) => {
@@ -223,7 +228,6 @@ export class CampusListComponent implements OnInit {
   }
 
   sortLocations() {
-    console.log('Sort locations');
     for (let i = 0, len = this._campuses.length; i < len; i++) {
       if (this._campuses[i].segments !== undefined) {
         for (let j = 0, len2 = this._campuses[i].segments.length; j < len2; j++) {

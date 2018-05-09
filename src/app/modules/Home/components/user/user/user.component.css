@@ -11,3 +11,25 @@
     border-color: black;
     border-width: 0.1em;
 }
+
+@keyframes hide-animation {
+    0% { transform: translate(0);}
+    20% { transform: translate(5px);}
+    100% { transform: translate(-120vw);}
+}
+
+@keyframes show-animation {
+    0% { transform: translate(-120vw);}
+    80% { transform: translate(5px);}
+    100% { transform: translate(0);}
+}
+  
+.fade {
+    position: relative;
+    animation: hide-animation 2s linear forwards;
+}
+
+.show {
+    position: relative;
+    animation: show-animation 2s linear forwards;
+}

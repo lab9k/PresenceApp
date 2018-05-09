@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Campus } from '../../../../../shared/models/campus.model';
 import { HomeDataService } from '../../../home.service';
 import { User } from '../../../../../shared/models/user.model';
@@ -18,7 +18,7 @@ export class CampusComponent implements OnInit {
   private _segments: Segment[];
   private _vergaderingSegments: Segment[];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private cd: ChangeDetectorRef) { }
 
   ngOnInit() {
     this._segments = [];
@@ -30,7 +30,6 @@ export class CampusComponent implements OnInit {
         this._segments.push(segment);
       }
     });
-    console.log('Load campus');
   }
 
   get segments() {
