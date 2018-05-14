@@ -4,7 +4,7 @@
   <div class="item" *ngIf="router.url === '/'">
     <div class="ui search">
       <div class="ui icon transparent inverted input">
-        <input name="search" class="prompt" type="text" placeholder="Search users..." (keyup)="filter($event)">
+        <input id="search"  name="search" class="prompt" type="text" placeholder="Search users..." (keyup)="filter($event)" (change)="filter($event)">
         <i class="search icon"></i>
       </div>
       <div class="results"></div>

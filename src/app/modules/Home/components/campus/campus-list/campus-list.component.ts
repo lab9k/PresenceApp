@@ -119,7 +119,13 @@ export class CampusListComponent implements OnInit {
   }
 
   filter(event) {
-    this.filterUsers($('input[name=\'search\']').val().toLowerCase());
+    if (event.type === 'keyup') {
+      this.filterUsers($('input[name=\'search\']').val().toLowerCase());
+    } else if (event.type === 'change') {
+      setTimeout(function() {
+        this.filterUsers($('input[name=\'search\']').val().toLowerCase());
+      }.bind(this), 1000);
+    }
   }
 
   fetchUsers() {

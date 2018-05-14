@@ -1,7 +1,7 @@
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
 let mongoose = require('mongoose');
-var io = require('../middleware/io');
+let io = require('../middleware/io');
 
 let Location = mongoose.model('Location');
 let User = mongoose.model('User');
@@ -143,7 +143,7 @@ router.post('/API/message/', function(req, res, next) {
 /* UPDATE USER */
 router.put('/API/user/', function(req, res, next) {
   console.log("USER:" + req.body.theme);
-  User.findByIdAndUpdate(req.body._id, req.body, function (err, user) {
+  User.findByIdAndUpdate(req.body._id, req.body, {new: true}, function (err, user) {
     if (err) { 
       console.log(err);
       return next(err); 
@@ -186,7 +186,7 @@ router.get('/API/register/:phoneid', function(req, res, next) {
 
 /* UPDATE MESSAGE */
 router.put('/API/message', function(req, res, next) {
-  Message.findByIdAndUpdate(req.body._id, req.body, function (err, message) {
+  Message.findByIdAndUpdate(req.body._id, req.body, {new: true}, function (err, message) {
     if (err) { 
       console.log(err);
       return next(err); 
@@ -220,7 +220,7 @@ router.put('/API/segment/', function(req, res, next) {
 /* UPDATE LOCATION */
 router.put('/API/location/', function(req, res, next) {
   console.log(req.body);
-  Location.findByIdAndUpdate(req.body._id, req.body, function (err, location) {
+  Location.findByIdAndUpdate(req.body._id, req.body, {new: true}, function (err, location) {
     if (err) { return next(err); }
     res.json(location);
   })
@@ -228,61 +228,30 @@ router.put('/API/location/', function(req, res, next) {
 
 /* GET CAMPUSES */
 router.get('/API/campuses', function(req, res, next) {
-  Campus.aggregate([
-    {$unwind: {"path": "$segments", "preserveNullAndEmptyArrays": true}},
-    {$lookup:
-      {
-        from: "segments",
-        localField: "segments",
-        foreignField: "_id",
-        as: "segment"
-      }
-    },
-    {$lookup:
-      {
-        from: "locations",
-        localField: "segment.locations",
-        foreignField: "_id",
-        as: "locations"
-      }
-    },
-    {
-      $group: {
-        _id: "$_id",
-        name: {$first: "$name"},
-        isLunch: {$first: "$isLunch"},
-        isThuiswerk: {$first: "$isThuiswerk"},
-        weight: {$first: "$weight"},
-        segments: { $push: {
-          _id: {$arrayElemAt:["$segment._id", 0]},
-          name: {$arrayElemAt:["$segment.name", 0]},
-          weight: {$arrayElemAt:["$segment.weight", 0]},
-          isVergadering: {$arrayElemAt:["$segment.isVergadering", 0]},
-          locations: "$locations"}
-        },
-      }
-    },
-  ],function(err, campuses) {
+  Campus.find()
+  .populate({
+    path: 'segments',
+    model: 'Segment',
+    populate: {
+      path: 'locations',
+      model: 'Location'
+    }
+  })
+  .exec(function(err, campuses) {
     if(err) {next(err);}
-    
     res.json(campuses);
   });
 });
 
 /* GET SEGMENTS */
 router.get('/API/segments', function(req, res, next) {
-  Segment.aggregate([
-    {$lookup:
-      {
-        from: "locations",
-        localField: "locations",
-        foreignField: "_id",
-        as: "locations"
-      }
-    }
-  ],function(err, segments) {
+  Segment.find()
+  .populate({
+    path: 'locations',
+    model: 'Location'
+  })
+  .exec(function(err, segments) {
     if(err) {next(err);}
-    
     res.json(segments);
   });
 });
@@ -338,8 +307,6 @@ router.get('/API/campus/:id', function(req, res, next) {
     }
   })
   .exec(function(err, campus) {
-    console.log(err);
-    console.log(campus);
     if (err) {next(err);}
     if (campus) {
       res.json(campus);
@@ -393,37 +360,16 @@ router.get('/API/user/name/:name', function(req, res, next) {
 
 /* GET CAMPUS BY NAME */
 router.get('/API/campus/name/:name', function(req, res, next) {
-  Campus.aggregate([
-    {$match: {name: req.params.name}},
-    {$unwind: {"path": "$segments", "preserveNullAndEmptyArrays": true}},
-    {$lookup:
-      {
-        from: "segments",
-        localField: "segments",
-        foreignField: "_id",
-        as: "segment"
-      }
-    },
-    {$lookup:
-      {
-        from: "locations",
-        localField: "segment.locations",
-        foreignField: "_id",
-        as: "locations"
-      }
-    },
-    {
-      $group: {
-        _id: "$_id",
-        name: {$first: "$name"},
-        segments: { $push: {
-          _id: {$arrayElemAt:["$segment._id", 0]},
-          name: {$arrayElemAt:["$segment.name", 0]},
-          locations: "$locations"}
-        },
-      }
-    },
-  ],function(err, campus) {
+  Campus.findOne({name: req.params.name})
+  .populate({
+    path: 'segments',
+    model: 'Segment',
+    populate: {
+      path: 'locations',
+      model: 'Location'
+    }
+  })
+  .exec(function(err, campus) {
     if (err) {next(err);}
     if (campus) {
       res.json(campus);
@@ -435,17 +381,12 @@ router.get('/API/campus/name/:name', function(req, res, next) {
 
 /* GET SEGMENT BY NAME */
 router.get('/API/segment/name/:name', function(req, res, next) {
-  Segment.aggregate([
-    {$match: {name: req.params.name}},
-    {$lookup:
-      {
-        from: "locations",
-        localField: "locations",
-        foreignField: "_id",
-        as: "locations"
-      }
-    }
-  ],function(err, segment) {
+  Segment.findOne({name: req.params.name})
+  .populate({
+    path: 'locations',
+    model: 'Location'
+  })
+  .exec(function(err, segment) {
     if (err) {next(err);}
     if (segment) {
       res.json(segment);
