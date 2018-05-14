@@ -37,8 +37,8 @@
   function main() {     
     jQuery(document).ready(function($) {
       socket = io('https://agile-everglades-38755.herokuapp.com');
-      //var base = 'https://agile-everglades-38755.herokuapp.com';
-      var base = 'http://localhost:4200';
+      var base = 'https://agile-everglades-38755.herokuapp.com';
+      //var base = 'http://localhost:4200';
       var $container = $('#wieiswaar-container');
       var script = $("script[data-segment],[data-campus],[data-all]");
       var segmentId = script.attr('data-segment');
