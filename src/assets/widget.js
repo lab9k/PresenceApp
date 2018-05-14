@@ -122,6 +122,7 @@
       }
 
       socket.on('new-checkin', (data) => {
+        jQuery('#' + data.user._id).remove();
         if(segmentId !== undefined) {
           $.ajax({ 
             type: 'GET', 
