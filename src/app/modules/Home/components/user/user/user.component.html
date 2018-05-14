@@ -1,4 +1,4 @@
-<div class="ui one column grid" id="{{user.id}}">
+<div class="ui one column grid" id="{{user.id}}" *ngIf="user.visible">
     <div class="computer only column">
         <div class="column" style="padding: 0.5em 0em 0.5em 0em" *ngIf="user.visible" [attr.data-tooltip]="user.name">
             <div [ngClass]="{'black': birthday}" class='ui raised fluid card' [ngStyle]="{'opacity': opacity}"

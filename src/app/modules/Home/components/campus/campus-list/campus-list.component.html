@@ -34,6 +34,11 @@
         <div id="campusDrop" class="ui simple dropdown">
           Select Campus<i class="dropdown icon"></i>
           <div class="menu">
+            <a (click)="changeTab('all')"
+              class="active item" data-tab="all"
+              style="word-wrap: break-word; padding-left: 0.5em;padding-right: 0.5em;">
+              Alle Campussen
+           </a>
             <a *ngFor="let localCampus of lunchCampuses" (click)="changeTab(localCampus.id)"
                   class="item" attr.data-tab="{{localCampus.id}}"
                   style="word-wrap: break-word; padding-left: 0.5em;padding-right: 0.5em;">
@@ -52,6 +57,22 @@
           </div>
         </div>
         
+        <div *ngFor="let localCampus of campuses"
+            class="ui active tab segment" data-tab="all">
+          <app-campus style="display:contents;" [campus]="localCampus" [users]="users">
+          </app-campus>
+        </div>
+        <div *ngFor="let localCampus of lunchCampuses"
+            class="ui active tab segment" data-tab="all">
+          <app-campus style="display:contents;" [campus]="localCampus" [users]="users">
+          </app-campus>
+        </div>
+        <div *ngFor="let localCampus of thuiswerkCampuses"
+            class="ui active tab segment" data-tab="all">
+          <app-campus style="display:contents;" [campus]="localCampus" [users]="users">
+          </app-campus>
+        </div>
+
         <div *ngFor="let localCampus of lunchCampuses"
             class="ui tab segment" attr.data-tab="{{localCampus.id}}">
           <app-campus style="display:contents;" [campus]="localCampus" [users]="users">

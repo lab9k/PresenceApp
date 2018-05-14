@@ -47,7 +47,7 @@ export class DashboardComponent implements OnInit {
         $(this).addClass('positive')
               .siblings()
               .removeClass('positive');
-      });
+    });
   }
 
   @HostListener('window:resize', ['$event'])
@@ -69,6 +69,28 @@ export class DashboardComponent implements OnInit {
     const campus = new Campus(null, 'New Campus', false, false, 1, []);
     this._adminDataService.createCampus(campus).subscribe(res => {
       this._campuses.push(res);
+    });
+  }
+
+  createSegment(campus) {
+    const segment = new Segment(null, 'New Segment', false, 1, []);
+    const index = this._campuses.indexOf(campus, 0);
+    this._adminDataService.createSegment(segment).subscribe(res => {
+      this._campuses[index].addSegment(res);
+      this._adminDataService.updateCampus(this._campuses[index]).subscribe();
+    });
+  }
+
+  createLocation(segment) {
+    const location = new Location(null, 'New Location', 1, [], false);
+    this._campuses.forEach(c => {
+      if (c.segments.includes(segment)) {
+        const index = c.segments.indexOf(segment, 0);
+        this._adminDataService.createLocation(location).subscribe(res => {
+          c.segments[index].addLocation(res);
+          this._adminDataService.updateSegment(c.segments[index]).subscribe();
+        });
+      }
     });
   }
 
@@ -140,37 +162,5 @@ export class DashboardComponent implements OnInit {
     });
     const yourComponentType1Instance = (<LocationDetailComponent>componentRef.instance);
   }
-
-  createSegment(campus) {
-    console.log(campus);
-    const segment = new Segment(null, 'New Segment', false, 1, []);
-    const index = this._campuses.indexOf(campus, 0);
-    this._adminDataService.createSegment(segment).subscribe(res => {
-      this._campuses[index].addSegment(res);
-      this._adminDataService.updateCampus(this._campuses[index]).subscribe();
-    });
-  }
-
-  createLocation(segment) {
-    console.log(segment);
-    const location = new Location(null, 'New Location', 1, [], false);
-    this._campuses.forEach(c => {
-      if (c.segments.includes(segment)) {
-        const index = c.segments.indexOf(segment, 0);
-        this._adminDataService.createLocation(location).subscribe(res => {
-          c.segments[index].addLocation(res);
-          this._adminDataService.updateSegment(c.segments[index]).subscribe();
-        });
-      }
-    });
-  }
-/*
-  deleteSegment(segment) {
-    const index = this._segments.indexOf(segment, 0);
-    if (index > -1) {
-      this._segments.splice(index, 1);
-    }
-    this._adminDataService.deleteSegment(segment).subscribe();
-  }*/
 
 }

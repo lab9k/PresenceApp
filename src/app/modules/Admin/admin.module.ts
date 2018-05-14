@@ -11,11 +11,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { DragulaModule } from 'ng2-dragula';
 import { SegmentComponent } from './components/segment/segment/segment.component';
 import { SegmentListComponent } from './components/segment/segment-list/segment-list.component';
-import { CreateSegmentComponent } from './components/segment/create-segment/create-segment.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CreateLocationComponent } from './components/location/create-location/create-location.component';
-import { StickerComponent } from './components/sticker/sticker/sticker.component';
-import { StickerListComponent } from './components/sticker/sticker-list/sticker-list.component';
 import { CampusDetailComponent } from './components/campus/campus-detail/campus-detail.component';
 import { SegmentDetailComponent } from './components/segment/segment-detail/segment-detail.component';
 import { LocationDetailComponent } from './components/location/location-detail/location-detail.component';
@@ -41,10 +37,6 @@ const routes = [
     DashboardComponent,
     SegmentComponent,
     SegmentListComponent,
-    CreateSegmentComponent,
-    CreateLocationComponent,
-    StickerComponent,
-    StickerListComponent,
     CampusDetailComponent,
     SegmentDetailComponent,
     LocationDetailComponent
@@ -55,9 +47,7 @@ const routes = [
   entryComponents: [
     CampusDetailComponent,
     SegmentDetailComponent,
-    LocationDetailComponent,
-    CreateSegmentComponent,
-    CreateLocationComponent
+    LocationDetailComponent
   ]
 })
 export class AdminModule { }

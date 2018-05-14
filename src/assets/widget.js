@@ -29,21 +29,29 @@
 
   function main() {     
     jQuery(document).ready(function($) {
+      //var base = 'https://agile-everglades-38755.herokuapp.com';
+      var base = 'http://localhost:4200';
       var $container = $('#wieiswaar-container');
       var script = $("script[data-segment],[data-campus],[data-all]");
       var segmentId = script.attr('data-segment');
       var campusId = script.attr('data-campus');
+      var hours = script.attr('data-hours');
       var all = script.attr('data-all');
+      var hoursUrl = ''
+
+      if (hours !== undefined) {
+        hoursUrl = '?hours=' + hours;
+      }
 
       if(segmentId !== undefined) {
         $.ajax({ 
           type: 'GET', 
-          url: 'https://agile-everglades-38755.herokuapp.com/API/segment/' + segmentId, 
+          url: base + '/API/segment/' + segmentId, 
           dataType: 'json',
           success: function (segment) { 
             $.ajax({ 
               type: 'GET', 
-              url: 'https://agile-everglades-38755.herokuapp.com/API/users', 
+              url: base + '/API/users' + hoursUrl, 
               dataType: 'json',
               success: function (users) { 
                 $container.append($('<ul>'));
@@ -61,12 +69,12 @@
       } else if (campusId !== undefined) {
         $.ajax({ 
           type: 'GET', 
-          url: 'https://agile-everglades-38755.herokuapp.com/API/campus/' + campusId, 
+          url: base + '/API/campus/' + campusId, 
           dataType: 'json',
           success: function (campus) { 
             $.ajax({ 
               type: 'GET', 
-              url: 'https://agile-everglades-38755.herokuapp.com/API/users', 
+              url: base + '/API/users' + hoursUrl, 
               dataType: 'json',
               success: function (users) { 
                 $container.append($('<ul>'));
@@ -86,7 +94,7 @@
       } else if(all !== undefined && all) {
         $.ajax({ 
           type: 'GET', 
-          url: 'https://agile-everglades-38755.herokuapp.com/API/users', 
+          url: base + '/API/users' + hoursUrl, 
           dataType: 'json',
           success: function (users) { 
             $container.append($('<ul>'));

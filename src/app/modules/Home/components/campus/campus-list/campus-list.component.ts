@@ -52,6 +52,7 @@ export class CampusListComponent implements OnInit {
       const user = User.fromJSON(data.user);
       $('#' + user.id).addClass('fade');
       setTimeout(function() {
+        $('#' + user.id).removeClass('fade');
         for (let i = 0; i < this._users.length; i++) {
           if (this._users[i].id === user._id) {
             this._users.splice(i, 1);
@@ -75,9 +76,9 @@ export class CampusListComponent implements OnInit {
       this.usr = User.fromJSON(data.user);
       for (let i = 0; i < this._users.length; i++) {
         if (this._users[i].id === data.user._id) {
-          $('#' + this._users[i].id).addClass('show');
+          $('#' + this._users[i].id).addClass('fade');
           setTimeout(function() {
-            $('#' + this._users[i].id).removeClass('show');
+            $('#' + this._users[i].id).removeClass('fade');
             this._users.splice(i, 1);
             this._users.push(this.usr);
             this.sortUsers();
