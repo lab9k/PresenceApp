@@ -121,8 +121,9 @@
         $container.append('<textarea style="width: 90%; height: 50px;"><div id="wieiswaar-container"></div>\n<script type="text/javascript" src="https://agile-everglades-38755.herokuapp.com/assets/widget.js" data-campus="Off-site campus"></script></textarea></br>');
       }
 
+      //socket events
       socket.on('new-checkin', (data) => {
-        jQuery('#' + data.user._id).remove();
+        $container.find('#' + data.user._id).remove();
         if(segmentId !== undefined) {
           $.ajax({ 
             type: 'GET', 
@@ -157,10 +158,8 @@
         
       });
       socket.on('new-checkout', (data) => {
-        jQuery('#' + data.user._id).remove();
+        $container.find('#' + data.user._id).remove();
       });
-      
     });
   }
-
 })();

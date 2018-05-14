@@ -30,7 +30,7 @@ export class CampusListComponent implements OnInit {
   private _userNames;
   socket = io();
 
-  constructor(private _homeDataService: HomeDataService, private cd: ChangeDetectorRef, private authService: AuthenticationService, 
+  constructor(private _homeDataService: HomeDataService, private cd: ChangeDetectorRef, private authService: AuthenticationService,
     private dataService: DataService) { }
 
   ngOnInit() {
