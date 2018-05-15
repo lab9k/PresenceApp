@@ -13,6 +13,15 @@
       {{user.name}}
     </div>
     <div class="field">
+      <label>Birthday:</label>
+      <div class="ui calendar" id="calendar">
+        <div class="ui input left icon">
+          <i class="calendar icon"></i>
+          <input type="text" placeholder="Date" value="{{user.birthday}}" (input)="changeBirthday($event)">
+        </div>
+      </div>
+    </div>
+    <div class="field">
       <label>Role:</label>
       {{user.role}}
     </div>

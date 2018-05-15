@@ -24,8 +24,8 @@ require('./models/Message');
 var app = express();
 app.use(cors());
 
-//mongoose.connect('mongodb://localhost/presencedb2');
-mongoose.connect(process.env.PRESENCE_DATABASE);
+mongoose.connect('mongodb://localhost/presencedb2');
+//mongoose.connect(process.env.PRESENCE_DATABASE);
 var index = require('./routes/index');
 var auth = require('./routes/auth');
 
@@ -44,7 +44,7 @@ passport.deserializeUser(function(id, done) {
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: "https://agile-everglades-38755.herokuapp.com/auth/callback/google"
+  callbackURL: "https://wie-is-waar.herokuapp.com/auth/callback/google"
   //callbackURL: "http://localhost:4200/auth/callback/google"
 },
 function(accessToken, refreshToken, profile, cb) {
@@ -110,7 +110,6 @@ function(iss, sub, profile, accessToken, refreshToken, done) {
       if (!user) {
         // "Auto-registration"
         graphHelper.getProfilePhoto(accessToken, (errPhoto, photo) => {
-          console.log(errPhoto)
           if(!errPhoto) {
             console.log(photo);
             user = new User({

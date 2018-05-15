@@ -21,7 +21,7 @@ exports.creds = {
     responseMode: 'form_post', 
   
     // Required, the reply URL registered in AAD for your app
-    redirectUrl: 'https://agile-everglades-38755.herokuapp.com/auth/openid/return', 
+    redirectUrl: 'https://wie-is-waar.herokuapp.com/auth/openid/return', 
     //redirectUrl: 'http://localhost:4200/auth/openid/return',
 
     // Required if we use http for redirectUrl
@@ -74,7 +74,7 @@ exports.creds = {
   };
   
   // The url you need to go to destroy the session with AAD
-  exports.destroySessionUrl = 'https://login.microsoftonline.com/common/oauth2/logout?post_logout_redirect_uri=https://agile-everglades-38755.herokuapp.com';
+  exports.destroySessionUrl = 'https://login.microsoftonline.com/common/oauth2/logout?post_logout_redirect_uri=https://wie-is-waar.herokuapp.com';
   
   // If you want to use the mongoDB session store for session middleware; otherwise we will use the default
   // session store provided by express-session.

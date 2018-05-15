@@ -36,6 +36,23 @@ export class ProfileComponent implements OnInit {
         this.router.navigate(['/account/login']);
       }
     });
+    setTimeout(function() {
+      $('#calendar').calendar({
+        type: 'date',
+        formatter: {
+          date: function (date, settings) {
+            if (!date) { return ''; }
+            const day = date.getDate();
+            const month = date.getMonth() + 1;
+            const year = date.getFullYear();
+            return year + '-' + month + '-' + day;
+          }
+        }
+      });
+    }, 2000);
+    $('#calendar').calendar({
+      type: 'date'
+    });
   }
 
   get user() {
@@ -68,5 +85,10 @@ export class ProfileComponent implements OnInit {
     const sec = a.getSeconds() < 10 ? '0' + a.getSeconds() : a.getSeconds();
     const time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
     return time;
+  }
+
+  changeBirthday(event) {
+    console.log('event.target.value');
+    console.log(event.target.value);
   }
 }

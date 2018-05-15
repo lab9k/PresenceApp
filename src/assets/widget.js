@@ -5,7 +5,7 @@
   //insert socket.io
   let script_socket = document.createElement('script');
   script_socket.setAttribute("type","text/javascript");
-  script_socket.setAttribute("src", "https://agile-everglades-38755.herokuapp.com/socket.io/socket.io.js");
+  script_socket.setAttribute("src", "https://wie-is-waar.herokuapp.com/socket.io/socket.io.js");
 
   if (window.jQuery === undefined || window.jQuery.fn.jquery !== '1.7.1') {
     var script_tag = document.createElement('script');
@@ -36,11 +36,12 @@
 
   function main() {     
     jQuery(document).ready(function($) {
-      socket = io('https://agile-everglades-38755.herokuapp.com');
-      var base = 'https://agile-everglades-38755.herokuapp.com';
+      socket = io('https://wie-is-waar.herokuapp.com');
+      var base = 'https://wie-is-waar.herokuapp.com';
       //var base = 'http://localhost:4200';
       var $container = $('#wieiswaar-container');
-      var script = $("script[data-segment],[data-campus],[data-all]");
+      var script = $("script[data-locatie],[data-segment],[data-campus],[data-all]");
+      var locationId = script.attr('data-locatie');
       var segmentId = script.attr('data-segment');
       var campusId = script.attr('data-campus');
       var hours = script.attr('data-hours');
@@ -51,7 +52,29 @@
         hoursUrl = '?hours=' + hours;
       }
 
-      if(segmentId !== undefined) {
+      if(locationId !== undefined) {
+        $.ajax({ 
+          type: 'GET', 
+          url: base + '/API/location/name/' + locationId, 
+          dataType: 'json',
+          success: function (location) { 
+            $.ajax({ 
+              type: 'GET', 
+              url: base + '/API/users' + hoursUrl, 
+              dataType: 'json',
+              success: function (users) { 
+                $container.append($('<ul>'));
+                $.each(users, function(index, user) {
+                  if (user.checkin.location._id === location._id) {
+                    $container.find('ul').append($('<li id="' + user._id + '">' + user.name + '</li>'));
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+      else if(segmentId !== undefined) {
         $.ajax({ 
           type: 'GET', 
           url: base + '/API/segment/name/' + segmentId, 
@@ -114,16 +137,28 @@
       } else {
         $container.append('<h1>Voorbeelden gebruik widget</h1>');
         $container.append('<p>Alle aanwezige gebruikers</p>');
-        $container.append('<textarea style="width: 90%; height: 50px;"><div id="wieiswaar-container"></div>\n<script type="text/javascript" src="https://agile-everglades-38755.herokuapp.com/assets/widget.js" data-all="true"></script></textarea></br>');
+        $container.append('<textarea style="width: 90%; height: 50px;"><div id="wieiswaar-container"></div>\n<script type="text/javascript" src="https://wie-is-waar.herokuapp.com/assets/widget.js" data-all="true"></script></textarea></br>');
         $container.append('<p>Aanwezige gebruikers in een segment</p>');
-        $container.append('<textarea style="width: 90%; height: 50px;"><div id="wieiswaar-container"></div>\n<script type="text/javascript" src="https://agile-everglades-38755.herokuapp.com/assets/widget.js" data-segment="Lab9k"></script></textarea></br>');
+        $container.append('<textarea style="width: 90%; height: 50px;"><div id="wieiswaar-container"></div>\n<script type="text/javascript" src="https://wie-is-waar.herokuapp.com/assets/widget.js" data-segment="Lab9k"></script></textarea></br>');
         $container.append('<p>Aanwezige gebruikers in een campus</p>');
-        $container.append('<textarea style="width: 90%; height: 50px;"><div id="wieiswaar-container"></div>\n<script type="text/javascript" src="https://agile-everglades-38755.herokuapp.com/assets/widget.js" data-campus="Off-site campus"></script></textarea></br>');
+        $container.append('<textarea style="width: 90%; height: 50px;"><div id="wieiswaar-container"></div>\n<script type="text/javascript" src="https://wie-is-waar.herokuapp.com/assets/widget.js" data-campus="Off-site campus"></script></textarea></br>');
       }
 
       //socket events
       socket.on('new-checkin', (data) => {
         $container.find('#' + data.user._id).remove();
+        if(locationId !== undefined) {
+          $.ajax({ 
+            type: 'GET', 
+            url: base + '/API/location/name/' + locationId, 
+            dataType: 'json',
+            success: function (location) { 
+              if (user.checkin.location._id === location._id) {
+                $container.find('ul').append($('<li id="' + user._id + '">' + user.name + '</li>'));
+              }
+            }
+          });
+        }
         if(segmentId !== undefined) {
           $.ajax({ 
             type: 'GET', 
