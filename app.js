@@ -24,8 +24,8 @@ require('./models/Message');
 var app = express();
 app.use(cors());
 
-mongoose.connect('mongodb://localhost/presencedb2');
-//mongoose.connect(process.env.PRESENCE_DATABASE);
+//mongoose.connect('mongodb://localhost/presencedb2');
+mongoose.connect(process.env.PRESENCE_DATABASE);
 var index = require('./routes/index');
 var auth = require('./routes/auth');
 
