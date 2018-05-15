@@ -81,6 +81,13 @@ export class AuthenticationService {
       .map(res => res.json()).map(item => User.fromJSON(item));
   }
 
+  updateUser(user): Observable<User> {
+    const headers = new Headers({ 'Content-Type': 'application/json'});
+    const options = new RequestOptions({ headers: headers });
+    return this.http.put(`/API/user`, user)
+      .map(res => res.json()).map(item => User.fromJSON(item));
+  }
+
   getIp(): Observable<String[]> {
     return this.http.get('https://api.ipify.org/')
       .map(res => res.json());

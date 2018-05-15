@@ -42,7 +42,8 @@ export class User {
             phoneid: this._phoneid,
             role: this._role,
             messages: this._messages,
-            accountType: this._accountType
+            accountType: this._accountType,
+            birthday: this._birthday
         };
     }
 

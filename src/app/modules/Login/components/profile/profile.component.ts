@@ -47,9 +47,13 @@ export class ProfileComponent implements OnInit {
             const year = date.getFullYear();
             return year + '-' + month + '-' + day;
           }
-        }
+        },
+        onChange: function(date, text, mode) {
+          this.user.birthday = text;
+          this.updateUser();
+        }.bind(this)
       });
-    }, 2000);
+    }.bind(this), 2000);
     $('#calendar').calendar({
       type: 'date'
     });
@@ -65,6 +69,10 @@ export class ProfileComponent implements OnInit {
 
   get time() {
     return this._time;
+  }
+
+  updateUser() {
+    this.authService.updateUser(this.user).subscribe();
   }
 
   deletePhoneId() {
@@ -87,8 +95,4 @@ export class ProfileComponent implements OnInit {
     return time;
   }
 
-  changeBirthday(event) {
-    console.log('event.target.value');
-    console.log(event.target.value);
-  }
 }

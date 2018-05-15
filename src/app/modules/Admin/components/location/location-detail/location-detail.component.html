@@ -1,28 +1,28 @@
 <div *ngIf="location !== undefined">
-    <h2 class="ui header">Location</h2>
+    <h2 class="ui header">Locatie</h2>
     <form class="ui form" #f="ngForm" (ngSubmit)="onSubmit()">
       <div class="field">
-        <label>Name:</label>
+        <label>Naam:</label>
         <input type="text" name="location-name" placeholder="Location Name" 
           [(ngModel)]="location.name" required>
       </div>
       <div class="field">
-        <label>Weight:</label>
+        <label>Gewicht:</label>
         <input type="number" name="location-weight" [(ngModel)]="location.weight" required>
       </div>
       <div class="field">
         <label data-tooltip="Mensen in een niet-storen locatie kun je een bericht sturen die zo ontvangen wanneer ze de volgende keer inchecken of uitchecken."
               data-position="top left">
-          Niet storen locatie?
+         Niet storen locatie?
         </label>  
         <input type="checkbox" name="DoNotDisturb" tabindex="0"
           [(ngModel)]="location.DoNotDisturb">
       </div>
       <button name="submit-button" class="ui right floated primary button" type="submit" [disabled]="!f.valid">
-        Save
+        Opslaan
       </button>
       <button name="delete-button" class="ui right floated red button" type="button" (click)="deleteLocation()">
-        Delete
+        Verwijderen
       </button>
     </form>
   </div>

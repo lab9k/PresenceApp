@@ -1,42 +1,42 @@
 <p *ngIf="location.id else nameLocation">
-    U bent ingechecked in locatie: {{location.name}}
+    U bent ingecheckt in locatie: {{location.name}}
 </p>
 <ng-template #nameLocation>
-    <p>New sticker scanned</p>
+    <p>Nieuwe sticker gevonden</p>
     <div class="ui horizontal segments" *ngIf="locations">
         <!-- create new location -->
         <div class="ui segment">
-            <h1>Create New Location </h1>
+            <h1>Nieuwe locatie aanmaken</h1>
             <div class="ui segment">
                 <form class="ui form">
                     <div class="field">
-                        <label for="newLocationName">Name:</label>
+                        <label for="newLocationName">Naam:</label>
                         <input type="text" name="new-location-name" placeholder="Location name"
                             id="newLocationName">
                     </div>
                     <div class="field">
-                        <label for="doNotDisturb">Do not disturb:</label>
+                        <label for="doNotDisturb">Niet storen:</label>
                         <input type="checkbox" name="doNotDisturb"/>
                     </div>
                     <button class="ui primary fluid button" type="button"
                         (click)="createLoc()">
-                        Create Location
+                        Locatie aanmaken
                     </button>
                 </form>      
             </div>
         </div>
         <div class="ui segment">
             <div class="ui vertical divider">
-                 OR
+                 OF
             </div>
         </div>
          <!-- add to existing location -->
         <div class="ui segment">
-            <h1>Add to existing location </h1>
+            <h1>Toevoegen aan bestaande locatie</h1>
             <div class="ui segment">
                 <form class="ui form">
                     <div class="field">
-                        <label for="existingLocation">Location:</label>
+                        <label for="existingLocation">Locatie:</label>
                         <select id="selectLocation">
                             <option *ngFor="let localLocation of locations" [value]="localLocation.id">
                                 {{localLocation.name}}
@@ -45,7 +45,7 @@
                     </div>
                     <button class="ui primary fluid button" type="button"
                         (click)="addSticker()">
-                        Add sticker to location
+                        Sticker toevoegen aan locatie
                     </button>
                 </form>      
             </div>

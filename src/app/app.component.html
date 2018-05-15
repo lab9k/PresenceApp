@@ -1,10 +1,10 @@
 <div class="ui inverted stackable menu">
-  <a class='item' routerLink="/" >Wie is waar</a>
-  <a class='item' routerLink="/admin" >Admin</a>
+  <a class='item' routerLink="/">Wie is waar</a>
+  <a class='item' routerLink="/admin">Admin</a>
   <div class="item" *ngIf="router.url === '/'">
     <div class="ui search">
       <div class="ui icon transparent inverted input">
-        <input id="search"  name="search" class="prompt" type="text" placeholder="Search users..." (keyup)="filter($event)" (change)="filter($event)">
+        <input id="search"  name="search" class="prompt" type="text" placeholder="Zoek gebruiker..." (keyup)="filter($event)" (change)="filter($event)">
         <i class="search icon"></i>
       </div>
       <div class="results"></div>
@@ -14,11 +14,11 @@
     <div id="menuDrop" class="ui dropdown item">
       <i class="large bars icon"></i>
       <div class="menu">
-        <a class='item' routerLink="account/profile" *ngIf="(currentUser | async)">Profile</a>
-        <a class='item' routerLink="/checkin" *ngIf="(currentUser | async)">Last checkin</a>
-        <a class='item' *ngIf='(currentUser | async) else loginlink' href="/auth/logout">Logout</a>
+        <a class='item' routerLink="account/profile" *ngIf="(currentUser | async)">Profiel</a>
+        <a class='item' routerLink="/checkin" *ngIf="(currentUser | async)" i18n>Laatste checkin</a>
+        <a class='item' *ngIf='(currentUser | async) else loginlink' href="/auth/logout">Uitloggen</a>
         <ng-template #loginlink>
-          <a class='item' routerLink="account/login">Login</a>
+          <a class='item' routerLink="account/login">Inloggen</a>
         </ng-template>
       </div>
     </div>

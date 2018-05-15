@@ -1,5 +1,5 @@
 <div class="ui container compact segment">
-    <h1>Profile</h1>
+    <h1>Profiel</h1>
     <div style="float: right;" *ngIf="user">
     <img *ngIf="user.picture else googlepic"
       src="{{user.picture}}">
@@ -9,20 +9,20 @@
   </div>
   <div style="float: left;" class="ui form" *ngIf="user">
     <div class="field">
-      <label>Name:</label>
+      <label>Naam:</label>
       {{user.name}}
     </div>
     <div class="field">
-      <label>Birthday:</label>
+      <label>Verjaardag:</label>
       <div class="ui calendar" id="calendar">
         <div class="ui input left icon">
           <i class="calendar icon"></i>
-          <input type="text" placeholder="Date" value="{{user.birthday}}" (input)="changeBirthday($event)">
+          <input type="text" placeholder="Date" value="{{user.birthday}}">
         </div>
       </div>
     </div>
     <div class="field">
-      <label>Role:</label>
+      <label>Rol:</label>
       {{user.role}}
     </div>
     <div class="field">
@@ -42,14 +42,13 @@
       <label>Checkin</label>
       <div *ngIf="time !== undefined && location !== undefined else noCheckin">
         <p>
-          Your last checkin was on {{time}} at {{location.name}}
+          Uw laatste checkin was op {{time}} bij {{location.name}}
         </p>  
       </div>
       <ng-template #noCheckin>
-        Not checked in.
+        Niet ingecheckt.
       </ng-template>
     </div>
   </div>
-
 
 </div>

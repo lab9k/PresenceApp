@@ -15,7 +15,7 @@
                 </div>
                 <div class="description">
                     <div class="center aligned" style="overflow:hidden;width:60px;height:20px;line-height:20px;">
-                            {{user.name}} 
+                        {{user.name}} 
                     </div>   
                 </div>
             </div> 
@@ -42,16 +42,16 @@
 <div class="ui modal" id="{{user.id}}{{user.name}}" *ngIf="location && location.doNotDisturb">
     <i class="close icon"></i>
     <div class="header">
-        Send Message
+        Bericht verzenden
     </div>
     <div class="content">
         <div class="ui form">
             <div class="field">
-                <label>Subject</label>
+                <label>Onderwerp</label>
                 <input type="text" name="subject-{{user.id}}" placeholder="Subject">
             </div>
             <div class="field">
-                <label>Message</label>
+                <label>Bericht</label>
                 <textarea name="message-{{user.id}}"
                     style="margin-top: 0px; margin-bottom: 0px; height: 150px;">
                 </textarea>
@@ -60,11 +60,11 @@
     </div>
     <div class="actions">
         <div class="ui black deny button">
-            Cancel
+            Sluiten
         </div>
         <div class="ui positive right labeled icon button"
           (click)="sendMessage()">
-            Send
+            Verzenden
             <i class="checkmark icon"></i>
         </div>
     </div>

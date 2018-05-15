@@ -2,16 +2,16 @@
     <h2 class="ui header">Segment</h2>
     <form class="ui form" #f="ngForm" (ngSubmit)="onSubmit()">
       <div class="field">
-        <label>Name:</label>
+        <label>Naam:</label>
         <input type="text" name="segment-name" placeholder="Segment Name" 
           [(ngModel)]="segment.name" required>
       </div>
       <div class="field">
-        <label>Weight:</label>
+        <label>Gewicht:</label>
         <input type="number" name="segment-weight" [(ngModel)]="segment.weight" required>
       </div>
       <div class="field">
-        <label data-tooltip="Wordt op de home pagina per campus apart met de andere vergaedring locaties getoond."
+        <label data-tooltip="Wordt op de home pagina per campus apart met de andere vergadering locaties getoond."
               data-position="top left">
           Vergadering locatie?
         </label>  
@@ -19,10 +19,10 @@
           [(ngModel)]="segment.isVergadering">
       </div>
       <button name="submit-button" class="ui right floated primary button" type="submit" [disabled]="!f.valid">
-        Save
+        Opslaan
       </button>
       <button name="delete-button" class="ui right floated red button" type="button" (click)="deleteSegment()">
-        Delete
+        Verwijderen
       </button>
     </form>
   </div>

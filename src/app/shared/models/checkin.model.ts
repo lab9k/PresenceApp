@@ -21,6 +21,13 @@ export class Checkin {
         return checkin;
     }
 
+    toJSON() {
+        return {
+            time: this._time,
+            location: this._location
+        };
+    }
+
     constructor(time: number, location: Location) {
         this._time =  time;
         this._location = location;

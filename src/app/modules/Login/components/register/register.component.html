@@ -1,10 +1,10 @@
 <div *ngIf="loggedIn !== undefined && isRegistered !== undefined && isRegistered && loggedIn">
-  Phone already registered.
-  You can remove your phone on your profile if you want to change.
+  Toestel is al geregistreerd.
+  U kan uw toestel verwijderen op uw profiel.
 </div>
 <div *ngIf="loggedIn !== undefined &&  !loggedIn">
-  <a href="account/login">Login</a> to register phone.
+  <a href="account/login">Log in</a> om toestel te registreren.
 </div>
 <div *ngIf="loggedIn !== undefined && isRegistered !== undefined && !isRegistered && loggedIn">
-  Succesfully registered phone
+  Succesvol toestel geregistreerd.
 </div>

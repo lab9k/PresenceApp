@@ -32,12 +32,12 @@
 
     <div class="mobile tablet only column">
         <div id="campusDrop" class="ui simple dropdown">
-          Select Campus<i class="dropdown icon"></i>
+          Selecteer Campus<i class="dropdown icon"></i>
           <div class="menu">
             <a (click)="changeTab('all')"
               class="active item" data-tab="all"
               style="word-wrap: break-word; padding-left: 0.5em;padding-right: 0.5em;">
-              Alle Campussen
+                Campus 
            </a>
             <a *ngFor="let localCampus of lunchCampuses" (click)="changeTab(localCampus.id)"
                   class="item" attr.data-tab="{{localCampus.id}}"

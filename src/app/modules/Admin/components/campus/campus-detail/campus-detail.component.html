@@ -2,12 +2,12 @@
   <h2 class="ui header">Campus</h2>
   <form class="ui form" #f="ngForm" (ngSubmit)="onSubmit($event)">
     <div class="field">
-      <label>Name:</label>
+      <label>Naam:</label>
       <input type="text" name="campus-name" placeholder="Campus Name" 
         [(ngModel)]="campus.name" required>
     </div>
     <div class="field">
-      <label>Weight:</label>
+      <label>Gewicht:</label>
       <input type="number" name="campus-weight" [(ngModel)]="campus.weight" required>
     </div>
     <div class="field">
@@ -27,10 +27,10 @@
         [(ngModel)]="campus.isThuiswerk">
     </div>
     <button name="submit-button" class="ui right floated primary button" type="submit" [disabled]="!f.valid">
-      Save
+      Opslaan
     </button>
     <button name="delete-button" class="ui right floated red button" type="button" (click)="deleteCampus()">
-      Delete
+      Verwijderen
     </button>
   </form>
 </div>
