@@ -3,6 +3,7 @@ import { AuthenticationService } from '../../../../shared/services/authenticatio
 import { DataService } from '../../../../shared/services/data.service';
 import { Location } from '../../../../shared/models/location.model';
 import { CheckinService } from '../../checkin.service';
+import * as io from 'socket.io-client';
 
 @Component({
   selector: 'app-checkin',
@@ -13,6 +14,8 @@ export class CheckinComponent implements OnInit {
 
   private _location: Location;
   private _time: String;
+
+  socket = io();
 
   constructor(private authService: AuthenticationService, private dataService: DataService, private checkinService: CheckinService) { }
 
@@ -53,7 +56,6 @@ export class CheckinComponent implements OnInit {
 
   removeCheckin() {
     this.checkinService.removeCheckin(this.authService.user.getValue()).subscribe();
-    console.log('remove checkin');
   }
 
 }

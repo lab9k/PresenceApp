@@ -6,6 +6,7 @@ import { AuthenticationService } from '../../../../shared/services/authenticatio
 import { Observable } from 'rxjs/Observable';
 import { DataService } from '../../../../shared/services/data.service';
 import * as io from 'socket.io-client';
+
 declare var $: any;
 
 @Component({
@@ -30,7 +31,6 @@ export class LocationComponent implements OnInit {
       if (this._location && this._location.id) {
         this.currentUser.subscribe(user => {
           this.checkinService.saveCheckin(this.authService.user.getValue(), this.location.stickers[0]).then((result) => {
-            console.log(result);
             this.socket.emit('checkin', result);
           }, (err) => {
             console.log(err);
@@ -46,10 +46,8 @@ export class LocationComponent implements OnInit {
     this.locationName = $('input[name=\'new-location-name\']').val();
     const doNotDisturb = $('input[name=\'doNotDisturb\']').is(':checked');
     const weight = $('input[name=\'new-location-name\']').val();
-    console.log(doNotDisturb);
     if (this.locationName.trim() !== '') {
       const location = new Location(null, this.locationName, weight, this._location.stickers, doNotDisturb);
-      console.log(location);
       this.checkinService.createLocation(location).subscribe(res => {
         window.location.reload();
       });

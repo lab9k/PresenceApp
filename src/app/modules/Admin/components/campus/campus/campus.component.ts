@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Campus } from '../../../../../shared/models/campus.model';
 import { Location } from '../../../../../shared/models/location.model';
-import { FormGroup, FormControl } from '@angular/forms';
 import { Segment } from '../../../../../shared/models/segment.model';
 
 @Component({

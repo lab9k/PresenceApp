@@ -32,14 +32,14 @@
             <ng-template #picture>
                 <img src="{{user.picture}}" class="ui avatar image" style="float: left;"/>
             </ng-template>
-            <a class="header" *ngIf="user.visible" style="float: left;">
+            <a class="header" *ngIf="user.visible && location.doNotDisturb" style="float: left;">
                 {{user.name}}
             </a>
         </div>
     </div>
 </div>
 
-<div class="ui modal" id="{{user.id}}{{user.name}}" *ngIf="location && location.doNotDisturb">
+<div class="ui modal" id="{{user.id}}{{name}}" *ngIf="location && location.doNotDisturb">
     <i class="close icon"></i>
     <div class="header">
         Bericht verzenden

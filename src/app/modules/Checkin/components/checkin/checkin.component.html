@@ -1,5 +1,5 @@
 <div class="ui container compact segment">
-  <div *ngIf="time !== undefined && location !== undefined else noCheckin">
+  <div *ngIf="time && location else noCheckin">
     <p>
       Uw laatste checkin was op {{time}} bij {{location.name}}
     </p>

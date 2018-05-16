@@ -44,7 +44,7 @@ passport.deserializeUser(function(id, done) {
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: "https://wie-is-waar.herokuapp.com/auth/callback/google"
+  callbackURL: "https://wiw.lab9k.gent/auth/callback/google"
   //callbackURL: "http://localhost:4200/auth/callback/google"
 },
 function(accessToken, refreshToken, profile, cb) {
@@ -165,6 +165,7 @@ app.use(expressSession({
   secret: process.env.SESSION_SECRET, 
   resave: true, 
   saveUninitialized: false,
+  cookie: { maxAge: 365 * 24 * 60 * 60 * 1000 },
   store: new MongoStore({ mongooseConnection: mongoose.connection }),
 }));
 // Initialize Passport!  Also use passport.session() middleware, to support

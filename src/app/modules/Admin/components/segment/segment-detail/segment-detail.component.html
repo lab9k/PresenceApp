@@ -1,4 +1,4 @@
-<div *ngIf="segment !== undefined">
+<div *ngIf="segment">
     <h2 class="ui header">Segment</h2>
     <form class="ui form" #f="ngForm" (ngSubmit)="onSubmit()">
       <div class="field">
@@ -7,7 +7,7 @@
           [(ngModel)]="segment.name" required>
       </div>
       <div class="field">
-        <label>Gewicht:</label>
+        <label data-position="top left" data-tooltip="Het grootste gewicht wordt als eerste getoond.">Gewicht:</label>
         <input type="number" name="segment-weight" [(ngModel)]="segment.weight" required>
       </div>
       <div class="field">
@@ -15,7 +15,7 @@
               data-position="top left">
           Vergadering locatie?
         </label>  
-        <input type="checkbox" name="isVergadering" tabindex="0"
+        <input type="checkbox" name="isVergadering"
           [(ngModel)]="segment.isVergadering">
       </div>
       <button name="submit-button" class="ui right floated primary button" type="submit" [disabled]="!f.valid">

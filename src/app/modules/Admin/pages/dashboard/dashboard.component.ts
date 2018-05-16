@@ -1,16 +1,15 @@
-import { Component, OnInit, OnDestroy, ViewChild, ViewContainerRef, ComponentFactoryResolver, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver, HostListener } from '@angular/core';
 import { Campus } from '../../../../shared/models/campus.model';
 import { Location } from '../../../../shared/models/location.model';
 import { AdminDataService } from '../../admin.service';
-import { DragulaService } from 'ng2-dragula/components/dragula.provider';
 import { DataService } from '../../../../shared/services/data.service';
 import { Segment } from '../../../../shared/models/segment.model';
-import { CampusComponent } from '../../components/campus/campus/campus.component';
 import { CampusDetailComponent } from '../../components/campus/campus-detail/campus-detail.component';
 import { SegmentDetailComponent } from '../../components/segment/segment-detail/segment-detail.component';
 import { LocationDetailComponent } from '../../components/location/location-detail/location-detail.component';
 
 declare var $: any;
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',

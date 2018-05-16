@@ -1,6 +1,4 @@
 import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
-import { AdminDataService } from '../../../admin.service';
-import { Campus } from '../../../../../shared/models/campus.model';
 import { Segment } from '../../../../../shared/models/segment.model';
 import { Location } from '../../../../../shared/models/location.model';
 
@@ -16,7 +14,7 @@ export class LocationListComponent implements OnInit {
   @Output() selectLocationEvent = new EventEmitter<Location>();
   @Output() createLocationEvent = new EventEmitter<Location>();
 
-  constructor(private adminDataService: AdminDataService) {
+  constructor() {
   }
 
   ngOnInit() {

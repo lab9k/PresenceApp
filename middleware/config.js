@@ -21,7 +21,7 @@ exports.creds = {
     responseMode: 'form_post', 
   
     // Required, the reply URL registered in AAD for your app
-    redirectUrl: 'https://wie-is-waar.herokuapp.com/auth/openid/return', 
+    redirectUrl: 'https://wiw.lab9k.gent/auth/openid/return', 
     //redirectUrl: 'http://localhost:4200/auth/openid/return',
 
     // Required if we use http for redirectUrl

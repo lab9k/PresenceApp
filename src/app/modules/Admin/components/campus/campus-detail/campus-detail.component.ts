@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Campus } from '../../../../../shared/models/campus.model';
 import { AdminDataService } from '../../../admin.service';
-import { Subject } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 
 declare var $: any;
 
@@ -21,7 +21,6 @@ export class CampusDetailComponent implements OnInit {
   }
 
   onSubmit(event) {
-    console.log(event);
     $('button[name=\'submit-button\']').addClass('loading');
     this.adminDataService.updateCampus(this.campus).subscribe(res  => {
       $('button[name=\'submit-button\']').removeClass('loading');

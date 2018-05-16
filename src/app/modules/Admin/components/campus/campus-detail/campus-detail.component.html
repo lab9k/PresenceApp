@@ -1,4 +1,4 @@
-<div *ngIf="campus !== undefined">
+<div *ngIf="campus">
   <h2 class="ui header">Campus</h2>
   <form class="ui form" #f="ngForm" (ngSubmit)="onSubmit($event)">
     <div class="field">
@@ -7,7 +7,7 @@
         [(ngModel)]="campus.name" required>
     </div>
     <div class="field">
-      <label>Gewicht:</label>
+      <label data-position="top left" data-tooltip="Het grootste gewicht wordt als eerste getoond.">Gewicht:</label>
       <input type="number" name="campus-weight" [(ngModel)]="campus.weight" required>
     </div>
     <div class="field">
@@ -15,7 +15,7 @@
             data-position="top left">
         Lunch locatie?
       </label>  
-      <input type="checkbox" name="isLunch" tabindex="0"
+      <input type="checkbox" name="isLunch"
         [(ngModel)]="campus.isLunch">
     </div>
     <div class="field">
@@ -23,7 +23,7 @@
             data-position="top left">
         Thuiswerk locatie?
       </label> 
-      <input type="checkbox" name="isThuiswerk" tabindex="0"
+      <input type="checkbox" name="isThuiswerk"
         [(ngModel)]="campus.isThuiswerk">
     </div>
     <button name="submit-button" class="ui right floated primary button" type="submit" [disabled]="!f.valid">

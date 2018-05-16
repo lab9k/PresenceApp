@@ -8,10 +8,9 @@ import { CampusListComponent } from './components/campus/campus-list/campus-list
 import { LocationComponent } from './components/location/location/location.component';
 import { LocationListComponent } from './components/location/location-list/location-list.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { DragulaModule } from 'ng2-dragula';
 import { SegmentComponent } from './components/segment/segment/segment.component';
 import { SegmentListComponent } from './components/segment/segment-list/segment-list.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { CampusDetailComponent } from './components/campus/campus-detail/campus-detail.component';
 import { SegmentDetailComponent } from './components/segment/segment-detail/segment-detail.component';
 import { LocationDetailComponent } from './components/location/location-detail/location-detail.component';
@@ -25,9 +24,7 @@ const routes = [
     HttpModule,
     CommonModule,
     FormsModule,
-    ReactiveFormsModule,
-    RouterModule.forChild(routes),
-    DragulaModule
+    RouterModule.forChild(routes)
   ],
   declarations: [
     CampusComponent,

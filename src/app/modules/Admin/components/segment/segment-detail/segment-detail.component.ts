@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Segment } from '../../../../../shared/models/segment.model';
 import { AdminDataService } from '../../../admin.service';
-import { Subject } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 
 declare var $: any;
 

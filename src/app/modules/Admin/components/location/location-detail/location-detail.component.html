@@ -1,4 +1,4 @@
-<div *ngIf="location !== undefined">
+<div *ngIf="location">
     <h2 class="ui header">Locatie</h2>
     <form class="ui form" #f="ngForm" (ngSubmit)="onSubmit()">
       <div class="field">
@@ -7,7 +7,7 @@
           [(ngModel)]="location.name" required>
       </div>
       <div class="field">
-        <label>Gewicht:</label>
+        <label data-position="top left" data-tooltip="Het grootste gewicht wordt als eerste getoond.">Gewicht:</label>
         <input type="number" name="location-weight" [(ngModel)]="location.weight" required>
       </div>
       <div class="field">
@@ -15,8 +15,8 @@
               data-position="top left">
          Niet storen locatie?
         </label>  
-        <input type="checkbox" name="DoNotDisturb" tabindex="0"
-          [(ngModel)]="location.DoNotDisturb">
+        <input type="checkbox" name="doNotDisturb"
+          [(ngModel)]="location.doNotDisturb">
       </div>
       <button name="submit-button" class="ui right floated primary button" type="submit" [disabled]="!f.valid">
         Opslaan

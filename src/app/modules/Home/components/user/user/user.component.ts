@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { User } from '../../../../../shared/models/user.model';
-import { DataService } from '../../../../../shared/services/data.service';
 import { Location } from '../../../../../shared/models/location.model';
 import { Message } from '../../../../../shared/models/message.model';
 import { HomeDataService } from '../../../home.service';
@@ -21,7 +20,7 @@ export class UserComponent implements OnInit {
   private _img: String;
   public birthday: boolean;
 
-  constructor(private dataService: DataService, private homeService: HomeDataService, private authService: AuthenticationService) { }
+  constructor(private homeService: HomeDataService, private authService: AuthenticationService) { }
 
   ngOnInit() {
     if (this.user.birthday !== null && this.user.birthday !== undefined) {
@@ -58,7 +57,7 @@ export class UserComponent implements OnInit {
   }
 
   userSelected() {
-    $('#' + this.user.id + this.user.name).modal('show');
+    $('#' + this.user.id + this.user.name.replace(/\s/g, '')).modal('show');
   }
 
   sendMessage() {
@@ -80,4 +79,7 @@ export class UserComponent implements OnInit {
     }
   }
 
+  get name() {
+    return this.user.name.replace(/\s/g, '');
+  }
 }
