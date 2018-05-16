@@ -50,8 +50,8 @@ exports.creds = {
     // rollover purpose. We always use the first set of key/iv pair to encrypt cookie, but we will try every set of
     // key/iv pair to decrypt cookie. Key can be any string of length 32, and iv can be any string of length 12.
     cookieEncryptionKeys: [ 
-      { 'key': '12345678901234567890123456789012', 'iv': '123456789012' },
-      { 'key': 'abcdefghijklmnopqrstuvwxyzabcdef', 'iv': 'abcdefghijkl' }
+      { 'key': process.env.KEY1, 'iv': process.env.IV1 },
+      { 'key': process.env.KEY2, 'iv': process.env.IV2 }
     ],
   
     // The additional scopes we want besides 'openid'.
@@ -74,7 +74,7 @@ exports.creds = {
   };
   
   // The url you need to go to destroy the session with AAD
-  exports.destroySessionUrl = 'https://login.microsoftonline.com/common/oauth2/logout?post_logout_redirect_uri=https://wie-is-waar.herokuapp.com';
+  exports.destroySessionUrl = 'https://login.microsoftonline.com/common/oauth2/logout?post_logout_redirect_uri=https://wiw.lab9k.gent';
   
   // If you want to use the mongoDB session store for session middleware; otherwise we will use the default
   // session store provided by express-session.
