@@ -2,8 +2,6 @@ import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { AuthenticationService } from './shared/services/authentication.service';
 import { Router } from '@angular/router';
-import { DomSanitizer } from '@angular/platform-browser';
-import { AdminDataService } from './modules/Admin/admin.service';
 
 declare var $: any;
 
@@ -18,7 +16,7 @@ export class AppComponent implements OnInit {
   private _correctIp: boolean;
   private _campusList: any;
 
-  constructor(private authService: AuthenticationService, private _router: Router, private dataService: AdminDataService) {
+  constructor(private authService: AuthenticationService, private _router: Router) {
   }
 
   ngOnInit() {

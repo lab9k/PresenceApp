@@ -1,10 +1,8 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy, OnChanges } from '@angular/core';
 import { HomeDataService } from '../../../home.service';
 import { User } from '../../../../../shared/models/user.model';
-import { Campus } from '../../../../../shared/models/campus.model';
 import { Location } from '../../../../../shared/models/location.model';
 import { Segment } from '../../../../../shared/models/segment.model';
-import { DataService } from '../../../../../shared/services/data.service';
 
 @Component({
   selector: 'app-user-list',
@@ -12,7 +10,7 @@ import { DataService } from '../../../../../shared/services/data.service';
   styleUrls: ['./user-list.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UserListComponent implements OnInit {
+export class UserListComponent implements OnInit, OnChanges {
 
   @Input() public segment: Segment;
   @Input() public users: User[];

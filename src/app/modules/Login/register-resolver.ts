@@ -11,7 +11,6 @@ export class RegisterResolver implements Resolve<boolean> {
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
         return this.authService.register(route.params['phoneid'])
             .map(item => {
-                console.log(item);
                 if (item) {
                     return item;
                 }

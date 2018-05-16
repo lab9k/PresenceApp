@@ -10,7 +10,6 @@ import { AuthenticationService } from './shared/services/authentication.service'
 import { AuthGuardService } from './modules/app-routing/auth-guard.service';
 import { LocationComponent } from './modules/Checkin/components/location/location.component';
 import { DataService } from './shared/services/data.service';
-import { DragulaModule } from 'ng2-dragula/components/dragular.module';
 import { AdminGuardService } from './modules/app-routing/admin-guard.service';
 import { AdminDataService } from './modules/Admin/admin.service';
 import { AvatarModule } from 'ngx-avatar';
@@ -25,7 +24,6 @@ import { AvatarModule } from 'ngx-avatar';
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    DragulaModule,
     AppRoutingModule,
     AvatarModule
   ],

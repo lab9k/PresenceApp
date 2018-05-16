@@ -6,7 +6,7 @@ import { DataService } from '../../shared/services/data.service';
 
 @Injectable()
 export class SegmentResolver implements Resolve<Segment> {
-    private _segment: Segment;
+
     constructor(private dataService: DataService) {}
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Segment> {

@@ -9,7 +9,6 @@ import { Checkin } from '../../../../../shared/models/checkin.model';
 import { Location } from '../../../../../shared/models/location.model';
 
 declare var $: any;
-$('.ui.dropdown').dropdown();
 
 @Component({
   selector: 'app-campus-list',
@@ -30,8 +29,7 @@ export class CampusListComponent implements OnInit {
   private _userNames;
   socket = io();
 
-  constructor(private _homeDataService: HomeDataService, private cd: ChangeDetectorRef, private authService: AuthenticationService,
-    private dataService: DataService) { }
+  constructor(private _homeDataService: HomeDataService, private cd: ChangeDetectorRef, private authService: AuthenticationService) { }
 
   ngOnInit() {
     $.getJSON('https://api.ipdata.co', function(data) {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, RequestOptions, Headers } from '@angular/http';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { Location } from '../models/location.model';
 import { Campus } from '../models/campus.model';
@@ -9,8 +9,6 @@ import { Segment } from '../models/segment.model';
 
 @Injectable()
 export class DataService {
-
-  private _appUrl = 'http://localhost:3000/API';
 
   constructor(private http: Http) { }
 

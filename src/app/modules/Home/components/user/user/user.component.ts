@@ -17,7 +17,6 @@ export class UserComponent implements OnInit {
   @Input() public user: User;
   private _location: Location;
   private _opacity: String;
-  private _img: String;
   public birthday: boolean;
 
   constructor(private homeService: HomeDataService, private authService: AuthenticationService) { }
@@ -50,10 +49,6 @@ export class UserComponent implements OnInit {
 
   get opacity() {
     return this._opacity;
-  }
-
-  get img() {
-    return this._img;
   }
 
   userSelected() {

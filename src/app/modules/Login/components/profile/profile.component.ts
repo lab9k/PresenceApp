@@ -77,7 +77,6 @@ export class ProfileComponent implements OnInit {
 
   deletePhoneId() {
     this._user.phoneid = undefined;
-    console.log(this._user);
     this.authService.removePhone(this._user).subscribe();
   }
 

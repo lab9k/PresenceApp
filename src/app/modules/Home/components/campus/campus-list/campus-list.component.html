@@ -37,7 +37,7 @@
             <a (click)="changeTab('all')"
               class="active item" data-tab="all"
               style="word-wrap: break-word; padding-left: 0.5em;padding-right: 0.5em;">
-                Campus 
+                Alle Campussen 
            </a>
             <a *ngFor="let localCampus of lunchCampuses" (click)="changeTab(localCampus.id)"
                   class="item" attr.data-tab="{{localCampus.id}}"

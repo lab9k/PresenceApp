@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
 import { User } from '../../shared/models/user.model';
 import { Http, RequestOptions, Headers } from '@angular/http';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class AuthenticationService {
 
-  private _appUrl = 'http://localhost:3000/API';
   private _ipUrl: 'https://api.ipify.org';
   private _user: BehaviorSubject<string>;
-  public auth2: any;
   public redirectUrl: string;
 
   constructor(private http: Http) {

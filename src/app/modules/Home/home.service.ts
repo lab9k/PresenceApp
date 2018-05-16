@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 import { User } from '../../shared/models/user.model';
 import { Http, RequestOptions, Headers } from '@angular/http';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { Campus } from '../../shared/models/campus.model';
 import { Message } from '../../shared/models/message.model';
 
 @Injectable()
 export class HomeDataService {
-
-  private _appUrl = 'http://localhost:3000/API';
 
   constructor(private http: Http) { }
 

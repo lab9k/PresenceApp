@@ -9,11 +9,11 @@ export class Campus {
     private _segments: Segment[];
 
     static fromJSON(json) {
-        const segs = [];
+        const segmentsJson = [];
         json.segments.forEach(element => {
-            segs.push(Segment.fromJSON(element));
+            segmentsJson.push(Segment.fromJSON(element));
         });
-        const campus = new Campus(json._id, json.name, json.isLunch, json.isThuiswerk, json.weight, segs);
+        const campus = new Campus(json._id, json.name, json.isLunch, json.isThuiswerk, json.weight, segmentsJson);
         return campus;
     }
 

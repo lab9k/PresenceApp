@@ -18,7 +18,6 @@ export class SegmentComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
-
   }
 
   addDummy() {

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { User } from '../../shared/models/user.model';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { Campus } from '../../shared/models/campus.model';
 import { Segment } from '../../shared/models/segment.model';
