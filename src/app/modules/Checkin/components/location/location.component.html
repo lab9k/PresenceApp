@@ -1,54 +1,110 @@
-<p *ngIf="location.id else nameLocation">
-    U bent ingecheckt in locatie: {{location.name}}
-</p>
-<ng-template #nameLocation>
-    <p>Nieuwe sticker gevonden</p>
-    <div class="ui horizontal segments" *ngIf="locations">
-        <!-- create new location -->
-        <div class="ui segment">
-            <h1>Nieuwe locatie aanmaken</h1>
-            <div class="ui segment">
-                <form class="ui form">
-                    <div class="field">
-                        <label for="newLocationName">Naam:</label>
-                        <input type="text" name="new-location-name" placeholder="Location name"
-                            id="newLocationName">
+<div class="ui container segment">
+    <p *ngIf="location.id else nameLocation">
+        U hebt ingecheckt in locatie: {{location.name}}
+    </p>
+    <ng-template #nameLocation>
+        <p>Nieuwe sticker gevonden</p>
+        <div class="ui one column grid">
+            <div class="computer only column">
+                <div class="ui horizontal segments" *ngIf="locations">
+                    <!-- create new location -->
+                    <div class="ui segment">
+                        <h1>Nieuwe locatie aanmaken</h1>
+                        <div class="ui segment">
+                            <form class="ui form">
+                                <div class="field">
+                                    <label for="newLocationName">Naam:</label>
+                                    <input type="text" name="new-location-name" placeholder="Location name"
+                                        id="newLocationName">
+                                </div>
+                                <div class="field">
+                                    <label for="doNotDisturb">Niet storen:</label>
+                                    <input type="checkbox" name="doNotDisturb"/>
+                                </div>
+                                <button class="ui primary fluid button" type="button"
+                                    (click)="createLoc()">
+                                    Locatie aanmaken
+                                </button>
+                            </form>      
+                        </div>
                     </div>
-                    <div class="field">
-                        <label for="doNotDisturb">Niet storen:</label>
-                        <input type="checkbox" name="doNotDisturb"/>
+                    <div class="ui segment">
+                        <div class="ui vertical divider">
+                            OF
+                        </div>
                     </div>
-                    <button class="ui primary fluid button" type="button"
-                        (click)="createLoc()">
-                        Locatie aanmaken
-                    </button>
-                </form>      
+                    <!-- add to existing location -->
+                    <div class="ui segment">
+                        <h1>Toevoegen aan bestaande locatie</h1>
+                        <div class="ui segment">
+                            <form class="ui form">
+                                <div class="field">
+                                    <label for="existingLocation">Locatie:</label>
+                                    <select id="selectLocation">
+                                        <option *ngFor="let localLocation of locations" [value]="localLocation.id">
+                                            {{localLocation.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <button class="ui primary fluid button" type="button"
+                                    (click)="addSticker()">
+                                    Sticker toevoegen aan locatie
+                                </button>
+                            </form>      
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mobile tablet only column">
+                <div class="ui vertical segments" *ngIf="locations">
+                    <!-- create new location -->
+                    <div class="ui segment">
+                        <h1>Nieuwe locatie aanmaken</h1>
+                        <div class="ui segment">
+                            <form class="ui form">
+                                <div class="field">
+                                    <label for="newLocationName">Naam:</label>
+                                    <input type="text" name="new-location-name" placeholder="Location name"
+                                        id="newLocationName">
+                                </div>
+                                <div class="field">
+                                    <label for="doNotDisturb">Niet storen:</label>
+                                    <input type="checkbox" name="doNotDisturb"/>
+                                </div>
+                                <button class="ui primary fluid button" type="button"
+                                    (click)="createLoc()">
+                                    Locatie aanmaken
+                                </button>
+                            </form>      
+                        </div>
+                    </div>
+                    <div class="ui segment">
+                        <div class="ui horizontal divider">
+                            OF
+                        </div>
+                    </div>
+                    <!-- add to existing location -->
+                    <div class="ui segment">
+                        <h1>Toevoegen aan bestaande locatie</h1>
+                        <div class="ui segment">
+                            <form class="ui form">
+                                <div class="field">
+                                    <label for="existingLocation">Locatie:</label>
+                                    <select id="selectLocation">
+                                        <option *ngFor="let localLocation of locations" [value]="localLocation.id">
+                                            {{localLocation.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <button class="ui primary fluid button" type="button"
+                                    (click)="addSticker()">
+                                    Sticker toevoegen aan locatie
+                                </button>
+                            </form>      
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="ui segment">
-            <div class="ui vertical divider">
-                 OF
-            </div>
-        </div>
-         <!-- add to existing location -->
-        <div class="ui segment">
-            <h1>Toevoegen aan bestaande locatie</h1>
-            <div class="ui segment">
-                <form class="ui form">
-                    <div class="field">
-                        <label for="existingLocation">Locatie:</label>
-                        <select id="selectLocation">
-                            <option *ngFor="let localLocation of locations" [value]="localLocation.id">
-                                {{localLocation.name}}
-                            </option>
-                        </select>
-                    </div>
-                    <button class="ui primary fluid button" type="button"
-                        (click)="addSticker()">
-                        Sticker toevoegen aan locatie
-                    </button>
-                </form>      
-            </div>
-        </div>
-    </div>
-</ng-template>
+    </ng-template>
+</div>

@@ -32,11 +32,9 @@ export class CheckinService {
     }
 
     // REMOVE CHECKIN
-    removeCheckin(userid): Observable<string> {
+    removeCheckin(userid): Observable<User> {
         return this.http.delete('/API/checkin/' + userid)
-            .map(res => {
-                return res.statusText;
-            });
+            .map(res => res.json()).map(item => User.fromJSON(item));
     }
 
     // UPDATE LOCATION

@@ -4,6 +4,7 @@ import { DataService } from '../../../../shared/services/data.service';
 import { Location } from '../../../../shared/models/location.model';
 import { CheckinService } from '../../checkin.service';
 import * as io from 'socket.io-client';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-checkin',
@@ -17,19 +18,22 @@ export class CheckinComponent implements OnInit {
 
   socket = io();
 
-  constructor(private authService: AuthenticationService, private dataService: DataService, private checkinService: CheckinService) { }
+  constructor(private router: Router, private authService: AuthenticationService, private dataService: DataService, 
+    private checkinService: CheckinService) { }
 
   ngOnInit() {
-    this.authService.user.subscribe(user => {
-      this.dataService.getUserById(user).subscribe(usr => {
-        if (usr.checkin) {
-          this.dataService.getLocationById(usr.checkin.location.id).subscribe(loc => {
-            this._location = loc;
-            this._time = this.timeConverter(usr.checkin.time);
-          });
-        }
+    if (this.authService.user) {
+      this.authService.user.subscribe(user => {
+        this.dataService.getUserById(user).subscribe(usr => {
+          if (usr.checkin) {
+            this.dataService.getLocationById(usr.checkin.location.id).subscribe(loc => {
+              this._location = loc;
+              this._time = this.timeConverter(usr.checkin.time);
+            });
+          }
+        });
       });
-    });
+    }
   }
 
   get location() {
@@ -55,7 +59,10 @@ export class CheckinComponent implements OnInit {
   }
 
   removeCheckin() {
-    this.checkinService.removeCheckin(this.authService.user.getValue()).subscribe();
+    this.checkinService.removeCheckin(this.authService.user.getValue()).subscribe(user => {
+      this.socket.emit('checkout', user);
+      this.router.navigate(['']);
+    });
   }
 
 }

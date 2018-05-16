@@ -32,7 +32,7 @@
             <ng-template #picture>
                 <img src="{{user.picture}}" class="ui avatar image" style="float: left;"/>
             </ng-template>
-            <a class="header" *ngIf="user.visible && location.doNotDisturb" style="float: left;">
+            <a class="header" *ngIf="user.visible" style="float: left;">
                 {{user.name}}
             </a>
         </div>

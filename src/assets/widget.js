@@ -5,7 +5,7 @@
   //insert socket.io
   let script_socket = document.createElement('script');
   script_socket.setAttribute("type","text/javascript");
-  script_socket.setAttribute("src", "https://wie-is-waar.herokuapp.com/socket.io/socket.io.js");
+  script_socket.setAttribute("src", "https://wiw.lab9k.gent/socket.io/socket.io.js");
 
   if (window.jQuery === undefined || window.jQuery.fn.jquery !== '1.7.1') {
     var script_tag = document.createElement('script');
@@ -36,8 +36,7 @@
 
   function main() {     
     jQuery(document).ready(function($) {
-      socket = io('https://wie-is-waar.herokuapp.com');
-      var base = 'https://wie-is-waar.herokuapp.com';
+      var base = 'https://wiw.lab9k.gent';
       var $container = $('#wieiswaar-container');
       var script = $("script[data-locatie],[data-segment],[data-campus],[data-all]");
       var locationId = script.attr('data-locatie');
@@ -45,7 +44,9 @@
       var campusId = script.attr('data-campus');
       var hours = script.attr('data-hours');
       var all = script.attr('data-all');
-      var hoursUrl = ''
+      var hoursUrl = '';
+
+      socket = io(base);
 
       if (hours !== undefined) {
         hoursUrl = '?hours=' + hours;
@@ -136,15 +137,15 @@
       } else {
         $container.append('<h1>Voorbeelden gebruik widget</h1>');
         $container.append('<p>Alle aanwezige gebruikers</p>');
-        $container.append('<textarea style="width: 90%; height: 50px;"><div id="wieiswaar-container"></div>\n<script type="text/javascript" src="https://wie-is-waar.herokuapp.com/assets/widget.js" data-all="true"></script></textarea></br>');
+        $container.append('<textarea style="width: 90%; height: 50px;"><div id="wieiswaar-container"></div>\n<script type="text/javascript" src="https://wiw.lab9k.gent/assets/widget.js" data-all="true"></script></textarea></br>');
         $container.append('<p>Aanwezige gebruikers in een locatie</p>');
-        $container.append('<textarea style="width: 90%; height: 50px;"><div id="wieiswaar-container"></div>\n<script type="text/javascript" src="https://wie-is-waar.herokuapp.com/assets/widget.js" data-locatie="Location 1"></script></textarea></br>');
+        $container.append('<textarea style="width: 90%; height: 50px;"><div id="wieiswaar-container"></div>\n<script type="text/javascript" src="https://wiw.lab9k.gent/assets/widget.js" data-locatie="Location 1"></script></textarea></br>');
         $container.append('<p>Aanwezige gebruikers in een segment</p>');
-        $container.append('<textarea style="width: 90%; height: 50px;"><div id="wieiswaar-container"></div>\n<script type="text/javascript" src="https://wie-is-waar.herokuapp.com/assets/widget.js" data-segment="Lab9k"></script></textarea></br>');
+        $container.append('<textarea style="width: 90%; height: 50px;"><div id="wieiswaar-container"></div>\n<script type="text/javascript" src="https://wiw.lab9k.gent/assets/widget.js" data-segment="Lab9k"></script></textarea></br>');
         $container.append('<p>Aanwezige gebruikers in een campus</p>');
-        $container.append('<textarea style="width: 90%; height: 50px;"><div id="wieiswaar-container"></div>\n<script type="text/javascript" src="https://wie-is-waar.herokuapp.com/assets/widget.js" data-campus="Off-site campus"></script></textarea></br>');
+        $container.append('<textarea style="width: 90%; height: 50px;"><div id="wieiswaar-container"></div>\n<script type="text/javascript" src="https://wiw.lab9k.gent/assets/widget.js" data-campus="Off-site campus"></script></textarea></br>');
         $container.append('<p>Aanwezige gebruikers ingecheckt in de laatste x uren.</p>');
-        $container.append('<textarea style="width: 90%; height: 50px;"><div id="wieiswaar-container"></div>\n<script type="text/javascript" src="https://wie-is-waar.herokuapp.com/assets/widget.js" data-all="true" data-hours="8"></script></textarea></br>');
+        $container.append('<textarea style="width: 90%; height: 50px;"><div id="wieiswaar-container"></div>\n<script type="text/javascript" src="https://wiw.lab9k.gent/assets/widget.js" data-all="true" data-hours="8"></script></textarea></br>');
       }
 
       //socket events

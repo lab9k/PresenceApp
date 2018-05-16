@@ -74,13 +74,15 @@ export class CampusListComponent implements OnInit {
       this.usr = User.fromJSON(data.user);
       for (let i = 0; i < this._users.length; i++) {
         if (this._users[i].id === data.user._id) {
+          const number = i;
           $('#' + this._users[i].id).addClass('fade');
           setTimeout(function() {
-            $('#' + this._users[i].id).removeClass('fade');
-            this._users.splice(i, 1);
-            this._users.push(this.usr);
+            $('#' + this._users[number].id).removeClass('fade');
+            this._users.splice(number, 1);
             this.sortUsers();
-          }, 2000);
+            this._users = this._users.slice(0);
+            this.cd.detectChanges();
+          }.bind(this), 2000);
           break;
         }
       }
