@@ -16,8 +16,9 @@ exports.creds = {
 
     // Required, must be 'code', 'code id_token', 'id_token code' or 'id_token'
     // If you want to get access_token, you must use 'code', 'code id_token' or 'id_token code' 
-    responseType: 'code id_token', 
-  
+    //responseType: 'code id_token', 
+    responseType: 'id_token',
+
     // Required
     responseMode: 'form_post', 
   
