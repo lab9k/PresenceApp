@@ -1,6 +1,6 @@
 <div class="ui left aligned top attached huge header" *ngIf="segment">
     <div style="padding-top: 8px;float: left">{{segment.name}}</div>
-    <button class="ui button" style="float: right;">
+    <button class="ui button" style="float: right;" *ngIf="location">
         <a routerLink="/checkin/{{location}}">Checkin</a>
     </button>
     <div style="clear: both;"></div>

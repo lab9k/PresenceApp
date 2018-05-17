@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Campus } from '../../../../../shared/models/campus.model';
 import { Segment } from '../../../../../shared/models/segment.model';
 import { Location } from '../../../../../shared/models/location.model';
@@ -8,7 +8,7 @@ import { Location } from '../../../../../shared/models/location.model';
   templateUrl: './segment-list.component.html',
   styleUrls: ['./segment-list.component.css']
 })
-export class SegmentListComponent implements OnInit {
+export class SegmentListComponent implements OnInit, OnDestroy {
 
   @Input() public campus: Campus;
   private _segments: Segment[];
@@ -29,6 +29,9 @@ export class SegmentListComponent implements OnInit {
         this.campus.segments.pop();
       }
     });
+  }
+
+  ngOnDestroy() {
   }
 
   selectSegment(segment) {
