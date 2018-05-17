@@ -1,6 +1,10 @@
 <div class="ui inverted stackable menu">
-  <a class='item' routerLink="/">Wie is waar</a>
-  <a class='item' routerLink="/admin">Admin</a>
+  <a class='item' routerLink="/" [ngClass]="{'active': router.url === '/'}">
+    Wie is waar
+  </a>
+  <a class='item' routerLink="/admin" [ngClass]="{'active': router.url === '/admin'}">
+    Admin
+  </a>
   <div class="item" *ngIf="router.url === '/'">
     <div class="ui search">
       <div class="ui icon transparent inverted input">
@@ -11,6 +15,7 @@
     </div>
   </div>
   <div class="right menu">
+    <a class="item" href="assets/app-release.apk" download="wie-is-waar.apk"><i class="download icon"></i>Download App</a>
     <div id="menuDrop" class="ui dropdown item">
       <i class="large bars icon"></i>
       <div class="menu">
@@ -31,5 +36,4 @@
 <!--
   tekst bij inchecken, HANS
   picture bij azure ad, birthday?
-  emit checkout in checkin component
 -->

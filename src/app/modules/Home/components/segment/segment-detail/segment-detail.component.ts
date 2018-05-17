@@ -43,4 +43,7 @@ export class SegmentDetailComponent implements OnInit {
     return this._users;
   }
 
+  get location() {
+    return this._segment.locations[0].stickers[0];
+  }
 }
