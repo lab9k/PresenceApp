@@ -52,7 +52,7 @@ export class UserComponent implements OnInit {
   }
 
   userSelected() {
-    $('#' + this.user.id + this.user.name.replace(/\s/g, '')).modal('show');
+    $('#' + this.user.id + this.user.name.replace(/[^a-zA-Z0-9]/g, '')).modal('show');
   }
 
   sendMessage() {
@@ -75,6 +75,6 @@ export class UserComponent implements OnInit {
   }
 
   get name() {
-    return this.user.name.replace(/\s/g, '');
+    return this.user.name.replace(/[^a-zA-Z0-9]/g, '');
   }
 }
