@@ -56,8 +56,20 @@ export class UserComponent implements OnInit {
   }
 
   sendMessage() {
-    const subject = $('input[name=\'subject-' + this.user.id + '\']').val();
-    const content = $('textarea[name=\'message-' + this.user.id + '\']').val();
+    let subject;
+    $('input[name=\'subject-' + this.user.id + '\']').each(function(i, obj) {
+      if ($(this).val()) {
+        subject = $(this).val();
+        $(this).val('');
+      }
+    });
+    let content;
+    $('textarea[name=\'message-' + this.user.id + '\']').each(function(i, obj) {
+      if ($(this).val()) {
+        content = $(this).val();
+        $(this).val('');
+      }
+    });
     if (content.trim() !== '') {
       let user;
       this.authService.getCurrentUser().subscribe(res => {
