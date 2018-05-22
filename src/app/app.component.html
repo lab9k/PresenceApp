@@ -5,6 +5,9 @@
   <a class='item' routerLink="/admin" [ngClass]="{'active': router.url === '/admin'}">
     Admin
   </a>
+  <a class='item' routerLink='/Over ons' [ngClass]="{'active': router.url === '/Over%20ons'}">
+    Over ons
+  </a>
   <div class="item" *ngIf="router.url === '/'">
     <div class="ui search">
       <div class="ui icon transparent inverted input">
@@ -20,7 +23,7 @@
       <i class="large bars icon"></i>
       <div class="menu">
         <a class='item' routerLink="account/profile" *ngIf="(currentUser | async)">Profiel</a>
-        <a class='item' routerLink="/checkin" *ngIf="(currentUser | async)" i18n>Laatste checkin</a>
+        <a class='item' routerLink="/checkin" *ngIf="(currentUser | async)">Laatste checkin</a>
         <a class='item' *ngIf='(currentUser | async) else loginlink' href="/auth/logout">Uitloggen</a>
         <ng-template #loginlink>
           <a class='item' routerLink="account/login">Inloggen</a>
@@ -33,7 +36,3 @@
 <div class="ui padded basic segment fluid container" style="padding-left: 2%; padding-right: 2%; height: auto;">
   <router-outlet (activate)="onActivate($event)"></router-outlet>
 </div>
-<!--
-  tekst bij inchecken, HANS
-  picture bij azure ad, birthday?
--->

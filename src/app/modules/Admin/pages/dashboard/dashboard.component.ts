@@ -93,14 +93,6 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  deleteCampus(campus) {
-    const index = this._campuses.indexOf(campus, 0);
-    if (index > -1) {
-      this._campuses.splice(index, 1);
-    }
-    this._adminDataService.deleteCampus(campus).subscribe();
-  }
-
   selectCampus(campus) {
     const componentFactory = this._componentFactoryResolver.resolveComponentFactory(CampusDetailComponent);
     const viewContainerRef = this.selectedElement;

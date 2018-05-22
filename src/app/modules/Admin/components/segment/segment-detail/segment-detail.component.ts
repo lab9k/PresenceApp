@@ -28,11 +28,13 @@ export class SegmentDetailComponent implements OnInit {
   }
 
   deleteSegment() {
-    $('button[name=\'delete-button\']').addClass('loading');
-    this.adminDataService.deleteSegment(this.segment).subscribe(res  => {
-      this.isDeleted.next(true);
-      this.segment = undefined;
-      $('button[name=\'delete-button\']').removeClass('loading');
-    });
+    if (confirm('Ben je zeker dat je segment ' + this.segment.name + ' wilt verwijderen?')) {
+      $('button[name=\'delete-button\']').addClass('loading');
+        this.adminDataService.deleteSegment(this.segment).subscribe(res  => {
+          this.isDeleted.next(true);
+          this.segment = undefined;
+          $('button[name=\'delete-button\']').removeClass('loading');
+      });
+    }
   }
 }

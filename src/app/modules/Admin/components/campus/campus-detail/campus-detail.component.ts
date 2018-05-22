@@ -28,11 +28,13 @@ export class CampusDetailComponent implements OnInit {
   }
 
   deleteCampus() {
-    $('button[name=\'delete-button\']').addClass('loading');
-    this.adminDataService.deleteCampus(this.campus).subscribe(res  => {
-      this.isDeleted.next(true);
-      this.campus = undefined;
-      $('button[name=\'delete-button\']').removeClass('loading');
-    });
+    if (confirm('Ben je zeker dat je campus ' + this.campus.name + ' wilt verwijderen?')) {
+        $('button[name=\'delete-button\']').addClass('loading');
+        this.adminDataService.deleteCampus(this.campus).subscribe(res  => {
+          this.isDeleted.next(true);
+          this.campus = undefined;
+          $('button[name=\'delete-button\']').removeClass('loading');
+      });
+    }
   }
 }

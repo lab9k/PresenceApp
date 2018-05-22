@@ -28,11 +28,13 @@ export class LocationDetailComponent implements OnInit {
   }
 
   deleteLocation() {
-    $('button[name=\'delete-button\']').addClass('loading');
-    this.adminDataService.deleteLocation(this.location).subscribe(res  => {
-      this.isDeleted.next(true);
-      this.location = undefined;
-      $('button[name=\'delete-button\']').removeClass('loading');
-    });
+    if (confirm('Ben je zeker dat je locatie ' + this.location.name + ' wilt verwijderen?')) {
+      $('button[name=\'delete-button\']').addClass('loading');
+        this.adminDataService.deleteLocation(this.location).subscribe(res  => {
+          this.isDeleted.next(true);
+          this.location = undefined;
+          $('button[name=\'delete-button\']').removeClass('loading');
+      });
+    }
   }
 }

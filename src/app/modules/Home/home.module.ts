@@ -15,11 +15,13 @@ import { CampusResolver } from './campus-resolver.service';
 import { SegmentDetailComponent } from './components/segment/segment-detail/segment-detail.component';
 import { SegmentResolver } from './segment-resolver.service';
 import { AvatarModule } from 'ngx-avatar';
+import { OverOnsComponent } from './components/over-ons/over-ons.component';
 
 const routes = [
   { path: '', component: CampusListComponent },
   { path: 'campus/:id', component: CampusDetailComponent, resolve: {campus: CampusResolver}},
-  { path: 'segment/:id', component: SegmentDetailComponent, resolve: {segment: SegmentResolver}}
+  { path: 'segment/:id', component: SegmentDetailComponent, resolve: {segment: SegmentResolver}},
+  { path: 'Over ons', component: OverOnsComponent}
 ];
 
 @NgModule({
@@ -37,7 +39,8 @@ const routes = [
     SegmentComponent,
     SegmentListComponent,
     CampusDetailComponent,
-    SegmentDetailComponent
+    SegmentDetailComponent,
+    OverOnsComponent
   ],
   providers: [
     HomeDataService,

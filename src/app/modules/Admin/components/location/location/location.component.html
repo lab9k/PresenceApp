@@ -5,7 +5,7 @@
     <div class="ui selection list">
         <div class="item" *ngFor=" let sticker of location.stickers">
             <div class="content">
-                {{sticker}}
+                {{sticker}} <i class="red icon trash" (click)="removeSticker(sticker)"></i>
             </div>
         </div>
     </div>
