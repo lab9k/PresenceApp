@@ -2,7 +2,7 @@ let express = require('express');
 let router = express.Router();
 let mongoose = require('mongoose');
 let io = require('../middleware/io');
-var CronJob = require('cron').CronJob;
+let CronJob = require('cron').CronJob;
 
 let Location = mongoose.model('Location');
 let User = mongoose.model('User');
@@ -11,10 +11,10 @@ let Segment = mongoose.model('Segment');
 let Message = mongoose.model('Message');
 
 var job = new CronJob({
-  cronTime: '*/5 * * * *',
-  //cronTime: '0/15 * * * * *',
+  //cronTime: '*/5 * * * *',
+  cronTime: '0/15 * * * * *',
   onTick: function() {
-    console.log('test');
+    console.log('Checking user checkins...');
     User.find().populate('checkin.location')
       .exec(function(err, users) {
         if(!err) {
@@ -22,8 +22,7 @@ var job = new CronJob({
           users.forEach(function(user) {
             if (user.checkin && user.checkin.time < (time - 1000 * 60 * 60 * 12)) {
               user.checkin = undefined;
-              user.save(function(er, usr) {
-                
+              user.save(function(err, u) {
               });
             }
           });
@@ -290,18 +289,8 @@ router.get('/API/locations/', function(req, res, next) {
 });
 
 /* GET USERS */
-router.get('/API/users', function(req, res, next) {
-  let time;
-  if (!req.query['hours']) {
-    time = +new Date() - 1000 * 60 * 60 * 24;
-  } 
-  else {
-    time = +new Date() - 1000 * 60 * 60 * req.query['hours'];
-  }
-  
-  User.find(
-      {'checkin.time': {$gt: time}},
-    ).populate('checkin.location').exec(function(err, users) {
+router.get('/API/users', ensureAuthenticated, function(req, res, next) {
+  User.find().populate('checkin.location').exec(function(err, users) {
     if (err) { return next(err); }
     res.json(users);
   });
@@ -552,5 +541,13 @@ router.put('/API/user/removephoneid', function(req, res, next) {
     res.json(user);
   })
 });
+
+function ensureAuthenticated(req, res, next) {
+  let trustedIps = ['212.123.26.150', '::ffff:127.0.0.1'];
+  let requestIP = (req.headers['x-forwarded-for'] || req.connection.remoteAddress || '').split(',')[0].trim();
+  console.log(requestIP);
+  if (req.isAuthenticated() || trustedIps.indexOf(requestIP) >= 0) { return next(); }
+  res.redirect('/account/login');
+};
 
 module.exports = router;
