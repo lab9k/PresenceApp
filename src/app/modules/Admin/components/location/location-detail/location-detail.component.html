@@ -26,4 +26,14 @@
       </button>
     </form>
   </div>
+<div id="{{location.id}}" class="ui mini modal">
+  <div class="header">Locatie verwijderen</div>
+  <div class="content">
+    <p>Ben je zeker dat je locatie {{location.name}} wilt verwijderen?</p>
+  </div>
+  <div class="actions">
+    <div class="ui red approve button" (click)="deleteConfirm()">Verwijderen</div>
+    <div class="ui deny button" (click)="deleteDeny()">Annuleren</div>
+  </div>
+</div>
   

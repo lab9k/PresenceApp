@@ -7,6 +7,16 @@
             <div class="content">
                 {{sticker}} <i class="red icon trash" (click)="removeSticker(sticker)"></i>
             </div>
+            <div id="{{sticker}}" class="ui mini modal">
+                <div class="header">Sticker verwijderen</div>
+                <div class="content">
+                    <p>Ben je zeker dat je sticker {{sticker}} wilt verwijderen?</p>
+                </div>
+                <div class="actions">
+                    <div class="ui red approve button" (click)="deleteConfirm()">Verwijderen</div>
+                    <div class="ui deny button" (click)="deleteDeny()">Annuleren</div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

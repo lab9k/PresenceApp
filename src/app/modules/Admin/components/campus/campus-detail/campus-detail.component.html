@@ -34,3 +34,13 @@
     </button>
   </form>
 </div>
+<div id="{{campus.id}}" class="ui mini modal">
+  <div class="header">Campus verwijderen</div>
+  <div class="content">
+    <p>Ben je zeker dat je campus {{campus.name}} wilt verwijderen?</p>
+  </div>
+  <div class="actions">
+    <div class="ui red approve button" (click)="deleteConfirm()">Verwijderen</div>
+    <div class="ui deny button" (click)="deleteDeny()">Annuleren</div>
+  </div>
+</div>

@@ -132,11 +132,13 @@ export class CampusListComponent implements OnInit {
     this._homeDataService.getUsers().then((res) => {
       this._users = res;
       for (let i = 0; i < this._users.length; i++) {
-        this._userNames.push({
-          'title': this._users[i].name,
-          'image': this._users[i].picture,
-          'description': this._users[i].checkin.location.name
-        });
+        if (this.users[i].checkin) {
+          this._userNames.push({
+            'title': this._users[i].name,
+            'image': this._users[i].picture,
+            'description': this._users[i].checkin.location.name
+          });
+        }
       }
       $('.ui.search')
       .search({
