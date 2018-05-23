@@ -2,12 +2,37 @@ let express = require('express');
 let router = express.Router();
 let mongoose = require('mongoose');
 let io = require('../middleware/io');
+var CronJob = require('cron').CronJob;
 
 let Location = mongoose.model('Location');
 let User = mongoose.model('User');
 let Campus = mongoose.model('Campus');
 let Segment = mongoose.model('Segment');
 let Message = mongoose.model('Message');
+
+var job = new CronJob({
+  cronTime: '*/5 * * * *',
+  //cronTime: '0/15 * * * * *',
+  onTick: function() {
+    console.log('test');
+    User.find().populate('checkin.location')
+      .exec(function(err, users) {
+        if(!err) {
+          let time = +new Date();
+          users.forEach(function(user) {
+            if (user.checkin && user.checkin.time < (time - 1000 * 60 * 60 * 12)) {
+              user.checkin = undefined;
+              user.save(function(er, usr) {
+                
+              });
+            }
+          });
+        }
+      });
+  },
+  start: false
+});
+job.start();
 
 // socket io
 io.on('connection', function (socket) {
@@ -348,10 +373,11 @@ router.get('/API/location/:id', function(req, res, next) {
 
 /* GET USER BY NAME */
 router.get('/API/user/name/:name', function(req, res, next) {
-  User.find({name: req.params.name}, function(err, user) {
+  console.log(req.params.name);
+  User.findOne({name: req.params.name}, function(err, user) {
     if (err) { return next(err); }
-    if (user[0]) {
-      res.json(user[0]);
+    if (user) {
+      res.json(user);
     } else {
       res.status(400).json({message: "User not found."});
     }
