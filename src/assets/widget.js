@@ -37,6 +37,7 @@
   function main() {     
     jQuery(document).ready(function($) {
       var base = 'https://wiw.lab9k.gent';
+      //var base = 'http://localhost:4200';
       var $container = $('#wieiswaar-container');
       var script = $("script[data-locatie],[data-segment],[data-campus],[data-all]");
       var locationId = script.attr('data-locatie');
@@ -69,6 +70,9 @@
                     $container.find('ul').append($('<li id="' + user._id + '">' + user.name + '</li>'));
                   }
                 });
+                if ($container.find('li').length === 0) {
+                  $container.append($('<p>Er is hier niemand ingecheckt...</p>'));
+                }
               }
             });
           }
@@ -93,6 +97,9 @@
                       }
                     });
                   });
+                  if ($container.find('li').length === 0) {
+                    $container.append($('<p>Er is hier niemand ingecheckt...</p>'));
+                  }
               }
             });
           }
@@ -118,6 +125,9 @@
                       });
                     });
                   });
+                  if ($container.find('li').length === 0) {
+                    $container.append($('<p>Er is hier niemand ingecheckt...</p>'));
+                  }
               }
             });
           }
@@ -132,6 +142,9 @@
               $.each(users, function(index, user) {
                 $container.find('ul').append($('<li id="' + user._id + '">' + user.name + '</li>'));
               });
+              if ($container.find('li').length === 0) {
+                $container.append($('<p>Er is hier niemand ingecheckt...</p>'));
+              }
           }
         });
       } else {
@@ -150,6 +163,7 @@
 
       //socket events
       socket.on('new-checkin', (data) => {
+        $container.find('p').remove();
         $container.find('#' + data.user._id).remove();
         if(locationId !== undefined) {
           $.ajax({ 
@@ -157,8 +171,11 @@
             url: base + '/API/location/name/' + locationId, 
             dataType: 'json',
             success: function (location) { 
-              if (user.checkin.location._id === location._id) {
-                $container.find('ul').append($('<li id="' + user._id + '">' + user.name + '</li>'));
+              if (data.user.checkin.location._id === location._id) {
+                $container.find('ul').append($('<li id="' + data.user._id + '">' + data.user.name + '</li>'));
+              }
+              if ($container.find('li').length === 0) {
+                $container.append($('<p>Er is hier niemand ingecheckt...</p>'));
               }
             }
           });
@@ -174,6 +191,9 @@
                   $container.find('ul').append($('<li id="' + data.user._id + '">' + data.user.name + '</li>'));
                 }
               });
+              if ($container.find('li').length === 0) {
+                $container.append($('<p>Er is hier niemand ingecheckt...</p>'));
+              }
             }
           });
         } else if (campusId !== undefined) {
@@ -189,15 +209,24 @@
                   }
                 });
               });
+              if ($container.find('li').length === 0) {
+                $container.append($('<p>Er is hier niemand ingecheckt...</p>'));
+              }
             }
           });
         } else if(all !== undefined && all) {
           $container.find('ul').append($('<li id="' + data.user._id + '">' + data.user.name + '</li>'));
+          if ($container.find('li').length === 0) {
+            $container.append($('<p>Er is hier niemand ingecheckt...</p>'));
+          }
         }
         
       });
       socket.on('new-checkout', (data) => {
         $container.find('#' + data.user._id).remove();
+        if ($container.find('li').length === 0) {
+          $container.append($('<p>Er is hier niemand ingecheckt...</p>'));
+        }
       });
     });
   }
