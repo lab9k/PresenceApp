@@ -140,7 +140,9 @@
           success: function (users) { 
             $container.append($('<ul>'));
               $.each(users, function(index, user) {
-                $container.find('ul').append($('<li id="' + user._id + '">' + user.name + '</li>'));
+                if(user.checkin) {
+                  $container.find('ul').append($('<li id="' + user._id + '">' + user.name + '</li>'));
+                }
               });
               if ($container.find('li').length === 0) {
                 $container.append($('<p>Er is hier niemand ingecheckt...</p>'));
@@ -215,7 +217,9 @@
             }
           });
         } else if(all !== undefined && all) {
-          $container.find('ul').append($('<li id="' + data.user._id + '">' + data.user.name + '</li>'));
+          if(data.user.checkin) {
+            $container.find('ul').append($('<li id="' + data.user._id + '">' + data.user.name + '</li>'));
+          }
           if ($container.find('li').length === 0) {
             $container.append($('<p>Er is hier niemand ingecheckt...</p>'));
           }
