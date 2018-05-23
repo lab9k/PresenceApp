@@ -9,7 +9,7 @@
 </app-segment-list>
 
 <div>
-    <div *ngFor="let localSegment of vergaderingSegments" class="ui secondary bottom aligned basic segment" style="height: 100%;">
+    <div *ngFor="let localSegment of vergaderingSegments" class="ui secondary bottom aligned segment" style="height: 100%;">
         <h3 class="ui left aligned top attached inverted header">In vergadering</h3>
         <app-user-list [segment]="localSegment" [users]="users"></app-user-list>
     </div>

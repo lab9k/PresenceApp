@@ -3,7 +3,7 @@
         display: grid;
         grid-auto-flow: column;
         grid-template-rows: repeat(3 , auto);
-        grid-gap: 8px;
+        grid-column-gap: 16px;
     }
 }
 
@@ -12,7 +12,7 @@
         display: grid;
         grid-auto-flow: row;
         grid-template-rows: repeat(3 , auto);
-        grid-gap: 8px;
+        grid-column-gap: 16px;
     }
 }
 

@@ -70,7 +70,7 @@ export class UserComponent implements OnInit {
         $(this).val('');
       }
     });
-    if (content.trim() !== '') {
+    if ((content && subject) && (content.trim() !== '' && subject.trim() !== '')) {
       let user;
       this.authService.getCurrentUser().subscribe(res => {
         user = {
@@ -81,9 +81,19 @@ export class UserComponent implements OnInit {
         this.homeService.createMessage(message).subscribe(resMessage => {
           this.user.addMessage(resMessage);
           this.homeService.updateUser(this.user).subscribe();
+          $('#berichtSuccess').removeClass('hidden');
         });
       });
+    } else {
+      $('#berichtFail').removeClass('hidden');
     }
+    $('.message .close')
+    .on('click', function() {
+      $(this)
+        .closest('.message')
+        .addClass('hidden')
+      ;
+    });
   }
 
   get name() {

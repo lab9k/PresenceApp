@@ -1,4 +1,18 @@
 <div *ngIf="correctIp">
+  <div id="berichtSuccess" class="ui positive hidden message">
+    <i class="close icon"></i>
+    <div class="header">
+      Succes!
+    </div>
+    <p>Succesvol bericht verzonden!</p>
+  </div>
+  <div id="berichtFail" class="ui negative hidden message">
+      <i class="close icon"></i>
+      <div class="header">
+        Oops!
+      </div>
+      <p>Vul een onderwerp en een bericht in bij het versturen van een bericht.</p>
+    </div>
   <div class="ui one column grid" style="width: 100%">
     <div class="computer only column">
       <div class="grid-container">
@@ -10,7 +24,7 @@
     <div class="computer only column">
       <div class="ui two column equal height grid">
         <div class="column">
-          <div class="ui tertiary basic segment" *ngFor="let localCampus of lunchCampuses" style="height: 100%;">
+          <div class="ui tertiary segment" *ngFor="let localCampus of lunchCampuses" style="height: 100%;">
             <h2 class="ui left aligned  header">{{localCampus.name}}</h2>
             <div *ngFor="let localSegment of localCampus.segments; trackBy: trackLunchSegment">
               <app-user-list [segment]="localSegment" [users]="users">
@@ -19,7 +33,7 @@
           </div>
         </div>
         <div class="column">
-          <div class="ui tertiary basic segment" *ngFor="let localCampus of thuiswerkCampuses" style="height: 100%;">
+          <div class="ui tertiary segment" *ngFor="let localCampus of thuiswerkCampuses" style="height: 100%;">
             <h2 class="ui left aligned  header">{{localCampus.name}}</h2>
               <div *ngFor="let localSegment of localCampus.segments; trackBy: trackThuiswerkSegment">
                 <app-user-list [segment]="localSegment" [users]="users">

@@ -4,6 +4,9 @@
             <div [ngClass]="{'black': birthday}" class='ui raised fluid card' [ngStyle]="{'opacity': opacity}"
                 (click)="userSelected()">
                 <div class="ui tiny image" style="width: 60px; height: 60px;">
+                    <a class="ui mini green right corner label" *ngIf="location && location.doNotDisturb">
+                        <i class="envelope icon"></i>
+                    </a>
                     <img class="overlayImage" *ngIf="birthday" src="./assets/crown2.png">
                     <ngx-avatar *ngIf="!user.picture else picture"
                         googleId="google" name="{{user.name}}"
@@ -42,7 +45,7 @@
 <div class="ui modal" id="{{user.id}}{{name}}" *ngIf="location && location.doNotDisturb">
     <i class="close icon"></i>
     <div class="header">
-        Bericht verzenden
+        Bericht verzenden naar {{user.name}}
     </div>
     <div class="content">
         <div class="ui form">
