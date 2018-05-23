@@ -210,14 +210,30 @@ router.get('/API/register/:phoneid', function(req, res, next) {
 
 /* UPDATE MESSAGE */
 router.put('/API/message', function(req, res, next) {
-  Message.findByIdAndUpdate(req.body._id, req.body, {new: true}, function (err, message) {
-    if (err) { 
-      console.log(err);
-      return next(err); 
-    }
-    console.log("RESULT:" + message);
-    res.json(message);
-  })
+  if(req.body.isRead) {
+    //remove message in user
+    User.findOneAndUpdate({messages: { "$in" : [mongoose.Types.ObjectId(req.body._id)]}}, { $pull: { messages: {"$in" : [mongoose.Types.ObjectId(req.body._id)] }}}, function(err, user) {
+
+    });
+    //remove message
+    Message.remove({_id: req.body._id}, function(err) {
+      if(!err) {
+        res.json({removed: true});
+      }
+      else {
+        res.json({removed: false});
+      }
+    });
+  } else {
+    Message.findByIdAndUpdate(req.body._id, req.body, {new: true}, function (err, message) {
+      if (err) { 
+        console.log(err);
+        return next(err); 
+      }
+      console.log("RESULT:" + message);
+      res.json(message);
+    });
+  }
 });
 
 /* UPDATE CAMPUS */
