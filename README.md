@@ -2,4 +2,4 @@
 
 ## Deployment
 
-Azure Cloud Platform (**Proof Of Concept -> zie projectboard**)
+Azure Cloud Platform (in progress)
